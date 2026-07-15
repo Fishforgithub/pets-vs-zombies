@@ -47,6 +47,16 @@ The authored direction is left-facing. Display as-is when the shield faces left;
 
 Suggested runtime nodes: one body hurtbox plus a separate forward `Area2D` shield collider. Front-facing bullets should be blocked/deflected by the shield; rear hits and pet attacks can bypass or damage it according to gameplay tuning. Keep the shield collider active and in the same forward offset throughout all six walk frames; do not derive its position from changing opaque pixels.
 
+## Stage 1 boss: Undead Foreman
+
+Boss frame cells are `512 x 512`, not the normal `256 x 256`. The authored direction is left-facing. Mirror the complete boss and every authored attack collider together when facing right.
+
+| Asset | Grid / order | Runtime mapping | Playback |
+|---|---|---|---|
+| `assets/bosses/stage1_foreman/idle.png` | 1 x 1, 512 x 512 | `idle` identity anchor | Static until an approved idle animation is available |
+
+Use separate authored shapes for the boss body, vulnerable area, and road-barrier hammer. Never include the extended hammer in the persistent body hurtbox. Activate weapon hitboxes only during documented attack windows. Preserve the bottom-center pivot when switching animations so the large sprite does not jump vertically.
+
 ## Stage 1 environment
 
 | Asset | Grid / order | Runtime use |
@@ -70,7 +80,8 @@ Suggested runtime nodes: one body hurtbox plus a separate forward `Area2D` shiel
 3. Add the Stage 1 background, ground tiles, and props without coupling visuals to level logic.
 4. Add pickups and VFX.
 5. Add the umbrella zombie as a separate enemy scene with a forward shield collider.
-6. Keep procedural placeholders as fallbacks when an optional production asset is absent.
+6. Add the Stage 1 boss as an independent boss scene with a boss state machine and separate weapon hitbox.
+7. Keep procedural placeholders as fallbacks when an optional production asset is absent.
 
 ## Approval and branch protocol
 
