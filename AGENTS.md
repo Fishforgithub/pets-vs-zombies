@@ -23,6 +23,7 @@ Build an original 2D side-scrolling run-and-gun game in Godot 4. The player cont
 - New production dependencies require an explanation in the PR.
 - Before wiring or replacing production art, read `docs/ART_ASSET_MANIFEST.md` and follow its frame order, animation names, facing rules, pivots, and import settings.
 - Treat `docs/ART_ASSET_MANIFEST.md` as the runtime handoff contract between the art-production branch and Godot implementation. Update it whenever an approved asset is added or its layout changes.
+- Record requests for new production art in `docs/ART_REQUEST_QUEUE.md`; do not leave implementation-critical art requirements only in chat or local notes.
 
 ## Verification
 
