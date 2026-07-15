@@ -33,7 +33,7 @@ The authored direction is left-facing. Display as-is while moving/attacking left
 | Asset | Grid / order | Runtime mapping | Playback |
 |---|---|---|---|
 | `assets/enemies/courier_zombie/idle.png` | 1 x 1 | `idle` | Static or subtle procedural bob |
-| `assets/enemies/courier_zombie/walk_sheet.png` | 3 x 2, 6 frames | `walk` frames 0–5 | Loop, 8 FPS |
+| `assets/enemies/courier_zombie/walk_sheet.png` | Expected 3 x 2, 6 frames; current remote blob is invalid | `walk` frames 0–5 after replacement | Blocked pending a valid PNG |
 | `assets/enemies/courier_zombie/action_sheet.png` | 3 x 1 | left `attack`, middle `hurt`, right `faint` | One-shot poses; faint holds |
 
 ## Umbrella commuter zombie

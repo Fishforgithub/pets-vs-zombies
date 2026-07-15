@@ -9,6 +9,13 @@ const requiredFiles = [
   'docs/GAME_DESIGN.md',
   'docs/ART_DIRECTION.md',
   'docs/ASSET_MIGRATION.md',
+  'docs/ART_ASSET_MANIFEST.md',
+  'assets/props/stage1/street_props.png',
+  'assets/props/stage1/crate_break_sheet.png',
+  'assets/items/pickups.png',
+  'assets/vfx/combat_effects.png',
+  'assets/enemies/umbrella_zombie/idle.png',
+  'assets/enemies/umbrella_zombie/walk_sheet.png',
   'docs/WEB_DEPLOYMENT.md',
   'export_presets.cfg',
   'wrangler.jsonc',
@@ -46,7 +53,7 @@ if (!project.includes('run/main_scene="res://game/main/main.tscn"')) {
 }
 
 const exportPresets = await readFile(path.join(root, 'export_presets.cfg'), 'utf8');
-if (!exportPresets.includes('platform="Web"') || !exportPresets.includes('variant/thread_support=false')) {
+if (!exportPresets.includes('platform="Web"') || !exportPresets.includes('variant/thread_support=false') || !exportPresets.includes('build/*')) {
   errors.push('export_presets.cfg must define a single-threaded Web export.');
 }
 const textExtensions = new Set(['.gd', '.tscn', '.godot', '.md', '.json', '.mjs']);

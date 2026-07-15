@@ -43,9 +43,12 @@ export default {
     const headers = new Headers(upstream.headers);
     headers.set("Content-Type", contentTypeFor(pathname));
     headers.set("X-Content-Type-Options", "nosniff");
+    headers.set("X-PVZ-Release", "2026-07-15.2");
     headers.set(
       "Cache-Control",
-      pathname.endsWith(".html") ? "no-cache" : "public, max-age=3600",
+      pathname.endsWith(".html") || pathname.endsWith(".pck")
+        ? "no-cache"
+        : "public, max-age=3600",
     );
 
     return new Response(upstream.body, {
