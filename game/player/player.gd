@@ -22,6 +22,8 @@ var is_crouching: bool = false
 var is_dead: bool = false
 
 @onready var character_sprite: AnimatedSprite2D = $CharacterSprite
+@onready var standing_collision_shape: CollisionShape2D = $StandingCollisionShape
+@onready var crouch_collision_shape: CollisionShape2D = $CrouchCollisionShape
 
 func _ready() -> void:
 	health = max_health
@@ -39,7 +41,7 @@ func _physics_process(delta: float) -> void:
 		velocity.y += gravity * delta
 
 	var axis := Input.get_axis("move_left", "move_right")
-	is_crouching = Input.is_action_pressed("crouch") and is_on_floor()
+	_update_crouch_state(Input.is_action_pressed("crouch") and is_on_floor())
 	velocity.x = axis * (move_speed * 0.45 if is_crouching else move_speed)
 
 	if Input.is_action_just_pressed("jump") and is_on_floor() and not is_crouching:
@@ -67,10 +69,32 @@ func _update_animation(move_axis: float) -> void:
 		character_sprite.pause()
 	elif not is_on_floor():
 		character_sprite.play(&"jump" if velocity.y < 0.0 else &"fall")
-	elif is_on_floor() and absf(move_axis) > 0.05 and not is_crouching:
+	elif is_crouching:
+		character_sprite.play(&"crouch")
+	elif absf(move_axis) > 0.05:
 		character_sprite.play(&"run")
 	else:
 		character_sprite.play(&"idle")
+
+func _update_crouch_state(wants_crouch: bool) -> void:
+	if wants_crouch == is_crouching:
+		return
+	if is_crouching and not wants_crouch and not _has_standing_clearance():
+		return
+
+	is_crouching = wants_crouch
+	standing_collision_shape.disabled = is_crouching
+	crouch_collision_shape.disabled = not is_crouching
+
+func _has_standing_clearance() -> bool:
+	var query := PhysicsShapeQueryParameters2D.new()
+	query.shape = standing_collision_shape.shape
+	query.transform = standing_collision_shape.global_transform
+	query.collision_mask = collision_mask
+	query.exclude = [get_rid()]
+	query.collide_with_areas = false
+	query.collide_with_bodies = true
+	return get_world_2d().direct_space_state.intersect_shape(query, 1).is_empty()
 
 func _try_fire() -> void:
 	if fire_cooldown > 0.0:
