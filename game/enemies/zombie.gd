@@ -15,6 +15,8 @@ var attack_cooldown: float = 0.0
 var hit_flash: float = 0.0
 var is_dead: bool = false
 
+@onready var character_sprite: AnimatedSprite2D = $CharacterSprite
+
 func _ready() -> void:
 	health = max_health
 	add_to_group("enemies")
@@ -28,9 +30,13 @@ func _physics_process(delta: float) -> void:
 
 	if not is_instance_valid(target):
 		target = get_tree().get_first_node_in_group("player") as PlayerGirl
+	if is_instance_valid(character_sprite) and is_instance_valid(target):
+		character_sprite.flip_h = target.global_position.x < global_position.x
 
 	attack_cooldown = maxf(0.0, attack_cooldown - delta)
 	hit_flash = maxf(0.0, hit_flash - delta)
+	if is_instance_valid(character_sprite):
+		character_sprite.modulate = Color("ffb3b3") if hit_flash > 0.0 else Color.WHITE
 	if is_instance_valid(target) and not target.is_dead:
 		var distance_x := target.global_position.x - global_position.x
 		if absf(distance_x) > 35.0:
@@ -60,6 +66,8 @@ func take_damage(amount: int, knockback_direction: Vector2 = Vector2.ZERO) -> vo
 	queue_redraw()
 
 func _draw() -> void:
+	if is_instance_valid(character_sprite) and character_sprite.sprite_frames != null:
+		return
 	var skin := Color.WHITE if hit_flash > 0.0 else Color("8ce99a")
 	var facing := 1.0
 	if is_instance_valid(target) and target.global_position.x < global_position.x:

@@ -20,7 +20,10 @@ const requiredFiles = [
   'game/projectiles/bullet.tscn',
   'game/projectiles/bullet.gd',
   'game/ui/hud.tscn',
-  'game/ui/hud.gd'
+  'game/ui/hud.gd',
+  'tests/player-crouch.gd',
+  'tests/production-animations.gd',
+  'tests/gameplay-smoke.gd'
 ];
 
 const errors = [];

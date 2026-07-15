@@ -13,12 +13,19 @@ const BULLET_SCENE := preload("res://game/projectiles/bullet.tscn")
 @export var max_health: int = 100
 @export var magazine_size: int = 24
 @export var fire_interval: float = 0.12
+@export var fire_animation_duration: float = 0.1
+@export var reload_duration: float = 0.65
+@export var hurt_animation_duration: float = 0.22
 
 var health: int
 var ammo: int
 var aim_direction: Vector2 = Vector2.RIGHT
 var fire_cooldown: float = 0.0
+var fire_animation_timer: float = 0.0
+var reload_timer: float = 0.0
+var hurt_animation_timer: float = 0.0
 var is_crouching: bool = false
+var is_reloading: bool = false
 var is_dead: bool = false
 
 @onready var character_sprite: AnimatedSprite2D = $CharacterSprite
@@ -37,6 +44,8 @@ func _physics_process(delta: float) -> void:
 	if is_dead:
 		return
 
+	_update_action_timers(delta)
+
 	if not is_on_floor():
 		velocity.y += gravity * delta
 
@@ -52,10 +61,10 @@ func _physics_process(delta: float) -> void:
 		aim_direction = mouse_delta.normalized()
 
 	fire_cooldown = maxf(0.0, fire_cooldown - delta)
-	if Input.is_action_pressed("fire"):
-		_try_fire()
 	if Input.is_action_just_pressed("reload"):
 		reload()
+	if Input.is_action_pressed("fire"):
+		_try_fire()
 
 	move_and_slide()
 	_update_animation(axis)
@@ -66,7 +75,13 @@ func _update_animation(move_axis: float) -> void:
 		return
 	character_sprite.flip_h = aim_direction.x < 0.0
 	if is_dead:
-		character_sprite.pause()
+		character_sprite.play(&"faint")
+	elif hurt_animation_timer > 0.0:
+		character_sprite.play(&"hurt")
+	elif is_reloading and not is_crouching and is_on_floor():
+		character_sprite.play(&"reload")
+	elif fire_animation_timer > 0.0 and not is_crouching and is_on_floor():
+		character_sprite.play(&"fire")
 	elif not is_on_floor():
 		character_sprite.play(&"jump" if velocity.y < 0.0 else &"fall")
 	elif is_crouching:
@@ -96,8 +111,22 @@ func _has_standing_clearance() -> bool:
 	query.collide_with_bodies = true
 	return get_world_2d().direct_space_state.intersect_shape(query, 1).is_empty()
 
+func _update_action_timers(delta: float) -> void:
+	fire_animation_timer = maxf(0.0, fire_animation_timer - delta)
+	hurt_animation_timer = maxf(0.0, hurt_animation_timer - delta)
+	if not is_reloading:
+		return
+
+	reload_timer = maxf(0.0, reload_timer - delta)
+	if reload_timer > 0.0:
+		return
+
+	is_reloading = false
+	ammo = magazine_size
+	ammo_changed.emit(ammo, magazine_size)
+
 func _try_fire() -> void:
-	if fire_cooldown > 0.0:
+	if is_reloading or fire_cooldown > 0.0:
 		return
 	if ammo <= 0:
 		reload()
@@ -109,26 +138,34 @@ func _try_fire() -> void:
 	bullet.configure(aim_direction, &"enemies", 25, Color("ffe066"))
 	ammo -= 1
 	fire_cooldown = fire_interval
+	fire_animation_timer = fire_animation_duration
 	ammo_changed.emit(ammo, magazine_size)
 
 func reload() -> void:
-	if ammo == magazine_size or is_dead:
+	if ammo == magazine_size or is_dead or is_reloading:
 		return
-	ammo = magazine_size
-	ammo_changed.emit(ammo, magazine_size)
+	is_reloading = true
+	reload_timer = reload_duration
+	fire_animation_timer = 0.0
 
 func take_damage(amount: int, knockback_direction: Vector2 = Vector2.ZERO) -> void:
 	if is_dead:
 		return
 	health = maxi(0, health - amount)
 	velocity += knockback_direction.normalized() * 110.0
+	is_reloading = false
+	reload_timer = 0.0
+	fire_animation_timer = 0.0
 	health_changed.emit(health, max_health)
 	if health <= 0:
 		is_dead = true
+		hurt_animation_timer = 0.0
 		velocity = Vector2.ZERO
 		if is_instance_valid(character_sprite):
-			character_sprite.pause()
+			character_sprite.play(&"faint")
 		died.emit()
+	else:
+		hurt_animation_timer = hurt_animation_duration
 	queue_redraw()
 
 func _draw() -> void:

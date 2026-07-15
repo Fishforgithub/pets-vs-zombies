@@ -4,16 +4,16 @@ An original 2D side-scrolling run-and-gun game. A human girl fights through a zo
 
 ## Current milestone
 
-The repository contains a no-asset graybox prototype:
+The repository contains a playable vertical-slice prototype with production character animation entering integration:
 
-- keyboard movement and jumping
-- mouse aiming and shooting
-- reload and ammunition tracking
+- keyboard movement, jumping, and crouching with stance-specific collision
+- mouse aiming, shooting, and timed reload behavior
+- complete girl state set: idle, run, jump, fall, crouch, fire, reload, hurt, and faint
 - autonomous pet follow and auto-attack
-- pursuing zombies with contact attacks
+- pursuing zombies with contact attacks and an approved courier-zombie idle sprite
 - health, ammunition, defeat, and stage-clear UI
 
-All visible characters are drawn as temporary code-based pixel blocks. Production art will be imported only after movement and combat feel are approved.
+Procedural drawing remains as a fallback while production pet, enemy, effects, and environment art continues to arrive.
 
 ## Controls
 
