@@ -90,6 +90,9 @@ func take_damage(amount: int, knockback_direction: Vector2 = Vector2.ZERO) -> vo
 	queue_redraw()
 
 func _draw() -> void:
+	var production_sprite := get_node_or_null("CharacterSprite") as Sprite2D
+	if is_instance_valid(production_sprite) and production_sprite.texture != null:
+		return
 	# Temporary code-drawn pixel character. Production art will replace this.
 	var crouch_offset := 9.0 if is_crouching else 0.0
 	var body_color := Color("4dabf7") if not is_dead else Color("868e96")
@@ -106,4 +109,3 @@ func _draw() -> void:
 	var muzzle := aim_direction * 30.0 + Vector2(0, -27 + crouch_offset)
 	draw_line(Vector2(0, -27 + crouch_offset), muzzle, Color("495057"), 6.0)
 	draw_circle(muzzle, 3.0, Color("212529"))
-

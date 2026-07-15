@@ -24,5 +24,8 @@ The source repository `Fishforgithub/tea-line-bot` is read-only. Copy only appro
 
 ## Imported assets
 
-No production assets have been copied yet.
+| Target | Source | Status |
+|---|---|---|
+| `assets/characters/girl/girl_idle.png` | Approved project-specific image generation; pure-magenta source keyed to alpha with the standard image pipeline | Integrated as the human protagonist identity anchor |
 
+No production assets have been copied from `tea-line-bot` yet.
