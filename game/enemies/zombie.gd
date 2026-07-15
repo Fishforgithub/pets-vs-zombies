@@ -8,10 +8,16 @@ signal defeated(enemy: ZombieEnemy)
 @export var gravity: float = 1280.0
 @export var contact_damage: int = 10
 @export var attack_interval: float = 0.8
+@export var attack_animation_duration: float = 0.22
+@export var hurt_animation_duration: float = 0.18
+@export var faint_duration: float = 0.45
 
 var health: int
 var target: PlayerGirl
 var attack_cooldown: float = 0.0
+var attack_animation_timer: float = 0.0
+var hurt_animation_timer: float = 0.0
+var faint_timer: float = 0.0
 var hit_flash: float = 0.0
 var is_dead: bool = false
 
@@ -24,6 +30,9 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	if is_dead:
+		faint_timer = maxf(0.0, faint_timer - delta)
+		if faint_timer <= 0.0:
+			queue_free()
 		return
 	if not is_on_floor():
 		velocity.y += gravity * delta
@@ -34,6 +43,8 @@ func _physics_process(delta: float) -> void:
 		character_sprite.flip_h = target.global_position.x < global_position.x
 
 	attack_cooldown = maxf(0.0, attack_cooldown - delta)
+	attack_animation_timer = maxf(0.0, attack_animation_timer - delta)
+	hurt_animation_timer = maxf(0.0, hurt_animation_timer - delta)
 	hit_flash = maxf(0.0, hit_flash - delta)
 	if is_instance_valid(character_sprite):
 		character_sprite.modulate = Color("ffb3b3") if hit_flash > 0.0 else Color.WHITE
@@ -46,10 +57,12 @@ func _physics_process(delta: float) -> void:
 			if attack_cooldown <= 0.0:
 				target.take_damage(contact_damage, Vector2(signf(distance_x), -0.15))
 				attack_cooldown = attack_interval
+				attack_animation_timer = attack_animation_duration
 	else:
 		velocity.x = 0.0
 
 	move_and_slide()
+	_update_animation()
 	queue_redraw()
 
 func take_damage(amount: int, knockback_direction: Vector2 = Vector2.ZERO) -> void:
@@ -60,10 +73,27 @@ func take_damage(amount: int, knockback_direction: Vector2 = Vector2.ZERO) -> vo
 	velocity += knockback_direction.normalized() * 95.0
 	if health <= 0:
 		is_dead = true
+		faint_timer = faint_duration
+		velocity = Vector2.ZERO
 		remove_from_group("enemies")
+		if is_instance_valid(character_sprite):
+			character_sprite.play(&"faint")
 		defeated.emit(self)
-		queue_free()
+	else:
+		hurt_animation_timer = hurt_animation_duration
 	queue_redraw()
+
+func _update_animation() -> void:
+	if not is_instance_valid(character_sprite):
+		return
+	if is_dead:
+		character_sprite.play(&"faint")
+	elif hurt_animation_timer > 0.0:
+		character_sprite.play(&"hurt")
+	elif attack_animation_timer > 0.0:
+		character_sprite.play(&"attack")
+	else:
+		character_sprite.play(&"idle")
 
 func _draw() -> void:
 	if is_instance_valid(character_sprite) and character_sprite.sprite_frames != null:

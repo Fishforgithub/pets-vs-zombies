@@ -20,6 +20,9 @@ func _run() -> void:
 	var player := main.player as PlayerGirl
 	var pet := main.pet as PetCompanion
 	_check(player.is_on_floor(), "Player starts on the stage floor")
+	_check(main.production_background_active, "Production city background loads")
+	_check(main.ground_tiles_texture != null, "Production ground tiles load")
+	_check(main.get_node_or_null("ProductionBackground") is Parallax2D, "Production parallax layer is active")
 
 	var start_x := player.global_position.x
 	Input.action_press("move_right")

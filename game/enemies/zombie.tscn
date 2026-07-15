@@ -1,14 +1,51 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=9 format=3]
 
 [ext_resource type="Script" path="res://game/enemies/zombie.gd" id="1"]
 [ext_resource type="Texture2D" path="res://assets/enemies/courier_zombie/idle.png" id="2"]
+[ext_resource type="Texture2D" path="res://assets/enemies/courier_zombie/action_sheet.png" id="3"]
 
 [sub_resource type="CapsuleShape2D" id="1"]
 radius = 13.0
 height = 61.0
 
+[sub_resource type="AtlasTexture" id="3"]
+atlas = ExtResource("3")
+region = Rect2(0, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="4"]
+atlas = ExtResource("3")
+region = Rect2(256, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="5"]
+atlas = ExtResource("3")
+region = Rect2(512, 0, 256, 256)
+
 [sub_resource type="SpriteFrames" id="2"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("3")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("5")
+}],
+"loop": false,
+"name": &"faint",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("4")
+}],
+"loop": false,
+"name": &"hurt",
+"speed": 1.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("2")

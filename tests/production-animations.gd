@@ -70,7 +70,19 @@ func _run() -> void:
 		var zombie := zombie_scene.instantiate() as ZombieEnemy
 		host.add_child(zombie)
 		await process_frame
-		_check_single_frame_animation(zombie.character_sprite.sprite_frames, &"idle")
+		for animation_name in [&"idle", &"attack", &"hurt", &"faint"]:
+			_check_single_frame_animation(zombie.character_sprite.sprite_frames, animation_name)
+		zombie.attack_animation_timer = zombie.attack_animation_duration
+		zombie._update_animation()
+		_check(zombie.character_sprite.animation == &"attack", "Zombie attack timer plays attack animation")
+		zombie.take_damage(1)
+		zombie._update_animation()
+		_check(zombie.character_sprite.animation == &"hurt", "Zombie damage plays hurt animation")
+		zombie.take_damage(zombie.health)
+		_check(zombie.is_dead, "Lethal zombie damage starts faint state")
+		_check(zombie.character_sprite.animation == &"faint", "Lethal zombie damage plays faint animation")
+		await physics_frame
+		_check(is_instance_valid(zombie), "Zombie remains briefly for faint presentation")
 		zombie.queue_free()
 
 	host.queue_free()

@@ -10,7 +10,8 @@ The repository contains a playable vertical-slice prototype with production char
 - mouse aiming, shooting, and timed reload behavior
 - complete girl state set: idle, run, jump, fall, crouch, fire, reload, hurt, and faint
 - autonomous pet follow and auto-attack
-- pursuing zombies with contact attacks and an approved courier-zombie idle sprite
+- pursuing zombies with approved courier-zombie idle and action sprites
+- approved stage-one city background and street ground tiles with procedural fallbacks
 - health, ammunition, defeat, and stage-clear UI
 
 Procedural drawing remains as a fallback while production pet, enemy, effects, and environment art continues to arrive.
