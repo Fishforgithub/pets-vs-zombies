@@ -55,8 +55,9 @@ Boss frame cells are `512 x 512`, not the normal `256 x 256`. The authored direc
 |---|---|---|---|
 | `assets/bosses/stage1_foreman/idle.png` | 1 x 1, 512 x 512 | `idle` identity anchor | Static until an approved idle animation is available |
 | `assets/bosses/stage1_foreman/walk_sheet.png` | 2 x 2, 4 frames of 512 x 512 | `walk` heavy stomp frames 0–3 | Loop, 6 FPS |
+| `assets/bosses/stage1_foreman/sweep_sheet.png` | 2 x 2, 4 frames of 512 x 512 | `sweep`: wind-up, early swing, active sweep, recovery | One shot, 7 FPS; enable hammer hitbox only on frame index 2 |
 
-Use separate authored shapes for the boss body, vulnerable area, and road-barrier hammer. Never include the extended hammer in the persistent body hurtbox. Activate weapon hitboxes only during documented attack windows. Preserve the bottom-center pivot when switching animations so the large sprite does not jump vertically.
+Use separate authored shapes for the boss body, vulnerable area, and road-barrier hammer. Never include the extended hammer in the persistent body hurtbox. Activate weapon hitboxes only during documented attack windows. For `sweep`, frame index 2 owns the wide leftward attack area; frames 0, 1, and 3 must not damage the player. Preserve the bottom-center pivot when switching animations so the large sprite does not jump vertically.
 
 ## Stage 1 environment
 
