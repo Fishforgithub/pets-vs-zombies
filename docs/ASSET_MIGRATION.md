@@ -41,6 +41,7 @@ The source repository `Fishforgithub/tea-line-bot` is read-only. Copy only appro
 | `assets/bosses/stage1_foreman/walk_sheet.png` | Four-frame generation derived from the Undead Foreman identity anchor | Approved; 2×2 heavy-walk sheet of 512×512 cells |
 | `assets/bosses/stage1_foreman/sweep_sheet.png` | Four-frame generation derived from the Undead Foreman identity anchor | Approved; 2×2 horizontal-sweep sheet of 512×512 cells |
 | `assets/bosses/stage1_foreman/slam_sheet.png` | Four-frame generation derived from the Undead Foreman identity anchor | Approved; 2×2 ground-slam sheet of 512×512 cells |
+| `assets/bosses/stage1_foreman/reaction_sheet.png` | Four-pose generation derived from the Undead Foreman identity anchor | Approved; 2×2 hurt, rage, stunned, and defeated state sheet |
 | `assets/backgrounds/stage1/city_far.png` | Approved original project-specific Stage 1 background generation | Approved; 960×540 indexed-color opaque background |
 | `assets/tilesets/stage1/ground_tiles.png` | Approved original project-specific Stage 1 tile generation | Approved; four transparent 256×256 ground cells |
 | `assets/props/stage1/street_props.png` | Approved original project-specific Stage 1 prop generation | Approved; crate, cone, bags, and hydrant |
