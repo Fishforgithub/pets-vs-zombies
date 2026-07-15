@@ -27,5 +27,6 @@ The source repository `Fishforgithub/tea-line-bot` is read-only. Copy only appro
 | Target | Source | Status |
 |---|---|---|
 | `assets/characters/girl/girl_idle.png` | Approved project-specific image generation; pure-magenta source keyed to alpha with the standard image pipeline | Integrated as the human protagonist identity anchor |
+| `assets/characters/girl/girl_run_sheet.png` | Six-frame run-cycle generated from the approved identity anchor; keyed to alpha, normalized to six 256×256 cells | Integrated as the `run` animation at 10 FPS |
 
 No production assets have been copied from `tea-line-bot` yet.

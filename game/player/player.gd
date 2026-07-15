@@ -21,6 +21,8 @@ var fire_cooldown: float = 0.0
 var is_crouching: bool = false
 var is_dead: bool = false
 
+@onready var character_sprite: AnimatedSprite2D = $CharacterSprite
+
 func _ready() -> void:
 	health = max_health
 	ammo = magazine_size
@@ -54,7 +56,19 @@ func _physics_process(delta: float) -> void:
 		reload()
 
 	move_and_slide()
+	_update_animation(axis)
 	queue_redraw()
+
+func _update_animation(move_axis: float) -> void:
+	if not is_instance_valid(character_sprite):
+		return
+	character_sprite.flip_h = aim_direction.x < 0.0
+	if is_dead:
+		character_sprite.pause()
+	elif is_on_floor() and absf(move_axis) > 0.05 and not is_crouching:
+		character_sprite.play(&"run")
+	else:
+		character_sprite.play(&"idle")
 
 func _try_fire() -> void:
 	if fire_cooldown > 0.0:
@@ -86,12 +100,14 @@ func take_damage(amount: int, knockback_direction: Vector2 = Vector2.ZERO) -> vo
 	if health <= 0:
 		is_dead = true
 		velocity = Vector2.ZERO
+		if is_instance_valid(character_sprite):
+			character_sprite.pause()
 		died.emit()
 	queue_redraw()
 
 func _draw() -> void:
-	var production_sprite := get_node_or_null("CharacterSprite") as Sprite2D
-	if is_instance_valid(production_sprite) and production_sprite.texture != null:
+	var production_sprite := get_node_or_null("CharacterSprite") as AnimatedSprite2D
+	if is_instance_valid(production_sprite) and production_sprite.sprite_frames != null:
 		return
 	# Temporary code-drawn pixel character. Production art will replace this.
 	var crouch_offset := 9.0 if is_crouching else 0.0
