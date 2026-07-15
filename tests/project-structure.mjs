@@ -10,6 +10,8 @@ const requiredFiles = [
   'docs/ART_DIRECTION.md',
   'docs/ASSET_MIGRATION.md',
   'docs/ART_ASSET_MANIFEST.md',
+  'docs/ART_REQUEST_QUEUE.md',
+  'docs/STAGE_1_PLAN.md',
   'assets/props/stage1/street_props.png',
   'assets/props/stage1/crate_break_sheet.png',
   'assets/items/pickups.png',
@@ -72,13 +74,16 @@ async function walk(directory) {
 for (const file of await walk(root)) {
   if (!textExtensions.has(path.extname(file))) continue;
   const content = await readFile(file, 'utf8');
-  const matches = content.matchAll(/res:\/\/([^"')\s]+)/g);
-  for (const match of matches) {
-    const referenced = path.join(root, match[1]);
-    try {
-      await access(referenced);
-    } catch {
-      errors.push(`${path.relative(root, file)} references missing ${match[0]}`);
+  const relativeFile = path.relative(root, file).replaceAll('\\', '/');
+  if (relativeFile !== 'docs/ART_REQUEST_QUEUE.md') {
+    const matches = content.matchAll(/res:\/\/([^"')\s]+)/g);
+    for (const match of matches) {
+      const referenced = path.join(root, match[1]);
+      try {
+        await access(referenced);
+      } catch {
+        errors.push(`${path.relative(root, file)} references missing ${match[0]}`);
+      }
     }
   }
   if (/OPENAI_API_KEY\s*=\s*[^\s<]/.test(content)) {
