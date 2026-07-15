@@ -41,6 +41,7 @@ The source repository `Fishforgithub/tea-line-bot` is read-only. Copy only appro
 | `assets/items/pickups.png` | Approved four-cell gameplay pickup sheet from `agent/art-production` commit `accee79` | Imported and reserved for the pickup system |
 | `assets/vfx/combat_effects.png` | Approved four-cell combat effect sheet from `agent/art-production` commit `956a2f9` | Imported and reserved for runtime combat effects |
 | `assets/enemies/umbrella_zombie/idle.png` | Approved umbrella commuter zombie idle sprite from `agent/art-production` commit `cc2f4d7` | Imported and reserved for the next enemy variant |
+| `assets/enemies/umbrella_zombie/walk_sheet.png` | Approved six-frame shield-walk sheet from `agent/art-production` commit `f940a94`; 3x2 cells at 256x256 | Imported and reserved for the umbrella zombie enemy scene |
 
 No production assets have been copied from `tea-line-bot` yet.
 
