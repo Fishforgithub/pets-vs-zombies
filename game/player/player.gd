@@ -65,6 +65,8 @@ func _update_animation(move_axis: float) -> void:
 	character_sprite.flip_h = aim_direction.x < 0.0
 	if is_dead:
 		character_sprite.pause()
+	elif not is_on_floor():
+		character_sprite.play(&"jump" if velocity.y < 0.0 else &"fall")
 	elif is_on_floor() and absf(move_axis) > 0.05 and not is_crouching:
 		character_sprite.play(&"run")
 	else:

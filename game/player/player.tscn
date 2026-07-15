@@ -1,8 +1,9 @@
-[gd_scene load_steps=12 format=3]
+[gd_scene load_steps=15 format=3]
 
 [ext_resource type="Script" path="res://game/player/player.gd" id="1"]
 [ext_resource type="Texture2D" path="res://assets/characters/girl/girl_idle.png" id="2"]
 [ext_resource type="Texture2D" path="res://assets/characters/girl/girl_run_sheet.png" id="3"]
+[ext_resource type="Texture2D" path="res://assets/characters/girl/girl_air_sheet.png" id="4"]
 
 [sub_resource type="CapsuleShape2D" id="1"]
 radius = 11.0
@@ -32,8 +33,24 @@ region = Rect2(256, 256, 256, 256)
 atlas = ExtResource("3")
 region = Rect2(512, 256, 256, 256)
 
+[sub_resource type="AtlasTexture" id="9"]
+atlas = ExtResource("4")
+region = Rect2(0, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="10"]
+atlas = ExtResource("4")
+region = Rect2(256, 0, 256, 256)
+
 [sub_resource type="SpriteFrames" id="8"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("10")
+}],
+"loop": true,
+"name": &"fall",
+"speed": 1.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("2")
@@ -41,6 +58,14 @@ animations = [{
 "loop": true,
 "name": &"idle",
 "speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("9")
+}],
+"loop": true,
+"name": &"jump",
+"speed": 1.0
 }, {
 "frames": [{
 "duration": 1.0,
