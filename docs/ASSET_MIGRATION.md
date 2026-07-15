@@ -36,6 +36,7 @@ The source repository `Fishforgithub/tea-line-bot` is read-only. Copy only appro
 | `assets/enemies/courier_zombie/walk_sheet.png` | Six-frame generation derived from the courier zombie identity anchor | Approved; 3×2 sheet of 256×256 cells |
 | `assets/enemies/courier_zombie/action_sheet.png` | Three-pose generation derived from the courier zombie identity anchor | Approved; attack, hurt, and faint |
 | `assets/enemies/umbrella_zombie/idle.png` | Approved original project-specific shield-enemy generation | Approved; 256×256 transparent identity anchor |
+| `assets/enemies/umbrella_zombie/walk_sheet.png` | Six-frame generation derived from the umbrella zombie identity anchor | Approved; 3×2 shield-walk sheet of 256×256 cells |
 | `assets/backgrounds/stage1/city_far.png` | Approved original project-specific Stage 1 background generation | Approved; 960×540 indexed-color opaque background |
 | `assets/tilesets/stage1/ground_tiles.png` | Approved original project-specific Stage 1 tile generation | Approved; four transparent 256×256 ground cells |
 | `assets/props/stage1/street_props.png` | Approved original project-specific Stage 1 prop generation | Approved; crate, cone, bags, and hydrant |

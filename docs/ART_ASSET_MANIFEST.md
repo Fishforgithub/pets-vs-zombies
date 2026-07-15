@@ -43,8 +43,9 @@ The authored direction is left-facing. Display as-is when the shield faces left;
 | Asset | Grid / order | Runtime mapping | Playback |
 |---|---|---|---|
 | `assets/enemies/umbrella_zombie/idle.png` | 1 x 1 | `idle` / shield stance | Static or subtle procedural bob |
+| `assets/enemies/umbrella_zombie/walk_sheet.png` | 3 x 2, 6 frames | `walk` / shield-walk frames 0–5 | Loop, 8 FPS |
 
-Suggested runtime nodes: one body hurtbox plus a separate forward `Area2D` shield collider. Front-facing bullets should be blocked/deflected by the shield; rear hits and pet attacks can bypass or damage it according to gameplay tuning.
+Suggested runtime nodes: one body hurtbox plus a separate forward `Area2D` shield collider. Front-facing bullets should be blocked/deflected by the shield; rear hits and pet attacks can bypass or damage it according to gameplay tuning. Keep the shield collider active and in the same forward offset throughout all six walk frames; do not derive its position from changing opaque pixels.
 
 ## Stage 1 environment
 
