@@ -21,6 +21,8 @@ Build an original 2D side-scrolling run-and-gun game in Godot 4. The player cont
 - Player, pet, enemies, projectiles, and UI must remain independently testable scenes.
 - The game must remain playable with procedural placeholder art when production art is absent.
 - New production dependencies require an explanation in the PR.
+- Before wiring or replacing production art, read `docs/ART_ASSET_MANIFEST.md` and follow its frame order, animation names, facing rules, pivots, and import settings.
+- Treat `docs/ART_ASSET_MANIFEST.md` as the runtime handoff contract between the art-production branch and Godot implementation. Update it whenever an approved asset is added or its layout changes.
 
 ## Verification
 
@@ -30,5 +32,5 @@ Before considering work complete:
 2. Confirm `project.godot` points to a valid main scene.
 3. Confirm no source API keys or LIFF secrets are committed.
 4. Confirm all imported source assets are recorded in `docs/ASSET_MIGRATION.md`.
-5. Manually verify movement, jump, firing, pet follow, pet auto-attack, damage, death, and stage completion.
-
+5. Confirm every production image used by the game is described in `docs/ART_ASSET_MANIFEST.md`.
+6. Manually verify movement, jump, firing, pet follow, pet auto-attack, damage, death, and stage completion.
