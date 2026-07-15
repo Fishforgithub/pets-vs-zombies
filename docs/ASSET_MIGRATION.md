@@ -29,5 +29,18 @@ The source repository `Fishforgithub/tea-line-bot` is read-only. Copy only appro
 | `assets/characters/girl/girl_idle.png` | Approved project-specific image generation; pure-magenta source keyed to alpha with the standard image pipeline | Integrated as the human protagonist identity anchor |
 | `assets/characters/girl/girl_run_sheet.png` | Six-frame run-cycle generated from the approved identity anchor; keyed to alpha, normalized to six 256×256 cells | Integrated as the `run` animation at 10 FPS |
 | `assets/characters/girl/girl_air_sheet.png` | Two-frame airborne sheet generated from the approved identity anchor; keyed to alpha and normalized to two 256×256 cells | Integrated as velocity-driven `jump` and `fall` states |
+| `assets/characters/girl/girl_crouch.png` | Approved project-specific generation derived from the girl identity anchor | Approved; 256×256 transparent crouch pose |
+| `assets/characters/girl/girl_combat_sheet.png` | Approved project-specific generation derived from the girl identity anchor | Approved; two 256×256 cells for fire and reload |
+| `assets/characters/girl/girl_damage_sheet.png` | Approved project-specific generation derived from the girl identity anchor | Approved; two 256×256 cells for hurt and faint |
+| `assets/enemies/courier_zombie/idle.png` | Approved original project-specific enemy generation | Approved; 256×256 transparent identity anchor |
+| `assets/enemies/courier_zombie/walk_sheet.png` | Six-frame generation derived from the courier zombie identity anchor | Approved; 3×2 sheet of 256×256 cells |
+| `assets/enemies/courier_zombie/action_sheet.png` | Three-pose generation derived from the courier zombie identity anchor | Approved; attack, hurt, and faint |
+| `assets/enemies/umbrella_zombie/idle.png` | Approved original project-specific shield-enemy generation | Approved; 256×256 transparent identity anchor |
+| `assets/backgrounds/stage1/city_far.png` | Approved original project-specific Stage 1 background generation | Approved; 960×540 indexed-color opaque background |
+| `assets/tilesets/stage1/ground_tiles.png` | Approved original project-specific Stage 1 tile generation | Approved; four transparent 256×256 ground cells |
+| `assets/props/stage1/street_props.png` | Approved original project-specific Stage 1 prop generation | Approved; crate, cone, bags, and hydrant |
+| `assets/props/stage1/crate_break_sheet.png` | Approved generation derived from the Stage 1 crate | Approved; three 256×256 break states |
+| `assets/items/pickups.png` | Approved original project-specific pickup generation | Approved; four 256×256 pickup cells |
+| `assets/vfx/combat_effects.png` | Approved original project-specific VFX generation | Approved; four 256×256 single-frame effects |
 
 No production assets have been copied from `tea-line-bot` yet.
