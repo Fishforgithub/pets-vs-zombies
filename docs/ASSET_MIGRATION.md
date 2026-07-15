@@ -43,6 +43,7 @@ The source repository `Fishforgithub/tea-line-bot` is read-only. Copy only appro
 | `assets/enemies/umbrella_zombie/idle.png` | Approved umbrella commuter zombie idle sprite from `agent/art-production` commit `cc2f4d7` | Imported and reserved for the next enemy variant |
 | `assets/enemies/umbrella_zombie/walk_sheet.png` | Approved six-frame shield-walk sheet from `agent/art-production` commit `f940a94`; 3x2 cells at 256x256 | Imported and reserved for the umbrella zombie enemy scene |
 | `assets/bosses/stage1_foreman/idle.png` | Approved Stage 1 boss identity anchor from `agent/art-production` commit `05449ea`; 512x512 with bottom-center pivot | Imported for the independently testable Undead Foreman boss scene |
+| `assets/bosses/stage1_foreman/walk_sheet.png` | Approved four-frame heavy walk from `agent/art-production` commit `6ca9d39`; 2x2 cells at 512x512 | Imported for the Undead Foreman `walk` animation |
 
 No production assets have been copied from `tea-line-bot` yet.
 
