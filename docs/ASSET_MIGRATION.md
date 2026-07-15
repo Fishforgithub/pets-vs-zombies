@@ -36,7 +36,12 @@ The source repository `Fishforgithub/tea-line-bot` is read-only. Copy only appro
 | `assets/enemies/courier_zombie/action_sheet.png` | Approved three-cell courier zombie action sheet from `agent/art-production` commit `f6420cd`; cells normalized to the standard feet baseline | Integrated as `attack`, `hurt`, and delayed-removal `faint` states |
 | `assets/backgrounds/stage1/city_far.png` | Approved stage-one city background from `agent/art-production` commit `01a0346` | Integrated as a repeating far-background layer with procedural fallback |
 | `assets/tilesets/stage1/ground_tiles.png` | Approved four-cell street ground strip from `agent/art-production` commit `56fe0dc` | Integrated across the stage floor with procedural fallback |
+| `assets/props/stage1/street_props.png` | Approved four-cell street prop sheet from `agent/art-production` commit `743c4bd` | Imported and available for stage-one scene dressing |
+| `assets/props/stage1/crate_break_sheet.png` | Approved three-cell breakable crate sheet from `agent/art-production` commit `dfd5e70` | Imported and reserved for the breakable-prop system |
+| `assets/items/pickups.png` | Approved four-cell gameplay pickup sheet from `agent/art-production` commit `accee79` | Imported and reserved for the pickup system |
+| `assets/vfx/combat_effects.png` | Approved four-cell combat effect sheet from `agent/art-production` commit `956a2f9` | Imported and reserved for runtime combat effects |
+| `assets/enemies/umbrella_zombie/idle.png` | Approved umbrella commuter zombie idle sprite from `agent/art-production` commit `cc2f4d7` | Imported and reserved for the next enemy variant |
 
 No production assets have been copied from `tea-line-bot` yet.
 
-> Note: `agent/art-production` commit `2641241` was not integrated because `walk_sheet.png` is not a valid PNG blob. The authoritative art branch retains it pending replacement.
+> Note: `agent/art-production` commit `2641241` was not integrated because `walk_sheet.png` is not a valid PNG blob. A fresh remote audit on 2026-07-15 confirmed the blob is still corrupt; the authoritative art branch retains it pending replacement.

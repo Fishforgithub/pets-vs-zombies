@@ -9,6 +9,10 @@ const requiredFiles = [
   'docs/GAME_DESIGN.md',
   'docs/ART_DIRECTION.md',
   'docs/ASSET_MIGRATION.md',
+  'docs/WEB_DEPLOYMENT.md',
+  'export_presets.cfg',
+  'wrangler.jsonc',
+  'deploy/cloudflare-worker.js',
   'game/main/main.tscn',
   'game/main/main.gd',
   'game/player/player.tscn',
@@ -41,6 +45,10 @@ if (!project.includes('run/main_scene="res://game/main/main.tscn"')) {
   errors.push('project.godot does not point to the expected main scene.');
 }
 
+const exportPresets = await readFile(path.join(root, 'export_presets.cfg'), 'utf8');
+if (!exportPresets.includes('platform="Web"') || !exportPresets.includes('variant/thread_support=false')) {
+  errors.push('export_presets.cfg must define a single-threaded Web export.');
+}
 const textExtensions = new Set(['.gd', '.tscn', '.godot', '.md', '.json', '.mjs']);
 async function walk(directory) {
   const entries = await readdir(directory, { withFileTypes: true });
