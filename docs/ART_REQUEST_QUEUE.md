@@ -78,6 +78,35 @@ Request IDs use `AR-YYYYMMDD-NNN`. Allowed states are `queued`, `approved`, `in-
   - No baked text, prices, currency values, item names, characters, pets, or copyrighted marks.
   - Unused pixels are transparent; filtering and mipmaps can remain disabled without seams.
 
+### AR-20260716-005 — Normalize Foreman animation cells
+
+- Status: `queued`
+- Screen use: Repair the Stage 1 Undead Foreman during walk, sweep, slam, hurt, rage, stunned, and defeated presentation. Current 2 x 2 sheets place opaque pixels across 512 px cell boundaries, causing a clipped hammer/body edge in one frame and detached fragments from the adjacent frame in another.
+- Godot node: `AnimatedSprite2D` at `ForemanBoss/CharacterSprite` in `game/bosses/foreman_boss.tscn`.
+- Output paths:
+  - `res://assets/bosses/stage1_foreman/walk_sheet.png`
+  - `res://assets/bosses/stage1_foreman/sweep_sheet.png`
+  - `res://assets/bosses/stage1_foreman/slam_sheet.png`
+  - `res://assets/bosses/stage1_foreman/reaction_sheet.png`
+- Pixel dimensions: Each output remains exactly 1024 x 1024 pixels; every frame remains exactly 512 x 512 pixels.
+- Grid / slicing:
+  - All four outputs remain 2 x 2 and read left-to-right, then top-to-bottom.
+  - `walk_sheet.png`: walk frames 0–3.
+  - `sweep_sheet.png`: wind-up, early swing, active sweep, recovery.
+  - `slam_sheet.png`: high wind-up, downward swing, ground impact, recovery.
+  - `reaction_sheet.png`: hurt, rage, stunned, defeated.
+- Interaction states: `walk`, `sweep`, `slam`, `hurt`, `rage`, `stunned`, and `defeated`; do not add, remove, or reorder states.
+- Nine-patch borders: N/A — non-resizable character sprites.
+- Acceptance criteria:
+  - Every file decodes as a valid lossless 1024 x 1024 PNG with alpha and exactly four 512 x 512 cells.
+  - Preserve the approved Foreman identity, pose intent, authored left-facing direction, palette, equipment, and road-barrier hammer design; this is cell normalization, not a redesign.
+  - Reconstruct and recenter each complete pose inside its own cell. No body, hammer, pouch, debris, or motion accent may be clipped by or borrowed from a neighboring cell.
+  - Every cell has at least 8 transparent pixels on all four edges; no connected opaque component crosses x=512 or y=512 in the complete sheet.
+  - Remove detached adjacent-frame fragments. Intentional sweep trails and slam debris remain only in their owning frame and stay inside that frame.
+  - Keep a stable bottom-center pivot and feet baseline when Godot switches frames; the character occupies no more than 85% of each 512 x 512 cell.
+  - Frame order and attack timing remain compatible with the existing frame-2 sweep hitbox and frame-2 slam/shockwave event.
+  - Provide a four-sheet contact sheet for explicit user visual approval before committing replacement production PNGs.
+
 ## Request template
 
 ### AR-YYYYMMDD-NNN — Short name

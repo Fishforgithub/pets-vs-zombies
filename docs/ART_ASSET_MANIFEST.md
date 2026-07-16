@@ -52,6 +52,8 @@ Suggested runtime nodes: one body hurtbox plus a separate forward `Area2D` shiel
 
 Boss frame cells are `512 x 512`, not the normal `256 x 256`. The authored direction is left-facing. Mirror the complete boss and every authored attack collider together when facing right.
 
+Known delivery defect: the current four multi-frame sheets contain opaque content crossing their 512 px cell boundaries, which produces clipping and adjacent-frame fragments under the exact atlas regions below. Request `AR-20260716-005` must normalize the cells without changing these runtime regions, frame orders, pivots, or attack timings. Replacement Boss imagery still requires explicit user visual approval.
+
 | Asset | Grid / order | Runtime mapping | Playback |
 |---|---|---|---|
 | `assets/bosses/stage1_foreman/idle.png` | 1 x 1, 512 x 512 | `idle` identity anchor | Static until an approved idle animation is available |
