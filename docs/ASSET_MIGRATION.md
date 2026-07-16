@@ -54,6 +54,7 @@ The source repository `Fishforgithub/tea-line-bot` is read-only. Copy only appro
 | `assets/enemies/wheelchair_zombie/roll_sheet.png` | Corrected six-frame generation derived from the approved wheelchair-zombie identity anchor | User-approved; normalized 3×2 rolling loop with wheel marker, suspension phases, and intact shield in every frame |
 | `assets/enemies/wheelchair_zombie/action_sheet.png` | Four-pose generation derived from the approved wheelchair-zombie identity anchor | User-approved; charge, hurt, stunned, and safely defeated 256×256 transparent cells |
 | `assets/bosses/stage2_chief_surgeon/idle.png` | Approved original Stage 2 boss generation | User-approved; normalized 512×512 transparent Undead Chief Surgeon identity anchor with operating-lamp/IV-stand heavy weapon |
+| `assets/bosses/stage2_chief_surgeon/walk_sheet.png` | Four-frame generation derived from the approved Chief Surgeon identity anchor | User-approved; normalized 2×2 heavy locomotion loop of 512×512 transparent cells |
 | `assets/bosses/stage1_foreman/idle.png` | Approved original Stage 1 boss generation | Approved; 512×512 transparent Undead Foreman identity anchor |
 | `assets/bosses/stage1_foreman/walk_sheet.png` | Four-frame generation derived from the Undead Foreman identity anchor | Approved; 2×2 heavy-walk sheet of 512×512 cells |
 | `assets/bosses/stage1_foreman/sweep_sheet.png` | Four-frame generation derived from the Undead Foreman identity anchor | Approved; 2×2 horizontal-sweep sheet of 512×512 cells |
