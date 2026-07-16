@@ -24,7 +24,7 @@ Stage 1 is complete when the player can finish five escalating waves, defeat the
 - [x] Add enemy XP/currency rewards and player progression state.
 - [x] Add weapon and pet-skill upgrade data models.
 - [x] Add Stage 1 reward result and next-stage card placeholder.
-- [ ] Re-run all checks, export Web release, deploy, and verify the public URL.
+- [x] Re-run all checks, export Web release, deploy, and verify the public URL.
 
 ## Default wave tuning
 

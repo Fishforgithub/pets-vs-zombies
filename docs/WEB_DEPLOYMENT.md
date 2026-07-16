@@ -40,3 +40,12 @@ wrangler deploy
 ```
 
 The Worker maps `/` to OCI's `index.html`, serves all game files from the same public origin, and applies explicit content types and cache headers.
+
+## Latest verified release
+
+- Release header: `2026-07-16.1`
+- Cloudflare Worker Version ID: `e64950c0-2120-482a-9a11-6f60de1ca9a9`
+- Verified on: 2026-07-16 (Asia/Taipei)
+- Public checks: HTML, JavaScript, PCK, and WASM returned HTTP 200 with their expected MIME types.
+- Exported PCK size: 1,535,124 bytes.
+- WASM header: `00 61 73 6D 01 00 00 00`.

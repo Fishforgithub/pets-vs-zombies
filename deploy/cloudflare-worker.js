@@ -43,7 +43,7 @@ export default {
     const headers = new Headers(upstream.headers);
     headers.set("Content-Type", contentTypeFor(pathname));
     headers.set("X-Content-Type-Options", "nosniff");
-    headers.set("X-PVZ-Release", "2026-07-15.2");
+    headers.set("X-PVZ-Release", "2026-07-16.1");
     headers.set(
       "Cache-Control",
       pathname.endsWith(".html") || pathname.endsWith(".pck")
