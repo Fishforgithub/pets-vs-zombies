@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3]
+[gd_scene load_steps=16 format=3]
 
 [ext_resource type="Script" path="res://game/enemies/zombie.gd" id="1"]
 [ext_resource type="Texture2D" path="res://assets/enemies/courier_zombie/idle.png" id="2"]
 [ext_resource type="Texture2D" path="res://assets/enemies/courier_zombie/action_sheet.png" id="3"]
+[ext_resource type="Texture2D" path="res://assets/enemies/courier_zombie/walk_sheet.png" id="4"]
 
 [sub_resource type="CapsuleShape2D" id="1"]
 radius = 13.0
@@ -19,6 +20,30 @@ region = Rect2(256, 0, 256, 256)
 [sub_resource type="AtlasTexture" id="5"]
 atlas = ExtResource("3")
 region = Rect2(512, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="6"]
+atlas = ExtResource("4")
+region = Rect2(0, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="7"]
+atlas = ExtResource("4")
+region = Rect2(256, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="8"]
+atlas = ExtResource("4")
+region = Rect2(512, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="9"]
+atlas = ExtResource("4")
+region = Rect2(0, 256, 256, 256)
+
+[sub_resource type="AtlasTexture" id="10"]
+atlas = ExtResource("4")
+region = Rect2(256, 256, 256, 256)
+
+[sub_resource type="AtlasTexture" id="11"]
+atlas = ExtResource("4")
+region = Rect2(512, 256, 256, 256)
 
 [sub_resource type="SpriteFrames" id="2"]
 animations = [{
@@ -53,6 +78,29 @@ animations = [{
 "loop": true,
 "name": &"idle",
 "speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("6")
+}, {
+"duration": 1.0,
+"texture": SubResource("7")
+}, {
+"duration": 1.0,
+"texture": SubResource("8")
+}, {
+"duration": 1.0,
+"texture": SubResource("9")
+}, {
+"duration": 1.0,
+"texture": SubResource("10")
+}, {
+"duration": 1.0,
+"texture": SubResource("11")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 8.0
 }]
 
 [node name="Zombie" type="CharacterBody2D"]

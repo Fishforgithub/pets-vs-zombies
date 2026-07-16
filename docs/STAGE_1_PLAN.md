@@ -16,7 +16,8 @@ Stage 1 is complete when the player can finish five escalating waves, defeat the
 - [x] HUD health, ammunition, result message, and simple objective count.
 - [x] Godot gameplay, animation, and crouch smoke tests.
 - [x] Godot Web export and OCI/Cloudflare deployment.
-- [ ] Integrate remote Foreman commits `05449ea`, `6ca9d39`, and `92a11e8`.
+- [x] Integrate the complete remote Foreman art set through `86fd34c`.
+- [x] Replace the truncated courier walk sheet with the valid `8912004` delivery.
 - [ ] Replace fixed five-enemy spawning with a five-wave director.
 - [ ] Add wave HUD, inter-wave transitions, and configurable spawn pacing.
 - [ ] Add a separately testable Foreman boss scene, boss health bar, and sweep attack.
@@ -46,6 +47,6 @@ These are data values, not hard-coded branches. They may be tuned without changi
 5. `ui: add Stage 1 results and next-stage card`
 6. `deploy: publish completed Stage 1 Web build`
 
-## Known asset exception
+## Asset status
 
-`assets/enemies/courier_zombie/walk_sheet.png` on the art-production branch remains an invalid PNG blob. Stage 1 must remain playable using the courier idle/action presentation until a valid replacement is delivered.
+Stage 1 has all production art required for the five courier waves and the initial Undead Foreman implementation. Optional UI decoration and a dedicated boss shockwave sheet do not block the playable milestone.

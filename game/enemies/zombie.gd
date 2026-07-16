@@ -92,6 +92,8 @@ func _update_animation() -> void:
 		character_sprite.play(&"hurt")
 	elif attack_animation_timer > 0.0:
 		character_sprite.play(&"attack")
+	elif absf(velocity.x) > 0.1:
+		character_sprite.play(&"walk")
 	else:
 		character_sprite.play(&"idle")
 

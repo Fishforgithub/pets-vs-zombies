@@ -71,7 +71,19 @@ func _run() -> void:
 		host.add_child(zombie)
 		await process_frame
 		for animation_name in [&"idle", &"attack", &"hurt", &"faint"]:
-			_check_single_frame_animation(zombie.character_sprite.sprite_frames, animation_name)
+			_check_single_frame_animation(zombie.character_sprite.sprite_frames, animation_name, false)
+		var zombie_frames := zombie.character_sprite.sprite_frames
+		_check(zombie_frames.has_animation(&"walk"), "walk animation exists")
+		if zombie_frames.has_animation(&"walk"):
+			_check(zombie_frames.get_frame_count(&"walk") == 6, "walk animation has six frames")
+			for frame_index in range(zombie_frames.get_frame_count(&"walk")):
+				var walk_texture := zombie_frames.get_frame_texture(&"walk", frame_index)
+				_check(walk_texture != null, "walk frame %d texture loads" % frame_index)
+				if walk_texture != null:
+					_check(walk_texture.get_size() == Vector2(256.0, 256.0), "walk frame %d is 256x256" % frame_index)
+		zombie.velocity.x = zombie.move_speed
+		zombie._update_animation()
+		_check(zombie.character_sprite.animation == &"walk", "Moving zombie plays walk animation")
 		zombie.attack_animation_timer = zombie.attack_animation_duration
 		zombie._update_animation()
 		_check(zombie.character_sprite.animation == &"attack", "Zombie attack timer plays attack animation")
@@ -88,7 +100,7 @@ func _run() -> void:
 	host.queue_free()
 	_finish()
 
-func _check_single_frame_animation(frames: SpriteFrames, animation_name: StringName) -> void:
+func _check_single_frame_animation(frames: SpriteFrames, animation_name: StringName, check_feet_baseline: bool = true) -> void:
 	_check(frames.has_animation(animation_name), "%s animation exists" % animation_name)
 	if not frames.has_animation(animation_name):
 		return
@@ -98,7 +110,8 @@ func _check_single_frame_animation(frames: SpriteFrames, animation_name: StringN
 	if texture == null:
 		return
 	_check(texture.get_size() == Vector2(256.0, 256.0), "%s texture is 256x256" % animation_name)
-	_check(texture.get_image().get_used_rect().end.y == 230, "%s art uses the standard feet baseline" % animation_name)
+	if check_feet_baseline:
+		_check(texture.get_image().get_used_rect().end.y == 230, "%s art uses the standard feet baseline" % animation_name)
 
 func _check(condition: bool, message: String) -> void:
 	if condition:
