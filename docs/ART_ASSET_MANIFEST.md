@@ -92,6 +92,16 @@ Keep a stable bottom-center pivot while the six-frame cycle alternates contact, 
 
 For `throw`, spawn one separate bandage projectile from the forward hand and enable projectile motion only after release. For `buff`, apply the ally effect once at the action event and render the larger range indicator as a separate VFX node; the small authored pulse only identifies the pose. `hurt` cancels throw/buff events. `defeated` permanently disables support logic, navigation, damage, and collision before holding the collapsed pose.
 
+### Zombie doctor
+
+The authored direction is left-facing. Display as-is while moving or attacking left and use `flip_h = true` for right-facing behavior. This is a rear-line electric controller: keep the body hitbox on the torso and exclude the forward paddle, cables, shoulder-mounted defibrillator box, clipped paddle, coat tails, and hair.
+
+| Asset | Grid / order | Runtime mapping | Playback |
+|---|---|---|---|
+| `assets/enemies/zombie_doctor/idle.png` | 1 x 1, 256 x 256 | identity anchor / electric-ready stance | Static until the approved walk cycle is available |
+
+The authored paddle spark is an identity cue only. Damage range, zap beam, hit timing, and status-control effects must use separate gameplay/VFX nodes. Preserve the crooked glasses, mismatched eyes, wild dark hair, cream coat, coral tie/armband, turquoise shirt, shoulder box, two paddles, and coiled cables across future animation sheets.
+
 ## Stage 1 boss: Undead Foreman
 
 Boss frame cells are `512 x 512`, not the normal `256 x 256`. The authored direction is left-facing. Mirror the complete boss and every authored attack collider together when facing right.
