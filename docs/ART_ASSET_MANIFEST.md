@@ -83,8 +83,11 @@ The authored direction is left-facing. Display as-is while moving or throwing le
 | Asset | Grid / order | Runtime mapping | Playback |
 |---|---|---|---|
 | `assets/enemies/zombie_nurse/idle.png` | 1 x 1, 256 x 256 | identity anchor / support-ready stance | Static until the approved walk cycle is available |
+| `assets/enemies/zombie_nurse/walk_sheet.png` | 3 x 2, 6 frames of 256 x 256 | `walk` shamble frames 0–5 | Loop, 8 FPS |
 
 Bandage projectiles and buff effects must be separate gameplay nodes; do not use the bandage pixels in this identity sprite as collision or projectile geometry. Preserve the mint cap, cream-and-mint tunic, coral bandage wraps, turquoise pouch, and three-roll loadout across future animation sheets.
+
+Keep a stable bottom-center pivot while the six-frame cycle alternates contact, down, and passing poses. The visible held roll and belt loadout are decorative during `walk`; throwing and ally-buff behavior must only start from their dedicated action states.
 
 ## Stage 1 boss: Undead Foreman
 
