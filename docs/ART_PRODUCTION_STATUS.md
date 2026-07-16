@@ -27,7 +27,7 @@ Stage 2 hospital character production is underway:
 - zombie nurse identity, corrected six-frame walk cycle, throw, ally-buff, hurt, and defeated states are delivered
 - zombie doctor identity, six-frame walk cycle, zap, hurt, and defeated states are delivered
 - wheelchair zombie identity, corrected six-frame roll cycle, charge, hurt, stunned, and defeated states are delivered
-- Chief Surgeon boss identity is the next character-art task
+- Chief Surgeon boss identity is delivered; locomotion and combat state production is underway
 
 ## Stage 1 boss completion
 
@@ -60,8 +60,8 @@ For complete asset paths, frame order, FPS, facing rules, pivots, collision guid
 
 1. Read any `ready` items added by Codex to `docs/ART_REQUEST_QUEUE.md`.
 2. Verify that Codex has integrated or cherry-picked the latest art branch before changing paths or layouts.
-3. Produce the Chief Surgeon boss identity with explicit user review.
-4. After identity approval, produce the boss locomotion and phase-one attack states.
+3. Produce the Chief Surgeon four-frame heavy locomotion cycle with explicit user review.
+4. Produce phase-one sweep and overhead-slam attacks after locomotion approval.
 5. Begin UI production only from a committed request that specifies Godot consumers, dimensions, states, and NinePatch margins.
 6. Keep all new character and creature image drafts out of Git until explicit user approval.
 
