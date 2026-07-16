@@ -1,0 +1,60 @@
+[gd_scene load_steps=9 format=3]
+
+[ext_resource type="Script" path="res://game/bosses/foreman_shockwave.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/vfx/foreman_shockwave.png" id="2"]
+
+[sub_resource type="RectangleShape2D" id="DamageShape"]
+size = Vector2(112, 38)
+
+[sub_resource type="AtlasTexture" id="Shockwave0"]
+atlas = ExtResource("2")
+region = Rect2(0, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="Shockwave1"]
+atlas = ExtResource("2")
+region = Rect2(256, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="Shockwave2"]
+atlas = ExtResource("2")
+region = Rect2(512, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="Shockwave3"]
+atlas = ExtResource("2")
+region = Rect2(768, 0, 256, 256)
+
+[sub_resource type="SpriteFrames" id="ShockwaveFrames"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Shockwave0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Shockwave1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Shockwave2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Shockwave3")
+}],
+"loop": false,
+"name": &"travel",
+"speed": 12.0
+}]
+
+[node name="ForemanShockwave" type="Area2D"]
+collision_layer = 0
+collision_mask = 2
+monitoring = true
+script = ExtResource("1")
+
+[node name="DamageCollision" type="CollisionShape2D" parent="."]
+position = Vector2(0, -24)
+shape = SubResource("DamageShape")
+disabled = true
+
+[node name="EffectSprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -42)
+scale = Vector2(0.6, 0.6)
+sprite_frames = SubResource("ShockwaveFrames")
+animation = &"travel"

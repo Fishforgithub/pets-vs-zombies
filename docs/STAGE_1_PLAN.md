@@ -21,6 +21,7 @@ Stage 1 is complete when the player can finish five escalating waves, defeat the
 - [x] Replace fixed five-enemy spawning with a five-wave director.
 - [x] Add wave HUD, inter-wave transitions, and configurable spawn pacing.
 - [x] Add a separately testable Foreman boss scene, boss health bar, and sweep attack.
+- [x] Add the Foreman ground slam, frame-gated local impact, and twin traveling shockwaves.
 - [x] Add enemy XP/currency rewards and player progression state.
 - [x] Add weapon and pet-skill upgrade data models.
 - [x] Add Stage 1 reward result and next-stage card placeholder.
@@ -49,4 +50,4 @@ These are data values, not hard-coded branches. They may be tuned without changi
 
 ## Asset status
 
-Stage 1 has all production art required for the five courier waves and the initial Undead Foreman implementation. Optional UI decoration and a dedicated boss shockwave sheet do not block the playable milestone.
+Stage 1 has all production art required for the five courier waves and the initial Undead Foreman implementation. The dedicated boss shockwave is integrated; optional result-screen UI decoration remains non-blocking while its requests are queued.

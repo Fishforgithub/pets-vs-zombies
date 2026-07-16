@@ -3,10 +3,14 @@ extends CharacterBody2D
 
 signal health_changed(current: int, maximum: int)
 signal defeated(boss: ForemanBoss)
+signal shockwave_spawned(shockwave: Area2D)
+
+const SHOCKWAVE_SCENE := preload("res://game/bosses/foreman_shockwave.tscn")
 
 enum State {
 	CHASE,
 	SWEEP,
+	SLAM,
 	HURT,
 	DEFEATED,
 }
@@ -16,6 +20,10 @@ enum State {
 @export var gravity: float = 1280.0
 @export var sweep_damage: int = 24
 @export var sweep_range: float = 145.0
+@export var slam_damage: int = 30
+@export var slam_range: float = 235.0
+@export var shockwave_damage: int = 18
+@export var shockwave_speed: float = 300.0
 @export var attack_interval: float = 1.25
 @export var hurt_duration: float = 0.18
 @export var defeat_delay: float = 0.9
@@ -29,6 +37,9 @@ var attack_cooldown: float = 0.45
 var hurt_timer: float = 0.0
 var facing_direction: float = -1.0
 var sweep_targets_hit: Dictionary = {}
+var slam_targets_hit: Dictionary = {}
+var slam_impact_emitted: bool = false
+var use_slam_next: bool = false
 var defeat_emitted: bool = false
 
 @onready var body_collision: CollisionShape2D = $BodyCollision
@@ -36,6 +47,8 @@ var defeat_emitted: bool = false
 @onready var vulnerable_collision: CollisionShape2D = $VulnerableArea/VulnerableCollision
 @onready var sweep_area: Area2D = $SweepArea
 @onready var sweep_collision: CollisionShape2D = $SweepArea/SweepCollision
+@onready var slam_area: Area2D = $SlamArea
+@onready var slam_collision: CollisionShape2D = $SlamArea/SlamCollision
 @onready var character_sprite: AnimatedSprite2D = $CharacterSprite
 
 func _ready() -> void:
@@ -44,6 +57,7 @@ func _ready() -> void:
 	character_sprite.animation_finished.connect(_on_animation_finished)
 	character_sprite.frame_changed.connect(_on_animation_frame_changed)
 	sweep_area.body_entered.connect(_on_sweep_body_entered)
+	slam_area.body_entered.connect(_on_slam_body_entered)
 	health_changed.emit(health, max_health)
 	character_sprite.play(&"idle")
 
@@ -60,7 +74,7 @@ func _physics_process(delta: float) -> void:
 	if is_instance_valid(target):
 		_update_facing(target.global_position.x - global_position.x)
 
-	if state == State.SWEEP:
+	if state == State.SWEEP or state == State.SLAM:
 		velocity.x = 0.0
 		move_and_slide()
 		return
@@ -79,7 +93,9 @@ func _physics_process(delta: float) -> void:
 		return
 
 	var distance_x := target.global_position.x - global_position.x
-	if absf(distance_x) <= sweep_range and attack_cooldown <= 0.0:
+	if attack_cooldown <= 0.0 and use_slam_next and absf(distance_x) <= slam_range:
+		_start_slam()
+	elif attack_cooldown <= 0.0 and absf(distance_x) <= sweep_range:
 		_start_sweep()
 	elif absf(distance_x) > sweep_range * 0.72:
 		velocity.x = signf(distance_x) * move_speed
@@ -104,10 +120,20 @@ func take_damage(amount: int, knockback_direction: Vector2 = Vector2.ZERO) -> vo
 
 func _start_sweep() -> void:
 	state = State.SWEEP
+	use_slam_next = true
 	velocity.x = 0.0
 	sweep_targets_hit.clear()
 	_set_sweep_active(false)
 	character_sprite.play(&"sweep")
+
+func _start_slam() -> void:
+	state = State.SLAM
+	use_slam_next = false
+	velocity.x = 0.0
+	slam_targets_hit.clear()
+	slam_impact_emitted = false
+	_set_slam_active(false)
+	character_sprite.play(&"slam")
 
 func _update_facing(distance_x: float) -> void:
 	if absf(distance_x) <= 0.1:
@@ -115,17 +141,24 @@ func _update_facing(distance_x: float) -> void:
 	facing_direction = 1.0 if distance_x > 0.0 else -1.0
 	character_sprite.flip_h = facing_direction > 0.0
 	sweep_area.position.x = 92.0 * facing_direction
+	slam_area.position.x = 58.0 * facing_direction
 
 func _on_animation_frame_changed() -> void:
 	var sweep_is_active := state == State.SWEEP and character_sprite.animation == &"sweep" and character_sprite.frame == 2
 	_set_sweep_active(sweep_is_active)
 	if sweep_is_active:
 		call_deferred("_damage_overlapping_sweep_targets")
+	var slam_is_active := state == State.SLAM and character_sprite.animation == &"slam" and character_sprite.frame == 2
+	_set_slam_active(slam_is_active)
+	if slam_is_active and not slam_impact_emitted:
+		slam_impact_emitted = true
+		call_deferred("_resolve_slam_impact")
 
 func _on_animation_finished() -> void:
-	if state != State.SWEEP or character_sprite.animation != &"sweep":
+	if state != State.SWEEP and state != State.SLAM:
 		return
 	_set_sweep_active(false)
+	_set_slam_active(false)
 	state = State.CHASE
 	attack_cooldown = attack_interval
 	character_sprite.play(&"idle")
@@ -134,6 +167,26 @@ func _set_sweep_active(active: bool) -> void:
 	sweep_collision.set_deferred("disabled", not active)
 	if not active:
 		sweep_targets_hit.clear()
+
+func _set_slam_active(active: bool) -> void:
+	slam_collision.set_deferred("disabled", not active)
+	if not active:
+		slam_targets_hit.clear()
+
+func _resolve_slam_impact() -> void:
+	if state != State.SLAM or character_sprite.animation != &"slam" or character_sprite.frame != 2:
+		return
+	for body in slam_area.get_overlapping_bodies():
+		_on_slam_body_entered(body)
+	_spawn_shockwave(-1.0)
+	_spawn_shockwave(1.0)
+
+func _spawn_shockwave(direction: float) -> void:
+	var shockwave := SHOCKWAVE_SCENE.instantiate() as Area2D
+	shockwave.call("configure", direction, shockwave_damage, shockwave_speed)
+	get_parent().add_child(shockwave)
+	shockwave.global_position = global_position + Vector2(74.0 * direction, 0.0)
+	shockwave_spawned.emit(shockwave)
 
 func _damage_overlapping_sweep_targets() -> void:
 	if state != State.SWEEP or character_sprite.frame != 2:
@@ -150,6 +203,15 @@ func _on_sweep_body_entered(body: Node) -> void:
 	var player := body as PlayerGirl
 	player.take_damage(sweep_damage, Vector2(facing_direction, -0.2))
 
+func _on_slam_body_entered(body: Node) -> void:
+	if state != State.SLAM or character_sprite.animation != &"slam" or character_sprite.frame != 2:
+		return
+	if not body is PlayerGirl or slam_targets_hit.has(body):
+		return
+	slam_targets_hit[body] = true
+	var player := body as PlayerGirl
+	player.take_damage(slam_damage, Vector2(facing_direction, -0.35))
+
 func _enter_defeated() -> void:
 	state = State.DEFEATED
 	velocity = Vector2.ZERO
@@ -157,6 +219,7 @@ func _enter_defeated() -> void:
 	body_collision.set_deferred("disabled", true)
 	vulnerable_collision.set_deferred("disabled", true)
 	_set_sweep_active(false)
+	_set_slam_active(false)
 	character_sprite.play(&"defeated")
 	_emit_defeated_after_delay()
 

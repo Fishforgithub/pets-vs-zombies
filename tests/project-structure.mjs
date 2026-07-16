@@ -29,6 +29,8 @@ const requiredFiles = [
   'game/main/main.gd',
   'game/bosses/foreman_boss.tscn',
   'game/bosses/foreman_boss.gd',
+  'game/bosses/foreman_shockwave.tscn',
+  'game/bosses/foreman_shockwave.gd',
   'game/stages/wave_director.tscn',
   'game/stages/wave_director.gd',
   'game/player/player.tscn',
@@ -116,4 +118,3 @@ if (errors.length) {
 } else {
   console.log(`Project structure OK (${requiredFiles.length} required files checked).`);
 }
-

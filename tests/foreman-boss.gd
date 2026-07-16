@@ -40,6 +40,7 @@ func _run() -> void:
 	_check(boss.body_collision != null, "Boss has a separate body collision")
 	_check(boss.vulnerable_collision != null, "Boss has a separate vulnerable area")
 	_check(boss.sweep_collision != null, "Boss has a separate hammer sweep hitbox")
+	_check(boss.slam_collision != null, "Boss has a separate slam impact hitbox")
 	_check(boss.is_in_group("enemies"), "Boss is targetable by player and pet attacks")
 
 	var frames := boss.character_sprite.sprite_frames
@@ -47,7 +48,7 @@ func _run() -> void:
 		_check(frames.has_animation(animation_name), "%s boss animation exists" % animation_name)
 		if frames.has_animation(animation_name):
 			_check(frames.get_frame_count(animation_name) == 1, "%s is a state pose" % animation_name)
-	for animation_name in [&"walk", &"sweep"]:
+	for animation_name in [&"walk", &"sweep", &"slam"]:
 		_check(frames.has_animation(animation_name), "%s boss animation exists" % animation_name)
 		if frames.has_animation(animation_name):
 			_check(frames.get_frame_count(animation_name) == 4, "%s has four frames" % animation_name)
@@ -56,9 +57,9 @@ func _run() -> void:
 				_check(texture != null and texture.get_size() == Vector2(512.0, 512.0), "%s frame %d is 512x512" % [animation_name, frame_index])
 
 	boss._update_facing(-10.0)
-	_check(not boss.character_sprite.flip_h and boss.sweep_area.position.x < 0.0, "Authored left-facing boss and hitbox stay aligned")
+	_check(not boss.character_sprite.flip_h and boss.sweep_area.position.x < 0.0 and boss.slam_area.position.x < 0.0, "Authored left-facing boss and hitboxes stay aligned")
 	boss._update_facing(10.0)
-	_check(boss.character_sprite.flip_h and boss.sweep_area.position.x > 0.0, "Mirrored boss and hitbox face right together")
+	_check(boss.character_sprite.flip_h and boss.sweep_area.position.x > 0.0 and boss.slam_area.position.x > 0.0, "Mirrored boss and hitboxes face right together")
 
 	var bullet_scene := load("res://game/projectiles/bullet.tscn") as PackedScene
 	var bullet := bullet_scene.instantiate() as GameBullet
@@ -87,6 +88,59 @@ func _run() -> void:
 	await physics_frame
 	_check(boss.sweep_collision.disabled, "Sweep hitbox disables during recovery")
 
+	player.global_position = boss.global_position + Vector2(58.0, 0.0)
+	boss._update_facing(58.0)
+	boss._start_slam()
+	boss.character_sprite.pause()
+	boss.character_sprite.frame = 1
+	boss._on_animation_frame_changed()
+	await physics_frame
+	_check(boss.slam_collision.disabled, "Slam impact hitbox is disabled before active frame 2")
+	var health_before_slam := player.health
+	boss.character_sprite.frame = 2
+	boss._on_animation_frame_changed()
+	await physics_frame
+	await physics_frame
+	_check(not boss.slam_collision.disabled, "Slam impact hitbox enables on frame 2")
+	_check(player.health == health_before_slam - boss.slam_damage, "Active slam frame damages a nearby player once")
+	var shockwaves := _find_shockwaves(host)
+	_check(shockwaves.size() == 2, "Slam impact creates one left and one right shockwave")
+	if shockwaves.size() == 2:
+		var directions := [float(shockwaves[0].get("travel_direction")), float(shockwaves[1].get("travel_direction"))]
+		directions.sort()
+		_check(directions == [-1.0, 1.0], "Slam shockwaves travel in opposite directions")
+		for shockwave in shockwaves:
+			shockwave.set("speed", 0.0)
+			(shockwave.get_node("EffectSprite") as AnimatedSprite2D).pause()
+		var test_wave := shockwaves[0]
+		shockwaves[1].global_position = Vector2(1000.0, 0.0)
+		test_wave.global_position = player.global_position
+		var wave_sprite := test_wave.get_node("EffectSprite") as AnimatedSprite2D
+		var wave_collision := test_wave.get_node("DamageCollision") as CollisionShape2D
+		wave_sprite.pause()
+		wave_sprite.frame = 1
+		test_wave.call("_on_animation_frame_changed")
+		await physics_frame
+		_check(wave_collision.disabled, "Shockwave damage is disabled before active frame 2")
+		var health_before_wave := player.health
+		wave_sprite.frame = 2
+		test_wave.call("_on_animation_frame_changed")
+		await physics_frame
+		await physics_frame
+		test_wave.call("_damage_overlapping_targets")
+		_check(not wave_collision.disabled, "Shockwave damage enables on frame 2")
+		_check(player.health == health_before_wave - boss.shockwave_damage, "Active shockwave frame damages the player once")
+		test_wave.call("_on_animation_frame_changed")
+		await physics_frame
+		_check(player.health == health_before_wave - boss.shockwave_damage, "Shockwave cannot damage the same player twice")
+	boss._on_animation_frame_changed()
+	await physics_frame
+	_check(_find_shockwaves(host).size() == 2, "Slam impact cannot emit duplicate shockwaves on the same frame")
+	boss.character_sprite.frame = 3
+	boss._on_animation_frame_changed()
+	await physics_frame
+	_check(boss.slam_collision.disabled, "Slam impact hitbox disables during recovery")
+
 	boss.take_damage(boss.health)
 	await physics_frame
 	_check(boss.state == ForemanBoss.State.DEFEATED, "Lethal damage enters defeated state")
@@ -99,6 +153,13 @@ func _run() -> void:
 
 func _on_boss_defeated(_boss: ForemanBoss) -> void:
 	boss_defeated = true
+
+func _find_shockwaves(host: Node) -> Array[Area2D]:
+	var shockwaves: Array[Area2D] = []
+	for child in host.get_children():
+		if child is Area2D and child.scene_file_path == "res://game/bosses/foreman_shockwave.tscn":
+			shockwaves.append(child as Area2D)
+	return shockwaves
 
 func _check(condition: bool, message: String) -> void:
 	if condition:

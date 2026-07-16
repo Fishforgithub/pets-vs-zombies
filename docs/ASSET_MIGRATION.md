@@ -46,9 +46,9 @@ The source repository `Fishforgithub/tea-line-bot` is read-only. Copy only appro
 | `assets/bosses/stage1_foreman/idle.png` | Approved Stage 1 boss identity anchor from `agent/art-production` commit `05449ea`; 512x512 with bottom-center pivot | Integrated as the Undead Foreman idle presentation |
 | `assets/bosses/stage1_foreman/walk_sheet.png` | Approved four-frame heavy walk from `agent/art-production` commit `6ca9d39`; 2x2 cells at 512x512 | Integrated as the Undead Foreman `walk` animation at 6 FPS |
 | `assets/bosses/stage1_foreman/sweep_sheet.png` | Approved four-frame sweep attack from `agent/art-production` commit `92a11e8`; 2x2 cells at 512x512 | Integrated as the Undead Foreman `sweep` animation with a frame-2 hammer hitbox |
-| `assets/bosses/stage1_foreman/slam_sheet.png` | Approved four-frame ground slam from `agent/art-production` commit `5345238`; 2x2 cells at 512x512 | Imported for the Undead Foreman `slam` animation and frame-2 shockwave event |
+| `assets/bosses/stage1_foreman/slam_sheet.png` | Approved four-frame ground slam from `agent/art-production` commit `5345238`; 2x2 cells at 512x512 | Integrated as the Undead Foreman `slam` animation with a frame-2 local impact and twin shockwave event |
 | `assets/bosses/stage1_foreman/reaction_sheet.png` | Approved four-pose reaction sheet from `agent/art-production` commit `86fd34c`; 2x2 cells at 512x512 | Integrated for `hurt` and `defeated`; `rage` and `stunned` are wired state poses reserved for phase-two tuning |
-| `assets/vfx/foreman_shockwave.png` | Four-frame Stage 1 slam shockwave from `agent/art-production` commit `843a02e`; 4x1 cells at 256x256 | Imported and reserved for the Foreman slam phase |
+| `assets/vfx/foreman_shockwave.png` | Four-frame Stage 1 slam shockwave from `agent/art-production` commit `843a02e`; 4x1 cells at 256x256 | Integrated as independently moving left/right Foreman shockwaves with frame-2 damage |
 | `assets/enemies/umbrella_zombie/action_sheet.png` | Three-pose action delivery from `agent/art-production` commit `99dcec9`; attack, hurt, defeated | Imported and reserved for the umbrella zombie scene |
 | `assets/ui/stage1/boss_health_frame.png` | Fixed 640x96 construction-themed overlay from `agent/art-production` commit `e06b862` | Integrated as the fixed overlay around the dynamic Stage 1 boss health fill |
 
