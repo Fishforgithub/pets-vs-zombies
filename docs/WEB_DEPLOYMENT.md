@@ -43,9 +43,9 @@ The Worker maps `/` to OCI's `index.html`, serves all game files from the same p
 
 ## Latest verified release
 
-- Release header: `2026-07-16.4`
-- Cloudflare Worker Version ID: `ccefcab8-7b13-44e6-983e-d3121b4d8fbb`
+- Release header: `2026-07-16.5`
+- Cloudflare Worker Version ID: `fac134ee-b58c-402e-a39c-c85794387efe`
 - Verified on: 2026-07-16 (Asia/Taipei)
 - Public checks: HTML, JavaScript, PCK, and WASM returned HTTP 200 with their expected MIME types.
-- Exported PCK size: 1,610,128 bytes.
+- Exported PCK size: 1,610,240 bytes.
 - WASM header: `00 61 73 6D 01 00 00 00`.
