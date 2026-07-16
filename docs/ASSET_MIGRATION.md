@@ -51,5 +51,6 @@ The source repository `Fishforgithub/tea-line-bot` is read-only. Copy only appro
 | `assets/vfx/foreman_shockwave.png` | Four-frame Stage 1 slam shockwave from `agent/art-production` commit `843a02e`; 4x1 cells at 256x256 | Integrated as independently moving left/right Foreman shockwaves with frame-2 damage |
 | `assets/enemies/umbrella_zombie/action_sheet.png` | Three-pose action delivery from `agent/art-production` commit `99dcec9`; attack, hurt, defeated | Imported and reserved for the umbrella zombie scene |
 | `assets/ui/stage1/boss_health_frame.png` | Fixed 640x96 construction-themed overlay from `agent/art-production` commit `e06b862` | Integrated as the fixed overlay around the dynamic Stage 1 boss health fill |
+| `assets/enemies/zombie_crow/idle.png` | Approved original Stage 2 aerial-enemy generation | User-approved; 256×256 transparent zombie crow identity anchor |
 
 No production assets have been copied from `tea-line-bot` yet.
