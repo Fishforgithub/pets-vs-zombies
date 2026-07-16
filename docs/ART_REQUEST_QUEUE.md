@@ -6,7 +6,41 @@ Request IDs use `AR-YYYYMMDD-NNN`. Allowed states are `queued`, `approved`, `in-
 
 ## Open requests
 
-No open requests. Stage 1 currently has sufficient approved art for engine implementation.
+### AR-20260716-001 — Stage result panel
+
+- Status: `queued`
+- Screen use: Center frame behind the Stage 1 clear title, earned XP, earned gears, level summary, next-stage card, and retry control after the Foreman is defeated.
+- Godot node: `NinePatchRect` at `StageResultScreen/Overlay/ResultPanel` in `game/ui/stage_result.tscn`.
+- Output path: `res://assets/ui/stage_result_panel.png`.
+- Pixel dimensions: 384 x 256 pixels.
+- Grid / slicing: 1 x 1 static panel; no animation frames. Preserve a clean center region for runtime labels and controls.
+- Interaction states: none; all text, buttons, rewards, and focus states remain Godot `Control` nodes layered above it.
+- Nine-patch borders: left 32 px, top 32 px, right 32 px, bottom 32 px. Corners and border ornaments must stay outside the stretchable center.
+- Acceptance criteria:
+  - File decodes as a valid lossless 384 x 256 PNG with transparency outside the panel silhouette.
+  - Crisp pixel-art edges, limited palette, and visual language match the Stage 1 city assets and existing character art.
+  - The 32 px borders remain visually intact when the node scales from 576 x 384 through 768 x 512.
+  - The center has enough contrast and uncluttered space for white/yellow runtime text at 18–34 px font sizes.
+  - No baked text, numbers, reward values, button labels, or copyrighted marks.
+  - Pixel-art filtering and mipmaps can remain disabled without seams.
+
+### AR-20260716-002 — Next-stage card states
+
+- Status: `queued`
+- Screen use: Fixed-size route card on the Stage 1 result screen; initially shows Stage 2 as locked/coming soon and later supports selection from the campaign route.
+- Godot node: `TextureButton` at `StageResultScreen/Overlay/ResultPanel/NextStageCard` in `game/ui/stage_result.tscn`, with runtime labels and stage illustration layered separately.
+- Output path: `res://assets/ui/stage_card_frames.png`.
+- Pixel dimensions: 960 x 256 pixels total; five 192 x 256 cells.
+- Grid / slicing: 5 x 1, each cell 192 x 256. Left-to-right order: `normal`, `hover`, `pressed`, `selected`, `locked`.
+- Interaction states: normal, hover, pressed, selected, locked. Locked must remain readable without relying only on color and must not contain baked text.
+- Nine-patch borders: N/A — non-resizable fixed-size card frame; runtime may apply only integer-safe uniform scaling.
+- Acceptance criteria:
+  - File decodes as a valid lossless 960 x 256 PNG with five cells exactly once in the documented order.
+  - Every cell keeps identical outer bounds, content opening, and alignment so state changes do not jump.
+  - Locked state has a distinct silhouette treatment or lock emblem and remains distinguishable for color-vision differences.
+  - Center opening safely supports a separate 160 x 112 illustration plus runtime stage name, status, and reward labels.
+  - No baked stage names, localized text, prices, or reward numbers.
+  - Unused pixels are transparent; filtering and mipmaps can remain disabled without seams.
 
 ## Request template
 
