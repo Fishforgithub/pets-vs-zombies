@@ -50,5 +50,6 @@ The source repository `Fishforgithub/tea-line-bot` is read-only. Copy only appro
 | `assets/items/pickups.png` | Approved original project-specific pickup generation | Approved; four 256×256 pickup cells |
 | `assets/vfx/combat_effects.png` | Approved original project-specific VFX generation | Approved; four 256×256 single-frame effects |
 | `assets/vfx/foreman_shockwave.png` | Project-specific VFX generation derived from the approved Foreman slam impact palette | Art-production self-reviewed; four transparent 256×256 shockwave frames |
+| `assets/ui/stage1/boss_health_frame.png` | Project-specific UI generation derived from the approved Stage 1 construction palette | Art-production self-reviewed; 640×96 transparent fixed overlay frame |
 
 No production assets have been copied from `tea-line-bot` yet.
