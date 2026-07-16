@@ -44,8 +44,9 @@ The authored direction is left-facing. Display as-is when the shield faces left;
 |---|---|---|---|
 | `assets/enemies/umbrella_zombie/idle.png` | 1 x 1 | `idle` / shield stance | Static or subtle procedural bob |
 | `assets/enemies/umbrella_zombie/walk_sheet.png` | 3 x 2, 6 frames | `walk` / shield-walk frames 0–5 | Loop, 8 FPS |
+| `assets/enemies/umbrella_zombie/action_sheet.png` | 3 x 1 | index 0 `attack`, 1 `hurt`, 2 `defeated` | State-selected poses; attack one-shot, defeated holds |
 
-Suggested runtime nodes: one body hurtbox plus a separate forward `Area2D` shield collider. Front-facing bullets should be blocked/deflected by the shield; rear hits and pet attacks can bypass or damage it according to gameplay tuning. Keep the shield collider active and in the same forward offset throughout all six walk frames; do not derive its position from changing opaque pixels.
+Suggested runtime nodes: one body hurtbox plus a separate forward `Area2D` shield collider. Front-facing bullets should be blocked/deflected by the shield; rear hits and pet attacks can bypass or damage it according to gameplay tuning. Keep the shield collider active and in the same forward offset throughout all six walk frames; do not derive its position from changing opaque pixels. During `attack`, enable the short forward bash hitbox only for the active attack window. During `hurt`, temporarily disable the shield collider. On `defeated`, permanently disable shield, damage, navigation, and body collision before cleanup.
 
 ## Stage 1 boss: Undead Foreman
 
