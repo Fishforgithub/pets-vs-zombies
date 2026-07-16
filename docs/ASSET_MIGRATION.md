@@ -52,5 +52,6 @@ The source repository `Fishforgithub/tea-line-bot` is read-only. Copy only appro
 | `assets/enemies/umbrella_zombie/action_sheet.png` | Three-pose action delivery from `agent/art-production` commit `99dcec9`; attack, hurt, defeated | Imported and reserved for the umbrella zombie scene |
 | `assets/ui/stage1/boss_health_frame.png` | Fixed 640x96 construction-themed overlay from `agent/art-production` commit `e06b862` | Integrated as the fixed overlay around the dynamic Stage 1 boss health fill |
 | `assets/enemies/zombie_crow/idle.png` | Approved original Stage 2 aerial-enemy generation | User-approved; 256×256 transparent zombie crow identity anchor |
+| `assets/enemies/zombie_crow/flight_sheet.png` | Six-frame generation derived from the zombie crow identity anchor | User-approved; 3×2 flight loop of 256×256 cells |
 
 No production assets have been copied from `tea-line-bot` yet.

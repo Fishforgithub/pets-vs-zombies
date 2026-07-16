@@ -57,6 +57,7 @@ The authored direction is left-facing. Display as-is while flying or attacking l
 | Asset | Grid / order | Runtime mapping | Playback |
 |---|---|---|---|
 | `assets/enemies/zombie_crow/idle.png` | 1 x 1, 256 x 256 | identity anchor / hover fallback | Static until the approved flight cycle is available |
+| `assets/enemies/zombie_crow/flight_sheet.png` | 3 x 2, 6 frames of 256 x 256 | `fly` hovering flight frames 0–5 | Loop, 10 FPS |
 
 ## Stage 1 boss: Undead Foreman
 
