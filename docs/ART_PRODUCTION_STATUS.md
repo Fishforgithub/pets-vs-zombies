@@ -20,6 +20,12 @@ Stage 1 now has an approved visual foundation:
 - Undead Foreman Stage 1 boss core visual state set
 - runtime asset manifest and Codex-to-art request queue
 
+Stage 2 hospital character production is underway:
+
+- zombie crow identity, six-frame flight cycle, dive, hurt, and defeated states are delivered
+- zombie dog identity and six-frame sprint cycle are delivered
+- zombie dog pounce, hurt, and defeated states are the next creature-art task
+
 ## Stage 1 boss completion
 
 The Undead Foreman core art set is complete for initial implementation:
@@ -51,10 +57,10 @@ For complete asset paths, frame order, FPS, facing rules, pivots, collision guid
 
 1. Read any `ready` items added by Codex to `docs/ART_REQUEST_QUEUE.md`.
 2. Verify that Codex has integrated or cherry-picked the latest art branch before changing paths or layouts.
-3. Integrate the dedicated boss ground-shockwave effect and fixed boss health-bar frame.
-4. Finish umbrella zombie attack, hurt, and defeated poses if the enemy is enabled in the current Stage 1 implementation.
+3. Complete the zombie dog pounce, hurt, and defeated action sheet with explicit user review.
+4. Continue with zombie nurse identity only after the zombie dog action set is delivered.
 5. Begin UI production only from a committed request that specifies Godot consumers, dimensions, states, and NinePatch margins.
-6. Keep all new image drafts out of Git until explicit user approval.
+6. Keep all new character and creature image drafts out of Git until explicit user approval.
 
 ## Resume command for Codex
 
