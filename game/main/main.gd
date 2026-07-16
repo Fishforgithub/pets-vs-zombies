@@ -10,6 +10,8 @@ const GROUND_TILE_COUNT: int = 4
 const GROUND_DRAW_Y: float = 486.0
 const SPAWN_OFFSET: float = 680.0
 
+@export var persistence_enabled: bool = true
+
 @onready var player: PlayerGirl = $Player
 @onready var pet: PetCompanion = $PetCompanion
 @onready var hud: GameHud = $Hud
@@ -30,9 +32,12 @@ func _ready() -> void:
 	player.health_changed.connect(hud.set_health)
 	player.ammo_changed.connect(hud.set_ammo)
 	player.progression.progress_changed.connect(hud.set_progression)
+	if persistence_enabled:
+		player.progression.load_profile()
 	player.died.connect(_on_player_died)
 	stage_result.configure_progression(player.progression)
 	stage_result.retry_requested.connect(_on_retry_requested)
+	stage_result.upgrade_purchased.connect(_on_upgrade_purchased)
 	wave_director.wave_started.connect(_on_wave_started)
 	wave_director.wave_progress_changed.connect(_on_wave_progress_changed)
 	wave_director.enemy_defeated.connect(_on_zombie_defeated)
@@ -116,13 +121,22 @@ func _on_foreman_defeated(boss: ForemanBoss) -> void:
 	experience_earned += boss.experience_reward
 	currency_earned += boss.currency_reward
 	player.progression.award_rewards(boss.experience_reward, boss.currency_reward)
+	_save_progression()
 	finished = true
 	player.is_dead = true
 	hud.hide_boss()
 	stage_result.show_stage_clear(experience_earned, currency_earned, player.progression.level)
 
 func _on_retry_requested() -> void:
+	_save_progression()
 	get_tree().reload_current_scene()
+
+func _on_upgrade_purchased() -> void:
+	_save_progression()
+
+func _save_progression() -> void:
+	if persistence_enabled:
+		player.progression.save_profile()
 
 func _on_player_died() -> void:
 	if finished:

@@ -25,6 +25,7 @@ Stage 1 is complete when the player can finish five escalating waves, defeat the
 - [x] Add enemy XP/currency rewards and player progression state.
 - [x] Add weapon and pet-skill upgrade data models.
 - [x] Add a Stage 1 result workbench that spends earned gears on weapon and pet-skill upgrades.
+- [x] Persist stage-clear rewards and purchased upgrades across replay and application restarts.
 - [x] Add Stage 1 reward result and next-stage card placeholder.
 - [x] Re-run all checks, export Web release, deploy, and verify the public URL.
 

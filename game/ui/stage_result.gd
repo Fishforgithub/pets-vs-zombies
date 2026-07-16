@@ -2,6 +2,7 @@ class_name StageResultScreen
 extends CanvasLayer
 
 signal retry_requested
+signal upgrade_purchased
 
 const STARTER_WEAPON: WeaponData = preload("res://game/data/weapons/starter_pistol.tres")
 const ENERGY_BOLT: PetSkillData = preload("res://game/data/pet_skills/energy_bolt.tres")
@@ -92,13 +93,13 @@ func _refresh_pet_upgrade() -> void:
 	pet_upgrade_button.disabled = progression.currency < cost
 
 func _on_weapon_upgrade_pressed() -> void:
-	if is_instance_valid(progression):
-		progression.try_upgrade_weapon(STARTER_WEAPON)
+	if is_instance_valid(progression) and progression.try_upgrade_weapon(STARTER_WEAPON):
+		upgrade_purchased.emit()
 	_refresh_shop()
 
 func _on_pet_upgrade_pressed() -> void:
-	if is_instance_valid(progression):
-		progression.try_upgrade_pet_skill(ENERGY_BOLT)
+	if is_instance_valid(progression) and progression.try_upgrade_pet_skill(ENERGY_BOLT):
+		upgrade_purchased.emit()
 	_refresh_shop()
 
 func _on_progress_changed(_level: int, _experience: int, _experience_required: int, _currency: int) -> void:

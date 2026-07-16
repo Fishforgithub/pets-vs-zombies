@@ -1,5 +1,7 @@
 extends SceneTree
 
+const TEST_SAVE_PATH: String = "user://campaign_profile_test.json"
+
 var failures: Array[String] = []
 var progress_signal_count: int = 0
 
@@ -55,8 +57,33 @@ func _run() -> void:
 	_check(progression.get_weapon_level(&"test_rifle") == 1, "Purchased weapon enters the inventory")
 	_check(progress_signal_count > 0, "Progression emits UI update signals")
 
+	_remove_test_save()
+	_check(progression.save_profile(TEST_SAVE_PATH) == OK, "Campaign profile saves as versioned JSON")
+	_check(FileAccess.file_exists(TEST_SAVE_PATH), "Campaign save file is created")
+	var restored := packed_scene.instantiate() as RunProgression
+	root.add_child(restored)
+	await process_frame
+	_check(restored.load_profile(TEST_SAVE_PATH), "Campaign profile loads successfully")
+	_check(restored.level == progression.level and restored.experience == progression.experience and restored.currency == progression.currency, "Campaign level, XP, and currency survive reload")
+	_check(restored.weapon_levels == progression.weapon_levels, "Owned weapon levels survive reload")
+	_check(restored.pet_skill_levels == progression.pet_skill_levels, "Pet-skill levels survive reload")
+
+	var currency_before_corruption := restored.currency
+	var corrupt_file := FileAccess.open(TEST_SAVE_PATH, FileAccess.WRITE)
+	corrupt_file.store_string("{not valid json")
+	corrupt_file.close()
+	_check(not restored.load_profile(TEST_SAVE_PATH), "Corrupt campaign data is rejected")
+	_check(restored.currency == currency_before_corruption, "Rejected save data does not overwrite the active profile")
+	_remove_test_save()
+
 	progression.queue_free()
+	restored.queue_free()
 	_finish()
+
+func _remove_test_save() -> void:
+	var absolute_path := ProjectSettings.globalize_path(TEST_SAVE_PATH)
+	if FileAccess.file_exists(TEST_SAVE_PATH):
+		DirAccess.remove_absolute(absolute_path)
 
 func _on_progress_changed(_level: int, _experience: int, _required: int, _currency: int) -> void:
 	progress_signal_count += 1

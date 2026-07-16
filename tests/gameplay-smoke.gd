@@ -13,6 +13,7 @@ func _run() -> void:
 		return
 
 	var main := main_scene.instantiate()
+	main.persistence_enabled = false
 	var test_director := main.get_node("WaveDirector") as WaveDirector
 	test_director.wave_configs = _fast_test_waves()
 	test_director.inter_wave_delay = 0.0
@@ -105,6 +106,7 @@ func _run() -> void:
 	await process_frame
 
 	var defeat_main := main_scene.instantiate()
+	defeat_main.persistence_enabled = false
 	root.add_child(defeat_main)
 	current_scene = defeat_main
 	await _wait_physics_frames(2)

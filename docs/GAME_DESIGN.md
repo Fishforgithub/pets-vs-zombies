@@ -54,7 +54,7 @@ The common zombie's base health and damage remain stable across these waves. Sta
 - Weapon data must keep damage, fire interval, magazine size, reload duration, price, and unlock level independent from player movement code.
 - Pet-skill data must keep damage, cooldown, range, targeting behavior, and upgrade price independent from follow movement.
 
-Persistent save data is required before campaign progression spans multiple play sessions. Windows desktop remains the first target; the Web build must use the same gameplay data model.
+Campaign progression is stored as versioned JSON at `user://campaign_profile.json`. Stage-clear rewards and successful shop purchases persist the player level, XP, gears, weapon levels, and pet-skill levels across replay and application restarts. Failed-stage partial rewards remain run-scoped. Invalid or unsupported save data is rejected without replacing safe defaults. Windows desktop remains the first target; the Web build uses the same gameplay data model and Godot `user://` storage.
 
 ## Campaign UI roadmap
 
@@ -65,7 +65,7 @@ Persistent save data is required before campaign progression spans multiple play
 5. Weapon and pet-upgrade shop.
 6. Multi-stage route map.
 
-The Stage 1 result screen includes the first run-scoped upgrade workbench. Persistent ownership across application restarts remains a separate save-data milestone before multiple campaign stages are enabled.
+The Stage 1 result screen includes the first upgrade workbench. Purchases persist through the campaign profile so the same weapon and pet-skill levels can carry into later stages.
 
 ## Art handoff
 

@@ -2,6 +2,7 @@ extends SceneTree
 
 var failures: Array[String] = []
 var retry_seen: bool = false
+var upgrade_purchase_count: int = 0
 
 func _init() -> void:
 	call_deferred("_run")
@@ -19,6 +20,7 @@ func _run() -> void:
 	root.add_child(progression)
 	await process_frame
 	result.retry_requested.connect(_on_retry_requested)
+	result.upgrade_purchased.connect(_on_upgrade_purchased)
 
 	_check(not result.visible, "Stage result starts hidden")
 	_check(result.get_node("Overlay/ResultPanel") is NinePatchRect, "Result panel is ready for NinePatch production art")
@@ -42,6 +44,7 @@ func _run() -> void:
 	result._on_pet_upgrade_pressed()
 	_check(progression.get_pet_skill_level(&"energy_bolt") == 2 and progression.currency == 100, "Pet shop button buys the configured upgrade")
 	_check("LEVEL 2 / 5" in result.pet_upgrade_label.text and "AVAILABLE GEARS  100" in result.shop_currency_label.text, "Pet purchase refreshes shop values")
+	_check(upgrade_purchase_count == 2, "Successful shop purchases request profile persistence")
 	result._on_retry_pressed()
 	_check(retry_seen, "Replay control emits a retry request")
 
@@ -51,6 +54,9 @@ func _run() -> void:
 
 func _on_retry_requested() -> void:
 	retry_seen = true
+
+func _on_upgrade_purchased() -> void:
+	upgrade_purchase_count += 1
 
 func _check(condition: bool, message: String) -> void:
 	if condition:
