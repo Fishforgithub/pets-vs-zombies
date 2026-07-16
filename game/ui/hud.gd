@@ -3,16 +3,27 @@ extends CanvasLayer
 
 var health_label: Label
 var ammo_label: Label
+var wave_label: Label
 var objective_label: Label
+var banner_label: Label
+var banner_timer: float = 0.0
 var message_panel: ColorRect
 var message_label: Label
 
 func _ready() -> void:
 	health_label = _make_label(Vector2(24, 18), 24, Color("ffe3e3"))
 	ammo_label = _make_label(Vector2(24, 52), 22, Color("fff3bf"))
-	objective_label = _make_label(Vector2(920, 18), 22, Color.WHITE)
-	objective_label.size = Vector2(330, 40)
+	wave_label = _make_label(Vector2(900, 18), 22, Color.WHITE)
+	wave_label.size = Vector2(350, 36)
+	wave_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	objective_label = _make_label(Vector2(900, 52), 20, Color("d0ebff"))
+	objective_label.size = Vector2(350, 36)
 	objective_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+
+	banner_label = _make_label(Vector2(440, 96), 34, Color("ffe066"))
+	banner_label.size = Vector2(400, 52)
+	banner_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	banner_label.visible = false
 
 	message_panel = ColorRect.new()
 	message_panel.position = Vector2(360, 245)
@@ -29,6 +40,13 @@ func _ready() -> void:
 	message_label.add_theme_font_size_override("font_size", 28)
 	message_label.add_theme_color_override("font_color", Color.WHITE)
 	message_panel.add_child(message_label)
+
+func _process(delta: float) -> void:
+	if banner_timer <= 0.0:
+		return
+	banner_timer = maxf(0.0, banner_timer - delta)
+	if banner_timer <= 0.0:
+		banner_label.visible = false
 
 func _make_label(label_position: Vector2, font_size: int, font_color: Color) -> Label:
 	var label := Label.new()
@@ -48,10 +66,18 @@ func set_health(current: int, maximum: int) -> void:
 func set_ammo(current: int, maximum: int) -> void:
 	ammo_label.text = "AMMO  %02d / %02d" % [current, maximum]
 
+func set_wave(current: int, total: int, defeated: int, required: int) -> void:
+	wave_label.text = "WAVE  %d / %d" % [current, total]
+	objective_label.text = "REMAINING  %d" % maxi(0, required - defeated)
+
+func show_wave_banner(current: int, total: int) -> void:
+	banner_label.text = "WAVE %d / %d" % [current, total]
+	banner_label.visible = true
+	banner_timer = 1.2
+
 func set_objective(defeated: int, required: int) -> void:
 	objective_label.text = "ZOMBIES  %d / %d" % [defeated, required]
 
 func show_result(title: String, subtitle: String) -> void:
 	message_panel.visible = true
 	message_label.text = "%s\n%s\n\nPress Enter" % [title, subtitle]
-

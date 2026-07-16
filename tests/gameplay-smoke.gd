@@ -13,6 +13,9 @@ func _run() -> void:
 		return
 
 	var main := main_scene.instantiate()
+	var test_director := main.get_node("WaveDirector") as WaveDirector
+	test_director.wave_configs = _fast_test_waves()
+	test_director.inter_wave_delay = 0.0
 	root.add_child(main)
 	current_scene = main
 	await _wait_physics_frames(3)
@@ -23,6 +26,9 @@ func _run() -> void:
 	_check(main.production_background_active, "Production city background loads")
 	_check(main.ground_tiles_texture != null, "Production ground tiles load")
 	_check(main.get_node_or_null("ProductionBackground") is Parallax2D, "Production parallax layer is active")
+	_check(main.wave_director.get_total_wave_count() == 5, "Stage runs five configured waves")
+	_check(main.wave_director.current_wave_index == 0, "Stage begins on wave one")
+	_check("WAVE  1 / 5" in main.hud.wave_label.text, "HUD shows the active wave")
 
 	var start_x := player.global_position.x
 	Input.action_press("move_right")
@@ -50,10 +56,10 @@ func _run() -> void:
 	var pet_distance_after := pet.global_position.distance_to(follow_target)
 	_check(pet_distance_after < pet_distance_before, "Pet moves toward its follow position")
 
-	var enemies: Array[Node] = main.enemies.get_children()
-	_check(enemies.size() == main.required_defeats, "Stage spawns the required zombies")
-	if not enemies.is_empty():
-		var target := enemies[0] as ZombieEnemy
+	var active_enemies: Array[Node] = main.enemies.get_children()
+	_check(not active_enemies.is_empty(), "Wave director spawns the first courier zombie")
+	if not active_enemies.is_empty():
+		var target := active_enemies[0] as ZombieEnemy
 		target.global_position = pet.global_position + Vector2(100.0, 0.0)
 		pet.attack_cooldown = 0.0
 		var bullets_before := _count_bullets(main)
@@ -64,11 +70,16 @@ func _run() -> void:
 	player.take_damage(10)
 	_check(player.health == health_before - 10, "Player damage reduces health")
 
-	for enemy_node in main.enemies.get_children():
-		var enemy := enemy_node as ZombieEnemy
-		enemy.take_damage(enemy.health)
-	await process_frame
-	_check(main.defeated_count == main.required_defeats, "Defeating five zombies completes the objective")
+	for _iteration in range(100):
+		for enemy_node in main.enemies.get_children():
+			var enemy := enemy_node as ZombieEnemy
+			if is_instance_valid(enemy) and not enemy.is_dead:
+				enemy.take_damage(enemy.health)
+		await process_frame
+		if main.wave_director.finished:
+			break
+	_check(main.defeated_count == 5, "Five fast test waves each award one defeat")
+	_check(main.wave_director.finished, "Defeating all five waves completes the director")
 	_check(main.finished, "Stage completion marks the run finished")
 	_check(main.hud.message_panel.visible, "Stage completion shows the result panel")
 	_check("STAGE CLEAR!" in main.hud.message_label.text, "Stage completion shows the clear message")
@@ -88,6 +99,15 @@ func _run() -> void:
 
 	defeat_main.queue_free()
 	_finish()
+
+func _fast_test_waves() -> Array[Dictionary]:
+	return [
+		{"enemy_count": 1, "spawn_interval": 0.0, "max_alive": 1, "spawn_sides": [1]},
+		{"enemy_count": 1, "spawn_interval": 0.0, "max_alive": 1, "spawn_sides": [1]},
+		{"enemy_count": 1, "spawn_interval": 0.0, "max_alive": 1, "spawn_sides": [-1]},
+		{"enemy_count": 1, "spawn_interval": 0.0, "max_alive": 1, "spawn_sides": [1]},
+		{"enemy_count": 1, "spawn_interval": 0.0, "max_alive": 1, "spawn_sides": [-1]},
+	]
 
 func _wait_physics_frames(count: int) -> void:
 	for _index in range(count):

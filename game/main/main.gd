@@ -7,13 +7,13 @@ const STAGE_WIDTH: float = 2800.0
 const GROUND_TILE_SIZE: float = 256.0
 const GROUND_TILE_COUNT: int = 4
 const GROUND_DRAW_Y: float = 486.0
-
-@export var required_defeats: int = 5
+const SPAWN_OFFSET: float = 680.0
 
 @onready var player: PlayerGirl = $Player
 @onready var pet: PetCompanion = $PetCompanion
 @onready var hud: GameHud = $Hud
 @onready var enemies: Node2D = $Enemies
+@onready var wave_director: WaveDirector = $WaveDirector
 
 var defeated_count: int = 0
 var finished: bool = false
@@ -25,13 +25,15 @@ func _ready() -> void:
 	player.health_changed.connect(hud.set_health)
 	player.ammo_changed.connect(hud.set_ammo)
 	player.died.connect(_on_player_died)
+	wave_director.wave_started.connect(_on_wave_started)
+	wave_director.wave_progress_changed.connect(_on_wave_progress_changed)
+	wave_director.enemy_defeated.connect(_on_zombie_defeated)
+	wave_director.all_waves_completed.connect(_on_all_waves_completed)
 	pet.owner_player = player
 	hud.set_health(player.health, player.max_health)
 	hud.set_ammo(player.ammo, player.magazine_size)
-	hud.set_objective(defeated_count, required_defeats)
-
-	for spawn_x in [760.0, 1120.0, 1480.0, 1850.0, 2220.0]:
-		_spawn_zombie(Vector2(spawn_x, 620.0))
+	wave_director.configure(_spawn_zombie)
+	wave_director.start()
 
 func _setup_production_art() -> void:
 	if ResourceLoader.exists(CITY_FAR_PATH):
@@ -60,19 +62,30 @@ func _process(_delta: float) -> void:
 	if finished and Input.is_action_just_pressed("restart"):
 		get_tree().reload_current_scene()
 
-func _spawn_zombie(spawn_position: Vector2) -> void:
+func _spawn_zombie(spawn_side: int) -> ZombieEnemy:
 	var zombie := ZOMBIE_SCENE.instantiate() as ZombieEnemy
 	enemies.add_child(zombie)
-	zombie.global_position = spawn_position
-	zombie.defeated.connect(_on_zombie_defeated)
+	var direction := 1.0 if spawn_side >= 0 else -1.0
+	var spawn_x := clampf(player.global_position.x + direction * SPAWN_OFFSET, 80.0, STAGE_WIDTH - 80.0)
+	zombie.global_position = Vector2(spawn_x, 620.0)
+	return zombie
+
+func _on_wave_started(wave_number: int, total_waves: int, enemy_count: int) -> void:
+	hud.set_wave(wave_number, total_waves, 0, enemy_count)
+	hud.show_wave_banner(wave_number, total_waves)
+
+func _on_wave_progress_changed(wave_number: int, total_waves: int, defeated: int, enemy_count: int) -> void:
+	hud.set_wave(wave_number, total_waves, defeated, enemy_count)
 
 func _on_zombie_defeated(_enemy: ZombieEnemy) -> void:
 	defeated_count += 1
-	hud.set_objective(defeated_count, required_defeats)
-	if defeated_count >= required_defeats and not finished:
-		finished = true
-		player.is_dead = true
-		hud.show_result("STAGE CLEAR!", "The girl and her pet survived the street.")
+
+func _on_all_waves_completed() -> void:
+	if finished:
+		return
+	finished = true
+	player.is_dead = true
+	hud.show_result("STAGE CLEAR!", "Five waves cleared. The street is quiet... for now.")
 
 func _on_player_died() -> void:
 	if finished:

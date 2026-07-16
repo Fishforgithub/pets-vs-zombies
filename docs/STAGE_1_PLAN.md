@@ -18,8 +18,8 @@ Stage 1 is complete when the player can finish five escalating waves, defeat the
 - [x] Godot Web export and OCI/Cloudflare deployment.
 - [x] Integrate the complete remote Foreman art set through `86fd34c`.
 - [x] Replace the truncated courier walk sheet with the valid `8912004` delivery.
-- [ ] Replace fixed five-enemy spawning with a five-wave director.
-- [ ] Add wave HUD, inter-wave transitions, and configurable spawn pacing.
+- [x] Replace fixed five-enemy spawning with a five-wave director.
+- [x] Add wave HUD, inter-wave transitions, and configurable spawn pacing.
 - [ ] Add a separately testable Foreman boss scene, boss health bar, and sweep attack.
 - [ ] Add enemy XP/currency rewards and player progression state.
 - [ ] Add weapon and pet-skill upgrade data models.

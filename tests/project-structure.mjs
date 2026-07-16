@@ -24,6 +24,8 @@ const requiredFiles = [
   'deploy/cloudflare-worker.js',
   'game/main/main.tscn',
   'game/main/main.gd',
+  'game/stages/wave_director.tscn',
+  'game/stages/wave_director.gd',
   'game/player/player.tscn',
   'game/player/player.gd',
   'game/pets/pet_companion.tscn',
@@ -36,7 +38,8 @@ const requiredFiles = [
   'game/ui/hud.gd',
   'tests/player-crouch.gd',
   'tests/production-animations.gd',
-  'tests/gameplay-smoke.gd'
+  'tests/gameplay-smoke.gd',
+  'tests/wave-director.gd'
 ];
 
 const errors = [];

@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3]
+[gd_scene load_steps=9 format=3]
 
 [ext_resource type="Script" path="res://game/main/main.gd" id="1"]
 [ext_resource type="PackedScene" path="res://game/player/player.tscn" id="2"]
 [ext_resource type="PackedScene" path="res://game/pets/pet_companion.tscn" id="3"]
 [ext_resource type="PackedScene" path="res://game/ui/hud.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://game/stages/wave_director.tscn" id="5"]
 
 [sub_resource type="RectangleShape2D" id="1"]
 size = Vector2(2800, 100)
@@ -46,6 +47,8 @@ position = Vector2(260, 620)
 
 [node name="PetCompanion" parent="." instance=ExtResource("3")]
 position = Vector2(180, 620)
+
+[node name="WaveDirector" parent="." instance=ExtResource("5")]
 
 [node name="Enemies" type="Node2D" parent="."]
 
