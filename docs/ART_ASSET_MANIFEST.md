@@ -99,8 +99,11 @@ The authored direction is left-facing. Display as-is while moving or attacking l
 | Asset | Grid / order | Runtime mapping | Playback |
 |---|---|---|---|
 | `assets/enemies/zombie_doctor/idle.png` | 1 x 1, 256 x 256 | identity anchor / electric-ready stance | Static until the approved walk cycle is available |
+| `assets/enemies/zombie_doctor/walk_sheet.png` | 3 x 2, 6 frames of 256 x 256 | `walk` burdened shamble frames 0–5 | Loop, 8 FPS |
 
 The authored paddle spark is an identity cue only. Damage range, zap beam, hit timing, and status-control effects must use separate gameplay/VFX nodes. Preserve the crooked glasses, mismatched eyes, wild dark hair, cream coat, coral tie/armband, turquoise shirt, shoulder box, two paddles, and coiled cables across future animation sheets.
+
+Keep a stable bottom-center pivot while the walk alternates contact, down, and passing poses. The carried box, clipped paddle, and coiled lead visibly lag the body but remain decorative during `walk`; electric damage must only begin from the dedicated attack state.
 
 ## Stage 1 boss: Undead Foreman
 
