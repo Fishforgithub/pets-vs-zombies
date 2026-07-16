@@ -124,6 +124,16 @@ Keep the gameplay body's ground position stable while the six-frame roll cycle s
 
 For `charge`, enable forward damage and shield priority only during the explicit rush window. `hurt` cancels charge damage but may retain brief momentum. `stunned` disables movement and the shield collider, opening the body/rear vulnerable window; the visually sideways caster remains part of the intact chair and is not a detached gameplay object. `defeated` permanently disables navigation, shield, damage, and collision while leaving the chair upright and intact.
 
+## Stage 2 boss: Undead Chief Surgeon
+
+Chief Surgeon frame cells are `512 x 512`. The authored direction is left-facing, with the operating-lamp hammer head resting on the left. Mirror the complete boss, weapon, IV canisters, and authored attack colliders together when facing right.
+
+| Asset | Grid / order | Runtime mapping | Playback |
+|---|---|---|---|
+| `assets/bosses/stage2_chief_surgeon/idle.png` | 1 x 1, 512 x 512 | `idle` identity anchor | Static until approved locomotion/idle motion is available |
+
+Author separate simple shapes for the boss body, vulnerable upper torso/head, IV-stand shaft, and oversized operating-lamp hammer. The lamp head, shaft, hanging canisters, coat tails, hair, and loupe are excluded from the persistent body hurtbox. Weapon damage is enabled only during documented attack windows; never derive collision from sprite alpha. Preserve the bottom-center pivot so the massive body does not jump when switching states.
+
 ## Stage 1 boss: Undead Foreman
 
 Boss frame cells are `512 x 512`, not the normal `256 x 256`. The authored direction is left-facing. Mirror the complete boss and every authored attack collider together when facing right.
