@@ -7,6 +7,8 @@ signal died
 
 const BULLET_SCENE := preload("res://game/projectiles/bullet.tscn")
 const STARTER_WEAPON: WeaponData = preload("res://game/data/weapons/starter_pistol.tres")
+const STANDING_MUZZLE_OFFSET := Vector2(48.0, -53.0)
+const CROUCH_MUZZLE_OFFSET := Vector2(25.0, -23.0)
 
 @export var move_speed: float = 250.0
 @export var jump_velocity: float = -470.0
@@ -146,13 +148,21 @@ func _try_fire() -> void:
 
 	var bullet := BULLET_SCENE.instantiate() as GameBullet
 	get_tree().current_scene.add_child(bullet)
-	bullet.global_position = global_position + aim_direction * 28.0 + Vector2(0.0, -18.0)
+	bullet.global_position = get_muzzle_global_position()
 	var weapon_level := progression.get_weapon_level(equipped_weapon.weapon_id)
 	bullet.configure(aim_direction, &"enemies", equipped_weapon.damage_at(weapon_level), Color("ffe066"))
 	ammo -= 1
 	fire_cooldown = fire_interval
 	fire_animation_timer = fire_animation_duration
 	ammo_changed.emit(ammo, magazine_size)
+
+func get_muzzle_global_position() -> Vector2:
+	return global_position + _get_muzzle_local_position()
+
+func _get_muzzle_local_position() -> Vector2:
+	var offset := CROUCH_MUZZLE_OFFSET if is_crouching else STANDING_MUZZLE_OFFSET
+	var facing_sign := -1.0 if aim_direction.x < 0.0 else 1.0
+	return Vector2(offset.x * facing_sign, offset.y)
 
 func reload() -> void:
 	if ammo == magazine_size or is_dead or is_reloading:
@@ -198,6 +208,6 @@ func _draw() -> void:
 	draw_rect(Rect2(-8, -16 + crouch_offset, 6, 16 - crouch_offset), Color("343a40"))
 	draw_rect(Rect2(3, -16 + crouch_offset, 6, 16 - crouch_offset), Color("343a40"))
 
-	var muzzle := aim_direction * 30.0 + Vector2(0, -27 + crouch_offset)
+	var muzzle := _get_muzzle_local_position()
 	draw_line(Vector2(0, -27 + crouch_offset), muzzle, Color("495057"), 6.0)
 	draw_circle(muzzle, 3.0, Color("212529"))

@@ -36,11 +36,31 @@ func _run() -> void:
 		_check_single_frame_animation(player_frames, animation_name)
 
 	var starting_ammo := player.ammo
+	player.aim_direction = Vector2.RIGHT
+	var standing_muzzle := player.get_muzzle_global_position()
+	_check(standing_muzzle.x > player.global_position.x, "Right-facing muzzle is in front of the player")
+	_check(standing_muzzle.y < player.global_position.y - 40.0, "Standing muzzle aligns above the player's feet")
 	player._try_fire()
 	_check(player.ammo == starting_ammo - 1, "Firing consumes one round")
+	var spawned_bullet := _find_bullet(host)
+	_check(spawned_bullet != null, "Firing spawns a bullet")
+	if spawned_bullet != null:
+		_check(spawned_bullet.global_position.is_equal_approx(standing_muzzle), "Bullet spawns at the standing muzzle")
 	_check(player.fire_animation_timer > 0.0, "Firing starts the fire animation timer")
 	player._update_animation(0.0)
 	_check(player.character_sprite.animation == &"fire", "Fire state has animation priority")
+
+	player.aim_direction = Vector2.LEFT
+	var left_muzzle := player.get_muzzle_global_position()
+	_check(left_muzzle.x < player.global_position.x, "Left-facing muzzle mirrors in front of the player")
+	_check(is_equal_approx(left_muzzle.y, standing_muzzle.y), "Facing does not change muzzle height")
+	player._update_crouch_state(true)
+	var crouch_muzzle := player.get_muzzle_global_position()
+	_check(crouch_muzzle.y > standing_muzzle.y, "Crouch uses its lower gun position")
+	_check(crouch_muzzle.y < player.global_position.y - 15.0, "Crouch muzzle remains above the player's feet")
+	player.is_crouching = false
+	player.standing_collision_shape.disabled = false
+	player.crouch_collision_shape.disabled = true
 
 	player.ammo = 0
 	player.reload()
@@ -103,6 +123,12 @@ func _run() -> void:
 
 	host.queue_free()
 	_finish()
+
+func _find_bullet(host: Node) -> GameBullet:
+	for child in host.get_children():
+		if child is GameBullet:
+			return child as GameBullet
+	return null
 
 func _check_single_frame_animation(frames: SpriteFrames, animation_name: StringName, check_feet_baseline: bool = true) -> void:
 	_check(frames.has_animation(animation_name), "%s animation exists" % animation_name)
