@@ -23,7 +23,7 @@ Stage 1 is complete when the player can finish five escalating waves, defeat the
 - [x] Add a separately testable Foreman boss scene, boss health bar, and sweep attack.
 - [x] Add enemy XP/currency rewards and player progression state.
 - [x] Add weapon and pet-skill upgrade data models.
-- [ ] Add Stage 1 reward result and next-stage card placeholder.
+- [x] Add Stage 1 reward result and next-stage card placeholder.
 - [ ] Re-run all checks, export Web release, deploy, and verify the public URL.
 
 ## Default wave tuning

@@ -15,9 +15,12 @@ const SPAWN_OFFSET: float = 680.0
 @onready var hud: GameHud = $Hud
 @onready var enemies: Node2D = $Enemies
 @onready var wave_director: WaveDirector = $WaveDirector
+@onready var stage_result: StageResultScreen = $StageResultScreen
 
 var defeated_count: int = 0
 var active_boss: ForemanBoss
+var experience_earned: int = 0
+var currency_earned: int = 0
 var finished: bool = false
 var production_background_active: bool = false
 var ground_tiles_texture: Texture2D
@@ -28,6 +31,7 @@ func _ready() -> void:
 	player.ammo_changed.connect(hud.set_ammo)
 	player.progression.progress_changed.connect(hud.set_progression)
 	player.died.connect(_on_player_died)
+	stage_result.retry_requested.connect(_on_retry_requested)
 	wave_director.wave_started.connect(_on_wave_started)
 	wave_director.wave_progress_changed.connect(_on_wave_progress_changed)
 	wave_director.enemy_defeated.connect(_on_zombie_defeated)
@@ -83,6 +87,8 @@ func _on_wave_progress_changed(wave_number: int, total_waves: int, defeated: int
 
 func _on_zombie_defeated(enemy: ZombieEnemy) -> void:
 	defeated_count += 1
+	experience_earned += enemy.experience_reward
+	currency_earned += enemy.currency_reward
 	player.progression.award_rewards(enemy.experience_reward, enemy.currency_reward)
 
 func _on_all_waves_completed() -> void:
@@ -106,11 +112,16 @@ func _on_foreman_health_changed(current: int, maximum: int) -> void:
 func _on_foreman_defeated(boss: ForemanBoss) -> void:
 	if finished:
 		return
+	experience_earned += boss.experience_reward
+	currency_earned += boss.currency_reward
 	player.progression.award_rewards(boss.experience_reward, boss.currency_reward)
 	finished = true
 	player.is_dead = true
 	hud.hide_boss()
-	hud.show_result("STAGE CLEAR!", "The Undead Foreman has fallen.")
+	stage_result.show_stage_clear(experience_earned, currency_earned, player.progression.level)
+
+func _on_retry_requested() -> void:
+	get_tree().reload_current_scene()
 
 func _on_player_died() -> void:
 	if finished:

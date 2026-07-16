@@ -92,8 +92,10 @@ func _run() -> void:
 	_check(main.finished, "Defeating the boss marks the run finished")
 	_check(player.progression.level == 3 and player.progression.currency == 180, "Boss rewards grant XP, currency, and another level")
 	_check("LV 3" in main.hud.progression_label.text, "HUD reflects earned progression")
-	_check(main.hud.message_panel.visible, "Stage completion shows the result panel")
-	_check("STAGE CLEAR!" in main.hud.message_label.text, "Stage completion shows the clear message")
+	_check(main.stage_result.visible, "Stage completion shows the result screen")
+	_check("XP +270" in main.stage_result.reward_label.text and "GEARS +180" in main.stage_result.reward_label.text, "Result screen reports all Stage 1 rewards")
+	_check(main.stage_result.next_stage_card.disabled, "Stage 2 card remains locked as a placeholder")
+	_check("STAGE 1 CLEAR" in main.stage_result.title_label.text, "Stage completion shows the clear title")
 
 	main.queue_free()
 	await process_frame

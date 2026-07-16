@@ -44,12 +44,15 @@ const requiredFiles = [
   'game/projectiles/bullet.gd',
   'game/ui/hud.tscn',
   'game/ui/hud.gd',
+  'game/ui/stage_result.tscn',
+  'game/ui/stage_result.gd',
   'tests/player-crouch.gd',
   'tests/production-animations.gd',
   'tests/gameplay-smoke.gd',
   'tests/wave-director.gd',
   'tests/foreman-boss.gd',
-  'tests/progression.gd'
+  'tests/progression.gd',
+  'tests/stage-result.gd'
 ];
 
 const errors = [];
