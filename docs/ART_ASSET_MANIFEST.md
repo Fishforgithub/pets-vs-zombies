@@ -48,6 +48,16 @@ The authored direction is left-facing. Display as-is when the shield faces left;
 
 Suggested runtime nodes: one body hurtbox plus a separate forward `Area2D` shield collider. Front-facing bullets should be blocked/deflected by the shield; rear hits and pet attacks can bypass or damage it according to gameplay tuning. Keep the shield collider active and in the same forward offset throughout all six walk frames; do not derive its position from changing opaque pixels. During `attack`, enable the short forward bash hitbox only for the active attack window. During `hurt`, temporarily disable the shield collider. On `defeated`, permanently disable shield, damage, navigation, and body collision before cleanup.
 
+## Stage 2 enemies
+
+### Zombie crow
+
+The authored direction is left-facing. Display as-is while flying or attacking left and use `flip_h = true` for right-facing movement. This enemy is airborne: use a compact body hitbox centered on the torso and do not include full wing tips in collision.
+
+| Asset | Grid / order | Runtime mapping | Playback |
+|---|---|---|---|
+| `assets/enemies/zombie_crow/idle.png` | 1 x 1, 256 x 256 | identity anchor / hover fallback | Static until the approved flight cycle is available |
+
 ## Stage 1 boss: Undead Foreman
 
 Boss frame cells are `512 x 512`, not the normal `256 x 256`. The authored direction is left-facing. Mirror the complete boss and every authored attack collider together when facing right.
