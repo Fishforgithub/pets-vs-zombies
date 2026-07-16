@@ -116,10 +116,13 @@ The authored direction is left-facing, with the reinforced bumper and front cast
 |---|---|---|---|
 | `assets/enemies/wheelchair_zombie/idle.png` | 1 x 1, 256 x 256 | identity anchor / braced ready stance | Static until the approved roll cycle is available |
 | `assets/enemies/wheelchair_zombie/roll_sheet.png` | 3 x 2, 6 frames of 256 x 256 | `roll` wheel/suspension frames 0–5 | Loop, 10 FPS |
+| `assets/enemies/wheelchair_zombie/action_sheet.png` | 4 x 1, 256 x 256 cells | index 0 `charge`, 1 `hurt`, 2 `stunned`, 3 `defeated` | State-selected poses; defeated holds |
 
 The broad cream-and-coral footplate is the forward shield and may block or reduce weak frontal shots. The exposed zombie torso and rear/upper chair remain the vulnerable area. Exclude spokes, wheel rims, front caster, brake lever, hair, and blanket edges from the persistent body hurtbox; never derive collision from sprite alpha. Mirror the shield offset and charge direction together when facing changes.
 
 Keep the gameplay body's ground position stable while the six-frame roll cycle supplies visual suspension compression, rebound, forward pitch, and a brief caster lift. The coral rear-rim marker is an animation cue only. Keep the forward shield collider attached throughout every roll frame even when its artwork rises; do not move collision to follow wheel or shield pixels.
+
+For `charge`, enable forward damage and shield priority only during the explicit rush window. `hurt` cancels charge damage but may retain brief momentum. `stunned` disables movement and the shield collider, opening the body/rear vulnerable window; the visually sideways caster remains part of the intact chair and is not a detached gameplay object. `defeated` permanently disables navigation, shield, damage, and collision while leaving the chair upright and intact.
 
 ## Stage 1 boss: Undead Foreman
 
