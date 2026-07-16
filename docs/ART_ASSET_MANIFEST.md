@@ -132,10 +132,13 @@ Chief Surgeon frame cells are `512 x 512`. The authored direction is left-facing
 |---|---|---|---|
 | `assets/bosses/stage2_chief_surgeon/idle.png` | 1 x 1, 512 x 512 | `idle` identity anchor | Static until approved locomotion/idle motion is available |
 | `assets/bosses/stage2_chief_surgeon/walk_sheet.png` | 2 x 2, 4 frames of 512 x 512 | `walk` heavy contact/down/rebound frames 0–3 | Loop, 6 FPS |
+| `assets/bosses/stage2_chief_surgeon/sweep_sheet.png` | 2 x 2, 4 frames of 512 x 512 | `sweep`: wind-up, early swing, active sweep, recovery | One shot, 7 FPS; weapon damage only on frame index 2 |
 
 Author separate simple shapes for the boss body, vulnerable upper torso/head, IV-stand shaft, and oversized operating-lamp hammer. The lamp head, shaft, hanging canisters, coat tails, hair, and loupe are excluded from the persistent body hurtbox. Weapon damage is enabled only during documented attack windows; never derive collision from sprite alpha. Preserve the bottom-center pivot so the massive body does not jump when switching states.
 
 Keep the gameplay body's ground position stable while the walk cycle supplies heavy contact, compression, opposite stride, and rebound. The lamp head alternates between ground drag and a short visual lift but deals no damage during `walk`. IV canisters, apron, straps, hair, and mask provide secondary motion only.
+
+For `sweep`, frames 0–1 are readable telegraph/startup and must not damage the player. Frame index 2 owns the wide leftward lamp-head attack area; its colored motion arc is visual only and does not define collision. Frame 3 disables weapon damage and recovers toward idle. Mirror the complete attack area and weapon together when facing right.
 
 ## Stage 1 boss: Undead Foreman
 
