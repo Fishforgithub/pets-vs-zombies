@@ -6,9 +6,9 @@ Art branch: `agent/art-production`
 
 This is the art-side session handoff. Codex implementation progress and gameplay planning documents on the implementation branch remain authoritative for code and design decisions.
 
-## End-of-day status
+## Current session status
 
-Art production is stopped for the day. Do not generate or commit additional images until the next reviewed session.
+Art production resumed on 2026-07-16. Character and creature images remain user-reviewed; ordinary environment, prop, VFX, and UI assets may be self-reviewed and delivered automatically.
 
 Stage 1 now has an approved visual foundation:
 
@@ -51,7 +51,7 @@ For complete asset paths, frame order, FPS, facing rules, pivots, collision guid
 
 1. Read any `ready` items added by Codex to `docs/ART_REQUEST_QUEUE.md`.
 2. Verify that Codex has integrated or cherry-picked the latest art branch before changing paths or layouts.
-3. If requested, produce a dedicated boss ground-shockwave effect and boss HUD portrait/health-bar decoration.
+3. Integrate the dedicated boss ground-shockwave effect and produce boss HUD decoration when its UI request is specified.
 4. Finish umbrella zombie attack, hurt, and defeated poses if the enemy is enabled in the current Stage 1 implementation.
 5. Begin UI production only from a committed request that specifies Godot consumers, dimensions, states, and NinePatch margins.
 6. Keep all new image drafts out of Git until explicit user approval.

@@ -48,5 +48,6 @@ The source repository `Fishforgithub/tea-line-bot` is read-only. Copy only appro
 | `assets/bosses/stage1_foreman/sweep_sheet.png` | Approved four-frame sweep attack from `agent/art-production` commit `92a11e8`; 2x2 cells at 512x512 | Integrated as the Undead Foreman `sweep` animation with a frame-2 hammer hitbox |
 | `assets/bosses/stage1_foreman/slam_sheet.png` | Approved four-frame ground slam from `agent/art-production` commit `5345238`; 2x2 cells at 512x512 | Imported for the Undead Foreman `slam` animation and frame-2 shockwave event |
 | `assets/bosses/stage1_foreman/reaction_sheet.png` | Approved four-pose reaction sheet from `agent/art-production` commit `86fd34c`; 2x2 cells at 512x512 | Integrated for `hurt` and `defeated`; `rage` and `stunned` are wired state poses reserved for phase-two tuning |
+| `assets/vfx/foreman_shockwave.png` | Four-frame Stage 1 slam shockwave from `agent/art-production` commit `843a02e`; 4x1 cells at 256x256 | Imported and reserved for the Foreman slam phase |
 
 No production assets have been copied from `tea-line-bot` yet.

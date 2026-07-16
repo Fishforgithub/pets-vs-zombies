@@ -76,6 +76,7 @@ Use separate authored shapes for the boss body, vulnerable area, and road-barrie
 |---|---|---|
 | `assets/items/pickups.png` | 4 x 1, 256 x 256 cells | Health snack, ammo box, pet treat, gear coin. Use simple centered pickup areas; visual bob/glow may be procedural. |
 | `assets/vfx/combat_effects.png` | 4 x 1, 256 x 256 cells | Muzzle flash, bullet impact, pet-energy hit, heal sparkle. These are single-frame flashes; scale them down in-scene rather than resampling source files. |
+| `assets/vfx/foreman_shockwave.png` | 4 x 1, 256 x 256 cells | Boss slam ground wave: spawn, rise, active travel, dissipate. Play once at 12 FPS, move the effect node horizontally, enable damage only on frame index 2, and use `flip_h` for the rightward copy. |
 
 ## Current integration order
 

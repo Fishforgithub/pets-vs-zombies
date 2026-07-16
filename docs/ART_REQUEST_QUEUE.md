@@ -65,3 +65,27 @@ Request IDs use `AR-YYYYMMDD-NNN`. Allowed states are `queued`, `approved`, `in-
 ## Completed requests
 
 Move a request here only after the delivered file is validated and integrated. Record the delivery commit SHA and engine integration commit SHA.
+
+## UI-specific rules
+
+- Build layout, text, prices, localization, timers, and dynamic values with Godot `Control` nodes. Do not bake them into generated images.
+- Request reusable components instead of one flattened screenshot: panels, NinePatch frames, icons, button states, tabs, badges, card art, and decorative overlays.
+- Every interactive element must list all required states. If hover does not apply to the first target platform, say so explicitly.
+- NinePatch requests must specify safe stretch regions and content padding.
+- Card systems must distinguish background frame, illustration, rarity/state treatment, and runtime text layers.
+- Skill icons must remain readable at the smallest intended in-game size and include locked/cooldown treatment requirements.
+
+## Review policy
+
+- Always require explicit user visual approval for human characters, pets, common enemies, bosses, portraits that depict them, and any asset that changes an established character identity.
+- Art production may self-review and automatically deliver ordinary environments, tiles, props, pickups, VFX, and functional UI components when they follow the approved style and request specification.
+- Escalate any asset for explicit user review when it changes the core visual identity, introduces a major new style direction, depicts paid-purchase/monetization UI, or has ambiguous gameplay meaning.
+- Self-reviewed delivery still requires dimension, alpha, slicing, palette, manifest, and repository validation.
+
+## Agent handoff procedure
+
+1. The implementation agent creates or updates a request and marks it `queued`.
+2. Commit and push the request; report the branch and commit SHA to the user for relay to art production.
+3. Art production marks the request `in-production` and produces a review image.
+4. Character or creature imagery pauses for explicit user review; eligible environment, prop, VFX, and ordinary UI work may pass art-production self-review.
+5. Delivery updates `docs/ART_ASSET_MANIFEST.md`, `docs/ASSET_MIGRATION.md`, and the request with the art commit SHA.
