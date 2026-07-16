@@ -20,7 +20,7 @@ Stage 1 is complete when the player can finish five escalating waves, defeat the
 - [x] Replace the truncated courier walk sheet with the valid `8912004` delivery.
 - [x] Replace fixed five-enemy spawning with a five-wave director.
 - [x] Add wave HUD, inter-wave transitions, and configurable spawn pacing.
-- [ ] Add a separately testable Foreman boss scene, boss health bar, and sweep attack.
+- [x] Add a separately testable Foreman boss scene, boss health bar, and sweep attack.
 - [ ] Add enemy XP/currency rewards and player progression state.
 - [ ] Add weapon and pet-skill upgrade data models.
 - [ ] Add Stage 1 reward result and next-stage card placeholder.

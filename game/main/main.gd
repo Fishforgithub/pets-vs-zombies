@@ -1,6 +1,7 @@
 extends Node2D
 
 const ZOMBIE_SCENE := preload("res://game/enemies/zombie.tscn")
+const FOREMAN_SCENE := preload("res://game/bosses/foreman_boss.tscn")
 const CITY_FAR_PATH := "res://assets/backgrounds/stage1/city_far.png"
 const GROUND_TILES_PATH := "res://assets/tilesets/stage1/ground_tiles.png"
 const STAGE_WIDTH: float = 2800.0
@@ -16,6 +17,7 @@ const SPAWN_OFFSET: float = 680.0
 @onready var wave_director: WaveDirector = $WaveDirector
 
 var defeated_count: int = 0
+var active_boss: ForemanBoss
 var finished: bool = false
 var production_background_active: bool = false
 var ground_tiles_texture: Texture2D
@@ -83,9 +85,28 @@ func _on_zombie_defeated(_enemy: ZombieEnemy) -> void:
 func _on_all_waves_completed() -> void:
 	if finished:
 		return
+	_spawn_foreman()
+
+func _spawn_foreman() -> void:
+	active_boss = FOREMAN_SCENE.instantiate() as ForemanBoss
+	enemies.add_child(active_boss)
+	active_boss.global_position = Vector2(clampf(player.global_position.x + 760.0, 420.0, STAGE_WIDTH - 140.0), 620.0)
+	active_boss.target = player
+	active_boss.health_changed.connect(_on_foreman_health_changed)
+	active_boss.defeated.connect(_on_foreman_defeated)
+	hud.show_boss(active_boss.max_health)
+	hud.show_boss_banner("UNDEAD FOREMAN")
+
+func _on_foreman_health_changed(current: int, maximum: int) -> void:
+	hud.set_boss_health(current, maximum)
+
+func _on_foreman_defeated(_boss: ForemanBoss) -> void:
+	if finished:
+		return
 	finished = true
 	player.is_dead = true
-	hud.show_result("STAGE CLEAR!", "Five waves cleared. The street is quiet... for now.")
+	hud.hide_boss()
+	hud.show_result("STAGE CLEAR!", "The Undead Foreman has fallen.")
 
 func _on_player_died() -> void:
 	if finished:

@@ -24,6 +24,8 @@ const requiredFiles = [
   'deploy/cloudflare-worker.js',
   'game/main/main.tscn',
   'game/main/main.gd',
+  'game/bosses/foreman_boss.tscn',
+  'game/bosses/foreman_boss.gd',
   'game/stages/wave_director.tscn',
   'game/stages/wave_director.gd',
   'game/player/player.tscn',
@@ -39,7 +41,8 @@ const requiredFiles = [
   'tests/player-crouch.gd',
   'tests/production-animations.gd',
   'tests/gameplay-smoke.gd',
-  'tests/wave-director.gd'
+  'tests/wave-director.gd',
+  'tests/foreman-boss.gd'
 ];
 
 const errors = [];

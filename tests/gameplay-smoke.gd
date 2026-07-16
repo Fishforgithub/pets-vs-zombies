@@ -80,7 +80,14 @@ func _run() -> void:
 			break
 	_check(main.defeated_count == 5, "Five fast test waves each award one defeat")
 	_check(main.wave_director.finished, "Defeating all five waves completes the director")
-	_check(main.finished, "Stage completion marks the run finished")
+	_check(is_instance_valid(main.active_boss), "Foreman enters after wave five")
+	_check(main.hud.boss_panel.visible, "Boss entrance shows the boss health bar")
+	if is_instance_valid(main.active_boss):
+		main.active_boss.defeat_delay = 0.0
+		main.active_boss.take_damage(main.active_boss.health)
+		await process_frame
+		await physics_frame
+	_check(main.finished, "Defeating the boss marks the run finished")
 	_check(main.hud.message_panel.visible, "Stage completion shows the result panel")
 	_check("STAGE CLEAR!" in main.hud.message_label.text, "Stage completion shows the clear message")
 

@@ -1,0 +1,174 @@
+[gd_scene load_steps=22 format=3]
+
+[ext_resource type="Script" path="res://game/bosses/foreman_boss.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/bosses/stage1_foreman/idle.png" id="2"]
+[ext_resource type="Texture2D" path="res://assets/bosses/stage1_foreman/walk_sheet.png" id="3"]
+[ext_resource type="Texture2D" path="res://assets/bosses/stage1_foreman/sweep_sheet.png" id="4"]
+[ext_resource type="Texture2D" path="res://assets/bosses/stage1_foreman/reaction_sheet.png" id="5"]
+
+[sub_resource type="CapsuleShape2D" id="BodyShape"]
+radius = 32.0
+height = 120.0
+
+[sub_resource type="RectangleShape2D" id="VulnerableShape"]
+size = Vector2(74, 108)
+
+[sub_resource type="RectangleShape2D" id="SweepShape"]
+size = Vector2(165, 58)
+
+[sub_resource type="AtlasTexture" id="Walk0"]
+atlas = ExtResource("3")
+region = Rect2(0, 0, 512, 512)
+
+[sub_resource type="AtlasTexture" id="Walk1"]
+atlas = ExtResource("3")
+region = Rect2(512, 0, 512, 512)
+
+[sub_resource type="AtlasTexture" id="Walk2"]
+atlas = ExtResource("3")
+region = Rect2(0, 512, 512, 512)
+
+[sub_resource type="AtlasTexture" id="Walk3"]
+atlas = ExtResource("3")
+region = Rect2(512, 512, 512, 512)
+
+[sub_resource type="AtlasTexture" id="Sweep0"]
+atlas = ExtResource("4")
+region = Rect2(0, 0, 512, 512)
+
+[sub_resource type="AtlasTexture" id="Sweep1"]
+atlas = ExtResource("4")
+region = Rect2(512, 0, 512, 512)
+
+[sub_resource type="AtlasTexture" id="Sweep2"]
+atlas = ExtResource("4")
+region = Rect2(0, 512, 512, 512)
+
+[sub_resource type="AtlasTexture" id="Sweep3"]
+atlas = ExtResource("4")
+region = Rect2(512, 512, 512, 512)
+
+[sub_resource type="AtlasTexture" id="Reaction0"]
+atlas = ExtResource("5")
+region = Rect2(0, 0, 512, 512)
+
+[sub_resource type="AtlasTexture" id="Reaction1"]
+atlas = ExtResource("5")
+region = Rect2(512, 0, 512, 512)
+
+[sub_resource type="AtlasTexture" id="Reaction2"]
+atlas = ExtResource("5")
+region = Rect2(0, 512, 512, 512)
+
+[sub_resource type="AtlasTexture" id="Reaction3"]
+atlas = ExtResource("5")
+region = Rect2(512, 512, 512, 512)
+
+[sub_resource type="SpriteFrames" id="ForemanFrames"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Reaction3")
+}],
+"loop": false,
+"name": &"defeated",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Reaction0")
+}],
+"loop": false,
+"name": &"hurt",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Reaction1")
+}],
+"loop": false,
+"name": &"rage",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Reaction2")
+}],
+"loop": false,
+"name": &"stunned",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Sweep0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Sweep1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Sweep2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Sweep3")
+}],
+"loop": false,
+"name": &"sweep",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Walk0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Walk1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Walk2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Walk3")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 6.0
+}]
+
+[node name="ForemanBoss" type="CharacterBody2D"]
+collision_layer = 0
+collision_mask = 3
+script = ExtResource("1")
+
+[node name="BodyCollision" type="CollisionShape2D" parent="."]
+position = Vector2(0, -60)
+shape = SubResource("BodyShape")
+
+[node name="VulnerableArea" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 0
+
+[node name="VulnerableCollision" type="CollisionShape2D" parent="VulnerableArea"]
+position = Vector2(0, -64)
+shape = SubResource("VulnerableShape")
+
+[node name="SweepArea" type="Area2D" parent="."]
+position = Vector2(-92, -64)
+collision_layer = 0
+collision_mask = 2
+
+[node name="SweepCollision" type="CollisionShape2D" parent="SweepArea"]
+shape = SubResource("SweepShape")
+disabled = true
+
+[node name="CharacterSprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -115)
+scale = Vector2(0.45, 0.45)
+sprite_frames = SubResource("ForemanFrames")
+animation = &"idle"

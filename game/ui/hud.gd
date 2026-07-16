@@ -7,6 +7,9 @@ var wave_label: Label
 var objective_label: Label
 var banner_label: Label
 var banner_timer: float = 0.0
+var boss_panel: ColorRect
+var boss_name_label: Label
+var boss_health_bar: ProgressBar
 var message_panel: ColorRect
 var message_label: Label
 
@@ -24,6 +27,27 @@ func _ready() -> void:
 	banner_label.size = Vector2(400, 52)
 	banner_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	banner_label.visible = false
+
+	boss_panel = ColorRect.new()
+	boss_panel.position = Vector2(335, 18)
+	boss_panel.size = Vector2(610, 54)
+	boss_panel.color = Color(0.16, 0.05, 0.06, 0.9)
+	boss_panel.visible = false
+	add_child(boss_panel)
+
+	boss_name_label = Label.new()
+	boss_name_label.position = Vector2(12, 7)
+	boss_name_label.size = Vector2(180, 38)
+	boss_name_label.text = "UNDEAD FOREMAN"
+	boss_name_label.add_theme_font_size_override("font_size", 17)
+	boss_name_label.add_theme_color_override("font_color", Color("ffd8a8"))
+	boss_panel.add_child(boss_name_label)
+
+	boss_health_bar = ProgressBar.new()
+	boss_health_bar.position = Vector2(188, 12)
+	boss_health_bar.size = Vector2(404, 30)
+	boss_health_bar.show_percentage = false
+	boss_panel.add_child(boss_health_bar)
 
 	message_panel = ColorRect.new()
 	message_panel.position = Vector2(360, 245)
@@ -77,6 +101,23 @@ func show_wave_banner(current: int, total: int) -> void:
 
 func set_objective(defeated: int, required: int) -> void:
 	objective_label.text = "ZOMBIES  %d / %d" % [defeated, required]
+
+func show_boss(maximum: int) -> void:
+	boss_health_bar.max_value = maximum
+	boss_health_bar.value = maximum
+	boss_panel.visible = true
+
+func set_boss_health(current: int, maximum: int) -> void:
+	boss_health_bar.max_value = maximum
+	boss_health_bar.value = current
+
+func hide_boss() -> void:
+	boss_panel.visible = false
+
+func show_boss_banner(boss_name: String) -> void:
+	banner_label.text = boss_name
+	banner_label.visible = true
+	banner_timer = 1.8
 
 func show_result(title: String, subtitle: String) -> void:
 	message_panel.visible = true

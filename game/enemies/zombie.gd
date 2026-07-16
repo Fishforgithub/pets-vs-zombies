@@ -40,7 +40,7 @@ func _physics_process(delta: float) -> void:
 	if not is_instance_valid(target):
 		target = get_tree().get_first_node_in_group("player") as PlayerGirl
 	if is_instance_valid(character_sprite) and is_instance_valid(target):
-		character_sprite.flip_h = target.global_position.x < global_position.x
+		character_sprite.flip_h = target.global_position.x > global_position.x
 
 	attack_cooldown = maxf(0.0, attack_cooldown - delta)
 	attack_animation_timer = maxf(0.0, attack_animation_timer - delta)
