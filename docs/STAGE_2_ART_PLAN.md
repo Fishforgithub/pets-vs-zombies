@@ -20,7 +20,7 @@ The girl and her pet enter a colorful abandoned neighborhood hospital after cros
 ## Safety and tone
 
 - All enemies are fictional adult cartoon zombies.
-- No blood, gore, exposed organs, exposed bone, realistic wounds, patient suffering, or identifiable real hospital branding.
+- No blood, exposed organs, realistic wounds, patient suffering, or identifiable real hospital branding. Restrained stylized exposed bone is allowed only for the already approved zombie-dog design; keep it dry, graphic, and non-gory.
 - The wheelchair enemy is designed around runaway momentum and directional defense, not mockery of disability. Defeat leaves the character safely dazed with the chair intact or gently tipped.
 - Medical props use abstract symbols only; runtime text and localization remain in Godot UI.
 
