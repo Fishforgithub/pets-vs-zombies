@@ -25,7 +25,8 @@ Stage 2 hospital character production is underway:
 - zombie crow identity, six-frame flight cycle, dive, hurt, and defeated states are delivered
 - zombie dog identity, six-frame sprint cycle, pounce, hurt, and defeated states are delivered
 - zombie nurse identity, corrected six-frame walk cycle, throw, ally-buff, hurt, and defeated states are delivered
-- zombie doctor identity and six-frame walk cycle are delivered; electric-action sheet is next
+- zombie doctor identity, six-frame walk cycle, zap, hurt, and defeated states are delivered
+- wheelchair zombie identity is the next character-art task
 
 ## Stage 1 boss completion
 
@@ -58,8 +59,8 @@ For complete asset paths, frame order, FPS, facing rules, pivots, collision guid
 
 1. Read any `ready` items added by Codex to `docs/ART_REQUEST_QUEUE.md`.
 2. Verify that Codex has integrated or cherry-picked the latest art branch before changing paths or layouts.
-3. Produce the zombie doctor electric attack, hurt, and defeated action sheet with explicit user review.
-4. Continue with wheelchair zombie identity after the doctor action set is delivered.
+3. Produce the wheelchair zombie identity with explicit user review.
+4. After identity approval, produce wheelchair roll, charge, hurt/stun, and defeated states.
 5. Begin UI production only from a committed request that specifies Godot consumers, dimensions, states, and NinePatch margins.
 6. Keep all new character and creature image drafts out of Git until explicit user approval.
 

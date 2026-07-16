@@ -100,10 +100,13 @@ The authored direction is left-facing. Display as-is while moving or attacking l
 |---|---|---|---|
 | `assets/enemies/zombie_doctor/idle.png` | 1 x 1, 256 x 256 | identity anchor / electric-ready stance | Static until the approved walk cycle is available |
 | `assets/enemies/zombie_doctor/walk_sheet.png` | 3 x 2, 6 frames of 256 x 256 | `walk` burdened shamble frames 0–5 | Loop, 8 FPS |
+| `assets/enemies/zombie_doctor/action_sheet.png` | 3 x 1, 256 x 256 cells | index 0 `zap`, 1 `hurt`, 2 `defeated` | State-selected poses; defeated holds |
 
 The authored paddle spark is an identity cue only. Damage range, zap beam, hit timing, and status-control effects must use separate gameplay/VFX nodes. Preserve the crooked glasses, mismatched eyes, wild dark hair, cream coat, coral tie/armband, turquoise shirt, shoulder box, two paddles, and coiled cables across future animation sheets.
 
 Keep a stable bottom-center pivot while the walk alternates contact, down, and passing poses. The carried box, clipped paddle, and coiled lead visibly lag the body but remain decorative during `walk`; electric damage must only begin from the dedicated attack state.
+
+For `zap`, enable one short forward attack area or separate beam VFX only during the authored discharge window; the visible arc does not define collision length. `hurt` cancels the active zap and any control status application. `defeated` permanently disables electric output, navigation, damage, and collision before holding the grounded pose with a dark device screen.
 
 ## Stage 1 boss: Undead Foreman
 
