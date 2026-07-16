@@ -70,8 +70,11 @@ The authored direction is left-facing. Display as-is while running/attacking lef
 |---|---|---|---|
 | `assets/enemies/zombie_dog/idle.png` | 1 x 1, 256 x 256 | identity anchor / ready stance | Static until the approved run cycle is available |
 | `assets/enemies/zombie_dog/run_sheet.png` | 3 x 2, 6 frames of 256 x 256 | `run` sprint frames 0–5 | Loop, 12 FPS |
+| `assets/enemies/zombie_dog/action_sheet.png` | 3 x 1, 256 x 256 cells | index 0 `pounce`, 1 `hurt`, 2 `defeated` | State-selected poses; defeated holds |
 
 Keep the torso collision shape at a stable local offset across the full run cycle; do not move or resize gameplay collision to follow the extended forelegs, hind legs, tail, or exposed ribs. The long airborne stride at frame index 2 is still part of the looping sprint and does not by itself trigger pounce damage.
+
+For `pounce`, move the enemy body along a short authored gameplay arc and enable the bite hitbox only during the active overlap window; the pose alone must not deal continuous damage. `hurt` cancels pounce damage and uses backward knockback. `defeated` permanently disables navigation, damage, and collision before holding the collapsed pose for cleanup.
 
 ## Stage 1 boss: Undead Foreman
 

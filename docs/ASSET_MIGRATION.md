@@ -43,6 +43,7 @@ The source repository `Fishforgithub/tea-line-bot` is read-only. Copy only appro
 | `assets/enemies/zombie_crow/action_sheet.png` | Three-pose generation derived from the zombie crow identity anchor | User-approved; dive, hurt, and defeated 256×256 cells |
 | `assets/enemies/zombie_dog/idle.png` | Approved original Stage 2 low-runner generation | User-approved; 256×256 transparent zombie dog identity anchor with stylized exposed bone |
 | `assets/enemies/zombie_dog/run_sheet.png` | Six-frame generation derived from the approved zombie dog identity anchor | User-approved; 3×2 sprint loop of 256×256 transparent cells |
+| `assets/enemies/zombie_dog/action_sheet.png` | Three-pose generation derived from the approved zombie dog identity anchor | User-approved; pounce, hurt, and defeated 256×256 transparent cells |
 | `assets/bosses/stage1_foreman/idle.png` | Approved original Stage 1 boss generation | Approved; 512×512 transparent Undead Foreman identity anchor |
 | `assets/bosses/stage1_foreman/walk_sheet.png` | Four-frame generation derived from the Undead Foreman identity anchor | Approved; 2×2 heavy-walk sheet of 512×512 cells |
 | `assets/bosses/stage1_foreman/sweep_sheet.png` | Four-frame generation derived from the Undead Foreman identity anchor | Approved; 2×2 horizontal-sweep sheet of 512×512 cells |
