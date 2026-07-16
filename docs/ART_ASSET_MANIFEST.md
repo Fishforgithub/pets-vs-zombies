@@ -58,6 +58,9 @@ The authored direction is left-facing. Display as-is while flying or attacking l
 |---|---|---|---|
 | `assets/enemies/zombie_crow/idle.png` | 1 x 1, 256 x 256 | identity anchor / hover fallback | Static until the approved flight cycle is available |
 | `assets/enemies/zombie_crow/flight_sheet.png` | 3 x 2, 6 frames of 256 x 256 | `fly` hovering flight frames 0–5 | Loop, 10 FPS |
+| `assets/enemies/zombie_crow/action_sheet.png` | 3 x 1, 256 x 256 cells | index 0 `dive`, 1 `hurt`, 2 `defeated` | Dive and hurt are state poses; defeated holds |
+
+For `dive`, rotate/move the enemy body along the authored down-left attack vector and enable damage only during the dive window. `hurt` stops targeting and preserves airborne knockback. `defeated` disables damage and collision before the grounded cleanup pose.
 
 ## Stage 1 boss: Undead Foreman
 
