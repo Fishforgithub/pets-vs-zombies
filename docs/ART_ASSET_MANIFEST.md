@@ -108,6 +108,16 @@ Keep a stable bottom-center pivot while the walk alternates contact, down, and p
 
 For `zap`, enable one short forward attack area or separate beam VFX only during the authored discharge window; the visible arc does not define collision length. `hurt` cancels the active zap and any control status application. `defeated` permanently disables electric output, navigation, damage, and collision before holding the grounded pose with a dark device screen.
 
+### Wheelchair zombie
+
+The authored direction is left-facing, with the reinforced bumper and front caster on the left. Display as-is while rolling or charging left and use `flip_h = true` for right-facing behavior. This is an armored directional charger: author separate collision shapes for the zombie body, wheelchair body, and forward shield plate.
+
+| Asset | Grid / order | Runtime mapping | Playback |
+|---|---|---|---|
+| `assets/enemies/wheelchair_zombie/idle.png` | 1 x 1, 256 x 256 | identity anchor / braced ready stance | Static until the approved roll cycle is available |
+
+The broad cream-and-coral footplate is the forward shield and may block or reduce weak frontal shots. The exposed zombie torso and rear/upper chair remain the vulnerable area. Exclude spokes, wheel rims, front caster, brake lever, hair, and blanket edges from the persistent body hurtbox; never derive collision from sprite alpha. Mirror the shield offset and charge direction together when facing changes.
+
 ## Stage 1 boss: Undead Foreman
 
 Boss frame cells are `512 x 512`, not the normal `256 x 256`. The authored direction is left-facing. Mirror the complete boss and every authored attack collider together when facing right.
