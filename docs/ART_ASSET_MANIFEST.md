@@ -76,6 +76,16 @@ Keep the torso collision shape at a stable local offset across the full run cycl
 
 For `pounce`, move the enemy body along a short authored gameplay arc and enable the bite hitbox only during the active overlap window; the pose alone must not deal continuous damage. `hurt` cancels pounce damage and uses backward knockback. `defeated` permanently disables navigation, damage, and collision before holding the collapsed pose for cleanup.
 
+### Zombie nurse
+
+The authored direction is left-facing. Display as-is while moving or throwing left and use `flip_h = true` for right-facing behavior. This is a mid-range support enemy: keep the body hitbox on the torso and exclude the held bandage roll, belt rolls, pouch, hair, and nurse cap.
+
+| Asset | Grid / order | Runtime mapping | Playback |
+|---|---|---|---|
+| `assets/enemies/zombie_nurse/idle.png` | 1 x 1, 256 x 256 | identity anchor / support-ready stance | Static until the approved walk cycle is available |
+
+Bandage projectiles and buff effects must be separate gameplay nodes; do not use the bandage pixels in this identity sprite as collision or projectile geometry. Preserve the mint cap, cream-and-mint tunic, coral bandage wraps, turquoise pouch, and three-roll loadout across future animation sheets.
+
 ## Stage 1 boss: Undead Foreman
 
 Boss frame cells are `512 x 512`, not the normal `256 x 256`. The authored direction is left-facing. Mirror the complete boss and every authored attack collider together when facing right.
