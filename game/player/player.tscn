@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3]
+[gd_scene load_steps=24 format=3]
 
 [ext_resource type="Script" path="res://game/player/player.gd" id="1"]
 [ext_resource type="Texture2D" path="res://assets/characters/girl/girl_idle.png" id="2"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" path="res://assets/characters/girl/girl_crouch.png" id="5"]
 [ext_resource type="Texture2D" path="res://assets/characters/girl/girl_combat_sheet.png" id="6"]
 [ext_resource type="Texture2D" path="res://assets/characters/girl/girl_damage_sheet.png" id="7"]
+[ext_resource type="PackedScene" path="res://game/progression/run_progression.tscn" id="8"]
 
 [sub_resource type="CapsuleShape2D" id="1"]
 radius = 11.0
@@ -173,6 +174,8 @@ position = Vector2(2, -44)
 scale = Vector2(0.44, 0.44)
 sprite_frames = SubResource("8")
 animation = &"idle"
+
+[node name="Progression" parent="." instance=ExtResource("8")]
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(180, -80)

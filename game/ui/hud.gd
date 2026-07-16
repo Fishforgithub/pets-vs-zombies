@@ -3,6 +3,7 @@ extends CanvasLayer
 
 var health_label: Label
 var ammo_label: Label
+var progression_label: Label
 var wave_label: Label
 var objective_label: Label
 var banner_label: Label
@@ -16,6 +17,8 @@ var message_label: Label
 func _ready() -> void:
 	health_label = _make_label(Vector2(24, 18), 24, Color("ffe3e3"))
 	ammo_label = _make_label(Vector2(24, 52), 22, Color("fff3bf"))
+	progression_label = _make_label(Vector2(24, 84), 18, Color("b2f2bb"))
+	progression_label.size = Vector2(520, 32)
 	wave_label = _make_label(Vector2(900, 18), 22, Color.WHITE)
 	wave_label.size = Vector2(350, 36)
 	wave_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
@@ -89,6 +92,9 @@ func set_health(current: int, maximum: int) -> void:
 
 func set_ammo(current: int, maximum: int) -> void:
 	ammo_label.text = "AMMO  %02d / %02d" % [current, maximum]
+
+func set_progression(level: int, experience: int, required: int, currency: int) -> void:
+	progression_label.text = "LV %d   XP %d / %d   GEARS %d" % [level, experience, required, currency]
 
 func set_wave(current: int, total: int, defeated: int, required: int) -> void:
 	wave_label.text = "WAVE  %d / %d" % [current, total]

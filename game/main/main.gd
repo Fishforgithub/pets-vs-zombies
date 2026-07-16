@@ -26,6 +26,7 @@ func _ready() -> void:
 	_setup_production_art()
 	player.health_changed.connect(hud.set_health)
 	player.ammo_changed.connect(hud.set_ammo)
+	player.progression.progress_changed.connect(hud.set_progression)
 	player.died.connect(_on_player_died)
 	wave_director.wave_started.connect(_on_wave_started)
 	wave_director.wave_progress_changed.connect(_on_wave_progress_changed)
@@ -34,6 +35,7 @@ func _ready() -> void:
 	pet.owner_player = player
 	hud.set_health(player.health, player.max_health)
 	hud.set_ammo(player.ammo, player.magazine_size)
+	hud.set_progression(player.progression.level, player.progression.experience, player.progression.experience_required_for_next_level(), player.progression.currency)
 	wave_director.configure(_spawn_zombie)
 	wave_director.start()
 
@@ -79,8 +81,9 @@ func _on_wave_started(wave_number: int, total_waves: int, enemy_count: int) -> v
 func _on_wave_progress_changed(wave_number: int, total_waves: int, defeated: int, enemy_count: int) -> void:
 	hud.set_wave(wave_number, total_waves, defeated, enemy_count)
 
-func _on_zombie_defeated(_enemy: ZombieEnemy) -> void:
+func _on_zombie_defeated(enemy: ZombieEnemy) -> void:
 	defeated_count += 1
+	player.progression.award_rewards(enemy.experience_reward, enemy.currency_reward)
 
 func _on_all_waves_completed() -> void:
 	if finished:
@@ -100,9 +103,10 @@ func _spawn_foreman() -> void:
 func _on_foreman_health_changed(current: int, maximum: int) -> void:
 	hud.set_boss_health(current, maximum)
 
-func _on_foreman_defeated(_boss: ForemanBoss) -> void:
+func _on_foreman_defeated(boss: ForemanBoss) -> void:
 	if finished:
 		return
+	player.progression.award_rewards(boss.experience_reward, boss.currency_reward)
 	finished = true
 	player.is_dead = true
 	hud.hide_boss()

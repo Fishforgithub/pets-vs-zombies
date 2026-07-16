@@ -6,6 +6,7 @@ signal ammo_changed(current: int, maximum: int)
 signal died
 
 const BULLET_SCENE := preload("res://game/projectiles/bullet.tscn")
+const STARTER_WEAPON: WeaponData = preload("res://game/data/weapons/starter_pistol.tres")
 
 @export var move_speed: float = 250.0
 @export var jump_velocity: float = -470.0
@@ -27,13 +28,17 @@ var hurt_animation_timer: float = 0.0
 var is_crouching: bool = false
 var is_reloading: bool = false
 var is_dead: bool = false
+var equipped_weapon: WeaponData
 
 @onready var character_sprite: AnimatedSprite2D = $CharacterSprite
 @onready var standing_collision_shape: CollisionShape2D = $StandingCollisionShape
 @onready var crouch_collision_shape: CollisionShape2D = $CrouchCollisionShape
+@onready var progression: RunProgression = $Progression
 
 func _ready() -> void:
 	health = max_health
+	equipped_weapon = STARTER_WEAPON
+	_apply_equipped_weapon_data()
 	ammo = magazine_size
 	add_to_group("player")
 	health_changed.emit(health, max_health)
@@ -125,6 +130,13 @@ func _update_action_timers(delta: float) -> void:
 	ammo = magazine_size
 	ammo_changed.emit(ammo, magazine_size)
 
+func _apply_equipped_weapon_data() -> void:
+	if equipped_weapon == null:
+		return
+	magazine_size = equipped_weapon.magazine_size
+	fire_interval = equipped_weapon.fire_interval
+	reload_duration = equipped_weapon.reload_duration
+
 func _try_fire() -> void:
 	if is_reloading or fire_cooldown > 0.0:
 		return
@@ -135,7 +147,8 @@ func _try_fire() -> void:
 	var bullet := BULLET_SCENE.instantiate() as GameBullet
 	get_tree().current_scene.add_child(bullet)
 	bullet.global_position = global_position + aim_direction * 28.0 + Vector2(0.0, -18.0)
-	bullet.configure(aim_direction, &"enemies", 25, Color("ffe066"))
+	var weapon_level := progression.get_weapon_level(equipped_weapon.weapon_id)
+	bullet.configure(aim_direction, &"enemies", equipped_weapon.damage_at(weapon_level), Color("ffe066"))
 	ammo -= 1
 	fire_cooldown = fire_interval
 	fire_animation_timer = fire_animation_duration

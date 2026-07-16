@@ -11,6 +11,8 @@ signal defeated(enemy: ZombieEnemy)
 @export var attack_animation_duration: float = 0.22
 @export var hurt_animation_duration: float = 0.18
 @export var faint_duration: float = 0.45
+@export var experience_reward: int = 18
+@export var currency_reward: int = 12
 
 var health: int
 var target: PlayerGirl

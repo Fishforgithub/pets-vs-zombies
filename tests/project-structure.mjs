@@ -30,6 +30,12 @@ const requiredFiles = [
   'game/stages/wave_director.gd',
   'game/player/player.tscn',
   'game/player/player.gd',
+  'game/progression/run_progression.tscn',
+  'game/progression/run_progression.gd',
+  'game/progression/weapon_data.gd',
+  'game/progression/pet_skill_data.gd',
+  'game/data/weapons/starter_pistol.tres',
+  'game/data/pet_skills/energy_bolt.tres',
   'game/pets/pet_companion.tscn',
   'game/pets/pet_companion.gd',
   'game/enemies/zombie.tscn',
@@ -42,7 +48,8 @@ const requiredFiles = [
   'tests/production-animations.gd',
   'tests/gameplay-smoke.gd',
   'tests/wave-director.gd',
-  'tests/foreman-boss.gd'
+  'tests/foreman-boss.gd',
+  'tests/progression.gd'
 ];
 
 const errors = [];

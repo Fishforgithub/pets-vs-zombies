@@ -80,6 +80,8 @@ func _run() -> void:
 			break
 	_check(main.defeated_count == 5, "Five fast test waves each award one defeat")
 	_check(main.wave_director.finished, "Defeating all five waves completes the director")
+	_check(player.progression.level == 2 and player.progression.experience == 10, "Five courier rewards level the player once with XP overflow")
+	_check(player.progression.currency == 60, "Five courier rewards grant spendable currency")
 	_check(is_instance_valid(main.active_boss), "Foreman enters after wave five")
 	_check(main.hud.boss_panel.visible, "Boss entrance shows the boss health bar")
 	if is_instance_valid(main.active_boss):
@@ -88,6 +90,8 @@ func _run() -> void:
 		await process_frame
 		await physics_frame
 	_check(main.finished, "Defeating the boss marks the run finished")
+	_check(player.progression.level == 3 and player.progression.currency == 180, "Boss rewards grant XP, currency, and another level")
+	_check("LV 3" in main.hud.progression_label.text, "HUD reflects earned progression")
 	_check(main.hud.message_panel.visible, "Stage completion shows the result panel")
 	_check("STAGE CLEAR!" in main.hud.message_label.text, "Stage completion shows the clear message")
 

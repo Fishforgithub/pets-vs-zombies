@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="WeaponData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://game/progression/weapon_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+weapon_id = &"starter_pistol"
+display_name = "Starter Pistol"
+base_damage = 25
+damage_per_level = 6
+fire_interval = 0.12
+magazine_size = 24
+reload_duration = 0.65
+upgrade_base_cost = 45
+max_level = 5

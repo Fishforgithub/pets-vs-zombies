@@ -19,6 +19,8 @@ enum State {
 @export var attack_interval: float = 1.25
 @export var hurt_duration: float = 0.18
 @export var defeat_delay: float = 0.9
+@export var experience_reward: int = 180
+@export var currency_reward: int = 120
 
 var health: int
 var target: PlayerGirl

@@ -2,6 +2,7 @@ class_name PetCompanion
 extends CharacterBody2D
 
 const BULLET_SCENE := preload("res://game/projectiles/bullet.tscn")
+const ENERGY_BOLT: PetSkillData = preload("res://game/data/pet_skills/energy_bolt.tres")
 
 @export var follow_offset: Vector2 = Vector2(-72.0, -8.0)
 @export var follow_speed: float = 310.0
@@ -43,7 +44,7 @@ func _physics_process(delta: float) -> void:
 
 func _nearest_enemy() -> Node2D:
 	var nearest: Node2D
-	var nearest_distance := attack_range
+	var nearest_distance := ENERGY_BOLT.attack_range
 	for candidate in get_tree().get_nodes_in_group("enemies"):
 		if not candidate is Node2D:
 			continue
@@ -59,8 +60,9 @@ func _fire_at(target: Node2D) -> void:
 	get_tree().current_scene.add_child(bullet)
 	bullet.global_position = global_position + shot_direction * 22.0 + Vector2(0, -18)
 	bullet.speed = 560.0
-	bullet.configure(shot_direction, &"enemies", 12, Color("74c0fc"))
-	attack_cooldown = attack_interval
+	var skill_level := owner_player.progression.get_pet_skill_level(ENERGY_BOLT.skill_id)
+	bullet.configure(shot_direction, &"enemies", ENERGY_BOLT.damage_at(skill_level), Color("74c0fc"))
+	attack_cooldown = ENERGY_BOLT.cooldown_at(skill_level)
 
 func _draw() -> void:
 	# Aqua-like temporary companion silhouette; production pet art will replace it.

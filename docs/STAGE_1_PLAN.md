@@ -21,8 +21,8 @@ Stage 1 is complete when the player can finish five escalating waves, defeat the
 - [x] Replace fixed five-enemy spawning with a five-wave director.
 - [x] Add wave HUD, inter-wave transitions, and configurable spawn pacing.
 - [x] Add a separately testable Foreman boss scene, boss health bar, and sweep attack.
-- [ ] Add enemy XP/currency rewards and player progression state.
-- [ ] Add weapon and pet-skill upgrade data models.
+- [x] Add enemy XP/currency rewards and player progression state.
+- [x] Add weapon and pet-skill upgrade data models.
 - [ ] Add Stage 1 reward result and next-stage card placeholder.
 - [ ] Re-run all checks, export Web release, deploy, and verify the public URL.
 
