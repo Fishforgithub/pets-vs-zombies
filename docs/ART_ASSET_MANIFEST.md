@@ -62,6 +62,14 @@ The authored direction is left-facing. Display as-is while flying or attacking l
 
 For `dive`, rotate/move the enemy body along the authored down-left attack vector and enable damage only during the dive window. `hurt` stops targeting and preserves airborne knockback. `defeated` disables damage and collision before the grounded cleanup pose.
 
+### Zombie dog
+
+The authored direction is left-facing. Display as-is while running/attacking left and use `flip_h = true` for right-facing movement. This is a low-profile fast enemy: use a horizontal torso hitbox that excludes the raised ears, tail tip, and exposed rib silhouette.
+
+| Asset | Grid / order | Runtime mapping | Playback |
+|---|---|---|---|
+| `assets/enemies/zombie_dog/idle.png` | 1 x 1, 256 x 256 | identity anchor / ready stance | Static until the approved run cycle is available |
+
 ## Stage 1 boss: Undead Foreman
 
 Boss frame cells are `512 x 512`, not the normal `256 x 256`. The authored direction is left-facing. Mirror the complete boss and every authored attack collider together when facing right.
