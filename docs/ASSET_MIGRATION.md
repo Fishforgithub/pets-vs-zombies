@@ -47,6 +47,7 @@ The source repository `Fishforgithub/tea-line-bot` is read-only. Copy only appro
 | `assets/enemies/zombie_nurse/idle.png` | Approved original Stage 2 support-enemy generation | User-approved; 256×256 transparent zombie nurse identity anchor with bandage-roll loadout |
 | `assets/enemies/zombie_nurse/walk_sheet.png` | Six-frame generation derived from the approved zombie nurse identity anchor | User-approved corrected 3×2 shamble loop with distinct contact, down, and passing poses |
 | `assets/enemies/zombie_nurse/action_sheet.png` | Four-pose generation derived from the approved zombie nurse identity anchor | User-approved; throw, ally-buff, hurt, and defeated 256×256 transparent cells |
+| `assets/enemies/zombie_doctor/idle.png` | Approved original Stage 2 electric-controller generation | User-approved; 256×256 transparent zombie doctor identity anchor with portable defibrillator loadout |
 | `assets/bosses/stage1_foreman/idle.png` | Approved original Stage 1 boss generation | Approved; 512×512 transparent Undead Foreman identity anchor |
 | `assets/bosses/stage1_foreman/walk_sheet.png` | Four-frame generation derived from the Undead Foreman identity anchor | Approved; 2×2 heavy-walk sheet of 512×512 cells |
 | `assets/bosses/stage1_foreman/sweep_sheet.png` | Four-frame generation derived from the Undead Foreman identity anchor | Approved; 2×2 horizontal-sweep sheet of 512×512 cells |
