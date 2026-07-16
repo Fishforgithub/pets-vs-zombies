@@ -46,12 +46,19 @@ Copy this block for each request. Keep one stable request ID for all revisions.
 - Card systems must distinguish background frame, illustration, rarity/state treatment, and runtime text layers.
 - Skill icons must remain readable at the smallest intended in-game size and include locked/cooldown treatment requirements.
 
+## Review policy
+
+- Always require explicit user visual approval for human characters, pets, common enemies, bosses, portraits that depict them, and any asset that changes an established character identity.
+- Art production may self-review and automatically deliver ordinary environments, tiles, props, pickups, VFX, and functional UI components when they follow the approved style and request specification.
+- Escalate any asset for explicit user review when it changes the core visual identity, introduces a major new style direction, depicts paid-purchase/monetization UI, or has ambiguous gameplay meaning.
+- Self-reviewed delivery still requires dimension, alpha, slicing, palette, manifest, and repository validation. Automatic approval does not lower technical quality requirements.
+
 ## Agent handoff procedure
 
 1. The implementation agent creates or updates a request and marks it `ready`.
 2. Commit and push the request; report the branch and commit SHA to the art-production conversation.
-3. Art production reads the request, marks it `generating`, and produces a review image.
-4. Only explicit user approval permits processing and repository delivery.
+3. Art production reads the request, marks it `generating`, and produces the requested asset.
+4. Character/creature imagery pauses for explicit user review; eligible environment, prop, VFX, and ordinary UI work may pass art-production self-review.
 5. Delivery updates `docs/ART_ASSET_MANIFEST.md`, `docs/ASSET_MIGRATION.md`, and this request to `delivered` with the art commit SHA.
 
 ## Active requests
