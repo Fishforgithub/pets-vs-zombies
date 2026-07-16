@@ -39,6 +39,7 @@ The source repository `Fishforgithub/tea-line-bot` is read-only. Copy only appro
 | `assets/enemies/umbrella_zombie/walk_sheet.png` | Six-frame generation derived from the umbrella zombie identity anchor | Approved; 3×2 shield-walk sheet of 256×256 cells |
 | `assets/enemies/umbrella_zombie/action_sheet.png` | Three-pose generation derived from the umbrella zombie identity anchor | User-approved; attack, hurt, and defeated 256×256 cells |
 | `assets/enemies/zombie_crow/idle.png` | Approved original Stage 2 aerial-enemy generation | User-approved; 256×256 transparent zombie crow identity anchor |
+| `assets/enemies/zombie_crow/flight_sheet.png` | Six-frame generation derived from the zombie crow identity anchor | User-approved; 3×2 flight loop of 256×256 cells |
 | `assets/bosses/stage1_foreman/idle.png` | Approved original Stage 1 boss generation | Approved; 512×512 transparent Undead Foreman identity anchor |
 | `assets/bosses/stage1_foreman/walk_sheet.png` | Four-frame generation derived from the Undead Foreman identity anchor | Approved; 2×2 heavy-walk sheet of 512×512 cells |
 | `assets/bosses/stage1_foreman/sweep_sheet.png` | Four-frame generation derived from the Undead Foreman identity anchor | Approved; 2×2 horizontal-sweep sheet of 512×512 cells |
