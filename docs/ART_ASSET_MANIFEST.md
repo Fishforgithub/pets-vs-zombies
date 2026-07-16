@@ -84,10 +84,13 @@ The authored direction is left-facing. Display as-is while moving or throwing le
 |---|---|---|---|
 | `assets/enemies/zombie_nurse/idle.png` | 1 x 1, 256 x 256 | identity anchor / support-ready stance | Static until the approved walk cycle is available |
 | `assets/enemies/zombie_nurse/walk_sheet.png` | 3 x 2, 6 frames of 256 x 256 | `walk` shamble frames 0–5 | Loop, 8 FPS |
+| `assets/enemies/zombie_nurse/action_sheet.png` | 4 x 1, 256 x 256 cells | index 0 `throw`, 1 `buff`, 2 `hurt`, 3 `defeated` | State-selected poses; defeated holds |
 
 Bandage projectiles and buff effects must be separate gameplay nodes; do not use the bandage pixels in this identity sprite as collision or projectile geometry. Preserve the mint cap, cream-and-mint tunic, coral bandage wraps, turquoise pouch, and three-roll loadout across future animation sheets.
 
 Keep a stable bottom-center pivot while the six-frame cycle alternates contact, down, and passing poses. The visible held roll and belt loadout are decorative during `walk`; throwing and ally-buff behavior must only start from their dedicated action states.
+
+For `throw`, spawn one separate bandage projectile from the forward hand and enable projectile motion only after release. For `buff`, apply the ally effect once at the action event and render the larger range indicator as a separate VFX node; the small authored pulse only identifies the pose. `hurt` cancels throw/buff events. `defeated` permanently disables support logic, navigation, damage, and collision before holding the collapsed pose.
 
 ## Stage 1 boss: Undead Foreman
 
