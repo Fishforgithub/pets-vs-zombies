@@ -81,6 +81,10 @@ func _run() -> void:
 				_check(walk_texture != null, "walk frame %d texture loads" % frame_index)
 				if walk_texture != null:
 					_check(walk_texture.get_size() == Vector2(256.0, 256.0), "walk frame %d is 256x256" % frame_index)
+		zombie._update_facing(-10.0)
+		_check(zombie.character_sprite.flip_h, "Right-authored courier mirrors toward a player on the left")
+		zombie._update_facing(10.0)
+		_check(not zombie.character_sprite.flip_h, "Right-authored courier displays as-is toward a player on the right")
 		zombie.velocity.x = zombie.move_speed
 		zombie._update_animation()
 		_check(zombie.character_sprite.animation == &"walk", "Moving zombie plays walk animation")

@@ -42,7 +42,7 @@ func _physics_process(delta: float) -> void:
 	if not is_instance_valid(target):
 		target = get_tree().get_first_node_in_group("player") as PlayerGirl
 	if is_instance_valid(character_sprite) and is_instance_valid(target):
-		character_sprite.flip_h = target.global_position.x > global_position.x
+		_update_facing(target.global_position.x - global_position.x)
 
 	attack_cooldown = maxf(0.0, attack_cooldown - delta)
 	attack_animation_timer = maxf(0.0, attack_animation_timer - delta)
@@ -66,6 +66,12 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	_update_animation()
 	queue_redraw()
+
+func _update_facing(distance_x: float) -> void:
+	if not is_instance_valid(character_sprite) or absf(distance_x) <= 0.1:
+		return
+	# Courier production art is authored facing right; mirror only for leftward targets.
+	character_sprite.flip_h = distance_x < 0.0
 
 func take_damage(amount: int, knockback_direction: Vector2 = Vector2.ZERO) -> void:
 	if is_dead:
@@ -113,4 +119,3 @@ func _draw() -> void:
 	draw_rect(Rect2(-12, -13, 8, 13), Color("343a40"))
 	draw_rect(Rect2(5, -13, 8, 13), Color("343a40"))
 	draw_line(Vector2(10 * facing, -36), Vector2(26 * facing, -29), skin, 7.0)
-

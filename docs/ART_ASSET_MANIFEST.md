@@ -28,7 +28,7 @@ The girl's authored gameplay direction is right-facing. Use `flip_h = true` when
 
 ## Courier zombie
 
-The authored direction is left-facing. Display as-is while moving/attacking left; use `flip_h = true` when facing right. Keep damage and movement hitboxes smaller than the satchel.
+The authored direction is right-facing. Display as-is while moving/attacking right; use `flip_h = true` when facing left. Keep damage and movement hitboxes smaller than the satchel.
 
 | Asset | Grid / order | Runtime mapping | Playback |
 |---|---|---|---|
