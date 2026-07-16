@@ -1,6 +1,8 @@
 class_name GameHud
 extends CanvasLayer
 
+const BOSS_HEALTH_FRAME: Texture2D = preload("res://assets/ui/stage1/boss_health_frame.png")
+
 var health_label: Label
 var ammo_label: Label
 var progression_label: Label
@@ -11,6 +13,7 @@ var banner_timer: float = 0.0
 var boss_panel: ColorRect
 var boss_name_label: Label
 var boss_health_bar: ProgressBar
+var boss_frame: TextureRect
 var message_panel: ColorRect
 var message_label: Label
 
@@ -32,25 +35,40 @@ func _ready() -> void:
 	banner_label.visible = false
 
 	boss_panel = ColorRect.new()
-	boss_panel.position = Vector2(335, 18)
-	boss_panel.size = Vector2(610, 54)
+	boss_panel.position = Vector2(320, 8)
+	boss_panel.size = Vector2(640, 96)
 	boss_panel.color = Color(0.16, 0.05, 0.06, 0.9)
 	boss_panel.visible = false
 	add_child(boss_panel)
 
-	boss_name_label = Label.new()
-	boss_name_label.position = Vector2(12, 7)
-	boss_name_label.size = Vector2(180, 38)
-	boss_name_label.text = "UNDEAD FOREMAN"
-	boss_name_label.add_theme_font_size_override("font_size", 17)
-	boss_name_label.add_theme_color_override("font_color", Color("ffd8a8"))
-	boss_panel.add_child(boss_name_label)
-
 	boss_health_bar = ProgressBar.new()
-	boss_health_bar.position = Vector2(188, 12)
-	boss_health_bar.size = Vector2(404, 30)
+	boss_health_bar.position = Vector2(60, 16)
+	boss_health_bar.size = Vector2(520, 64)
 	boss_health_bar.show_percentage = false
 	boss_panel.add_child(boss_health_bar)
+
+	boss_name_label = Label.new()
+	boss_name_label.position = Vector2(60, 16)
+	boss_name_label.size = Vector2(520, 64)
+	boss_name_label.text = "UNDEAD FOREMAN"
+	boss_name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	boss_name_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	boss_name_label.add_theme_font_size_override("font_size", 18)
+	boss_name_label.add_theme_color_override("font_color", Color("fff3bf"))
+	boss_name_label.add_theme_color_override("font_shadow_color", Color.BLACK)
+	boss_name_label.add_theme_constant_override("shadow_offset_x", 2)
+	boss_name_label.add_theme_constant_override("shadow_offset_y", 2)
+	boss_panel.add_child(boss_name_label)
+
+	boss_frame = TextureRect.new()
+	boss_frame.name = "ProductionFrame"
+	boss_frame.position = Vector2.ZERO
+	boss_frame.size = Vector2(640, 96)
+	boss_frame.texture = BOSS_HEALTH_FRAME
+	boss_frame.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	boss_frame.stretch_mode = TextureRect.STRETCH_KEEP
+	boss_frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	boss_panel.add_child(boss_frame)
 
 	message_panel = ColorRect.new()
 	message_panel.position = Vector2(360, 245)

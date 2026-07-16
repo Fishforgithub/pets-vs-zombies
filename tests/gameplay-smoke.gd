@@ -84,6 +84,7 @@ func _run() -> void:
 	_check(player.progression.currency == 60, "Five courier rewards grant spendable currency")
 	_check(is_instance_valid(main.active_boss), "Foreman enters after wave five")
 	_check(main.hud.boss_panel.visible, "Boss entrance shows the boss health bar")
+	_check(main.hud.boss_frame.texture != null and main.hud.boss_frame.texture.get_size() == Vector2(640.0, 96.0), "Boss HUD uses the production health frame")
 	if is_instance_valid(main.active_boss):
 		main.active_boss.defeat_delay = 0.0
 		main.active_boss.take_damage(main.active_boss.health)
