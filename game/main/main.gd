@@ -31,6 +31,7 @@ func _ready() -> void:
 	player.ammo_changed.connect(hud.set_ammo)
 	player.progression.progress_changed.connect(hud.set_progression)
 	player.died.connect(_on_player_died)
+	stage_result.configure_progression(player.progression)
 	stage_result.retry_requested.connect(_on_retry_requested)
 	wave_director.wave_started.connect(_on_wave_started)
 	wave_director.wave_progress_changed.connect(_on_wave_progress_changed)

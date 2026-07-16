@@ -14,22 +14,39 @@ func _run() -> void:
 		return
 	var result := packed_scene.instantiate() as StageResultScreen
 	root.add_child(result)
+	var progression_scene := load("res://game/progression/run_progression.tscn") as PackedScene
+	var progression := progression_scene.instantiate() as RunProgression
+	root.add_child(progression)
 	await process_frame
 	result.retry_requested.connect(_on_retry_requested)
 
 	_check(not result.visible, "Stage result starts hidden")
 	_check(result.get_node("Overlay/ResultPanel") is NinePatchRect, "Result panel is ready for NinePatch production art")
 	_check(result.next_stage_card is TextureButton, "Next-stage card is ready for texture states")
+	_check(result.get_node("Overlay/ResultPanel/WeaponUpgradePanel") is NinePatchRect, "Weapon shop card is ready for NinePatch production art")
+	_check(result.get_node("Overlay/ResultPanel/PetUpgradePanel") is NinePatchRect, "Pet shop card is ready for NinePatch production art")
+	progression.award_rewards(270, 180)
+	result.configure_progression(progression)
 	result.show_stage_clear(270, 180, 3)
 	_check(result.visible, "Stage result becomes visible after stage clear")
 	_check("XP +270" in result.reward_label.text and "GEARS +180" in result.reward_label.text, "Result summarizes earned rewards")
 	_check("PLAYER LEVEL  3" in result.level_label.text, "Result shows the reached player level")
 	_check(result.next_stage_card.disabled, "Unavailable Stage 2 card is locked")
 	_check("STAGE 2" in result.stage_label.text and "COMING SOON" in result.status_label.text, "Next-stage placeholder explains availability")
+	_check("AVAILABLE GEARS  180" in result.shop_currency_label.text, "Upgrade shop shows spendable Stage 1 currency")
+	_check("LEVEL 1 / 5" in result.weapon_upgrade_label.text and not result.weapon_upgrade_button.disabled, "Affordable weapon upgrade is available")
+	_check("LEVEL 1 / 5" in result.pet_upgrade_label.text and not result.pet_upgrade_button.disabled, "Affordable pet upgrade is available")
+	result._on_weapon_upgrade_pressed()
+	_check(progression.get_weapon_level(&"starter_pistol") == 2 and progression.currency == 135, "Weapon shop button buys the configured upgrade")
+	_check("LEVEL 2 / 5" in result.weapon_upgrade_label.text and "AVAILABLE GEARS  135" in result.shop_currency_label.text, "Weapon purchase refreshes shop values")
+	result._on_pet_upgrade_pressed()
+	_check(progression.get_pet_skill_level(&"energy_bolt") == 2 and progression.currency == 100, "Pet shop button buys the configured upgrade")
+	_check("LEVEL 2 / 5" in result.pet_upgrade_label.text and "AVAILABLE GEARS  100" in result.shop_currency_label.text, "Pet purchase refreshes shop values")
 	result._on_retry_pressed()
 	_check(retry_seen, "Replay control emits a retry request")
 
 	result.queue_free()
+	progression.queue_free()
 	_finish()
 
 func _on_retry_requested() -> void:

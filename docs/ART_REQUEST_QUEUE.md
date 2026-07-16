@@ -42,6 +42,42 @@ Request IDs use `AR-YYYYMMDD-NNN`. Allowed states are `queued`, `approved`, `in-
   - No baked stage names, localized text, prices, or reward numbers.
   - Unused pixels are transparent; filtering and mipmaps can remain disabled without seams.
 
+### AR-20260716-003 — Upgrade shop card panel
+
+- Status: `queued`
+- Screen use: Reusable frame behind the weapon and pet-skill upgrade summaries on the Stage 1 result screen; runtime labels show the item name, current level, improved stats, and price.
+- Godot node: `NinePatchRect` at `StageResultScreen/Overlay/ResultPanel/WeaponUpgradePanel` and `StageResultScreen/Overlay/ResultPanel/PetUpgradePanel` in `game/ui/stage_result.tscn`.
+- Output path: `res://assets/ui/upgrade_card_panel.png`.
+- Pixel dimensions: 192 x 192 pixels.
+- Grid / slicing: 1 x 1 static reusable panel; no animation frames. The same image must support both weapon and pet-skill cards without baked category imagery.
+- Interaction states: none; item names, levels, statistics, prices, affordability, and focus remain runtime Godot controls.
+- Nine-patch borders: left 24 px, top 24 px, right 24 px, bottom 24 px. Keep corner bolts and border ornament outside the stretchable center.
+- Acceptance criteria:
+  - File decodes as a valid lossless 192 x 192 PNG with transparency outside the card silhouette.
+  - Crisp pixel-art construction/workbench styling matches the Stage 1 result panel and boss health frame without depicting a character or pet.
+  - Borders remain intact when stretched from 192 x 192 through the current 206 x 252 runtime size.
+  - The center remains uncluttered behind four or five centered lines at 14–17 px font sizes.
+  - Weapon and pet cards remain distinguishable through runtime header color and text; do not bake category labels, icons, prices, levels, or statistics.
+  - Filtering and mipmaps can remain disabled without seams.
+
+### AR-20260716-004 — Upgrade button states
+
+- Status: `queued`
+- Screen use: Reusable purchase control for weapon and pet-skill upgrades on the Stage 1 result screen, including an unambiguous disabled state when gears are insufficient or the upgrade is maxed.
+- Godot node: `Button` theme `StyleBoxTexture` states at `StageResultScreen/Overlay/ResultPanel/WeaponUpgradePanel/UpgradeButton` and `StageResultScreen/Overlay/ResultPanel/PetUpgradePanel/UpgradeButton` in `game/ui/stage_result.tscn`.
+- Output path: `res://assets/ui/upgrade_button_states.png`.
+- Pixel dimensions: 768 x 48 pixels total; four 192 x 48 cells.
+- Grid / slicing: 4 x 1, each cell 192 x 48. Left-to-right order: `normal`, `hover`, `pressed`, `disabled`.
+- Interaction states: normal, hover/focus, pressed, disabled. Disabled must remain distinguishable without relying only on color.
+- Nine-patch borders: for every 192 x 48 cell, left 12 px, top 12 px, right 12 px, bottom 12 px; runtime target is approximately 178 x 44.
+- Acceptance criteria:
+  - File decodes as a valid lossless 768 x 48 PNG with all four cells present exactly once in the documented order.
+  - Every state keeps identical outer bounds, content center, and baseline so state changes do not jump.
+  - Hover/focus has a visible keyboard-focus treatment; pressed reads as depressed; disabled uses both value and silhouette/detail changes.
+  - The stretchable center safely supports runtime labels such as `UPGRADE 45`, `MAXED`, and localized equivalents.
+  - No baked text, prices, currency values, item names, characters, pets, or copyrighted marks.
+  - Unused pixels are transparent; filtering and mipmaps can remain disabled without seams.
+
 ## Request template
 
 ### AR-YYYYMMDD-NNN — Short name

@@ -97,6 +97,9 @@ func _run() -> void:
 	_check("XP +270" in main.stage_result.reward_label.text and "GEARS +180" in main.stage_result.reward_label.text, "Result screen reports all Stage 1 rewards")
 	_check(main.stage_result.next_stage_card.disabled, "Stage 2 card remains locked as a placeholder")
 	_check("STAGE 1 CLEAR" in main.stage_result.title_label.text, "Stage completion shows the clear title")
+	_check(main.stage_result.progression == player.progression, "Stage result shop uses the active run progression")
+	_check("AVAILABLE GEARS  180" in main.stage_result.shop_currency_label.text, "Stage result shop exposes earned boss currency")
+	_check(not main.stage_result.weapon_upgrade_button.disabled and not main.stage_result.pet_upgrade_button.disabled, "Earned Stage 1 rewards can buy both upgrade types")
 
 	main.queue_free()
 	await process_frame

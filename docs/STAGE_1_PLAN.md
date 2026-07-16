@@ -24,6 +24,7 @@ Stage 1 is complete when the player can finish five escalating waves, defeat the
 - [x] Add the Foreman ground slam, frame-gated local impact, and twin traveling shockwaves.
 - [x] Add enemy XP/currency rewards and player progression state.
 - [x] Add weapon and pet-skill upgrade data models.
+- [x] Add a Stage 1 result workbench that spends earned gears on weapon and pet-skill upgrades.
 - [x] Add Stage 1 reward result and next-stage card placeholder.
 - [x] Re-run all checks, export Web release, deploy, and verify the public URL.
 
@@ -50,4 +51,4 @@ These are data values, not hard-coded branches. They may be tuned without changi
 
 ## Asset status
 
-Stage 1 has all production art required for the five courier waves and the initial Undead Foreman implementation. The dedicated boss shockwave is integrated; optional result-screen UI decoration remains non-blocking while its requests are queued.
+Stage 1 has all production art required for the five courier waves and the initial Undead Foreman implementation. The dedicated boss shockwave is integrated. Result-screen and upgrade-workbench UI art remains non-blocking while requests `AR-20260716-001` through `AR-20260716-004` are queued.

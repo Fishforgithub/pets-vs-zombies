@@ -66,6 +66,114 @@ theme_override_font_sizes/font_size = 19
 text = "PLAYER LEVEL  1"
 horizontal_alignment = 1
 
+[node name="WeaponUpgradePanel" type="NinePatchRect" parent="Overlay/ResultPanel"]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 178.0
+offset_right = 238.0
+offset_bottom = 430.0
+patch_margin_left = 24
+patch_margin_top = 24
+patch_margin_right = 24
+patch_margin_bottom = 24
+
+[node name="FallbackPanel" type="ColorRect" parent="Overlay/ResultPanel/WeaponUpgradePanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.1, 0.16, 0.22, 1)
+show_behind_parent = true
+
+[node name="HeaderLabel" type="Label" parent="Overlay/ResultPanel/WeaponUpgradePanel"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 12.0
+offset_right = 194.0
+offset_bottom = 42.0
+theme_override_colors/font_color = Color(1, 0.82, 0.36, 1)
+theme_override_font_sizes/font_size = 17
+text = "WEAPON"
+horizontal_alignment = 1
+
+[node name="UpgradeLabel" type="Label" parent="Overlay/ResultPanel/WeaponUpgradePanel"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 48.0
+offset_right = 196.0
+offset_bottom = 178.0
+theme_override_colors/font_color = Color(0.86, 0.92, 1, 1)
+theme_override_font_sizes/font_size = 15
+text = "STARTER PISTOL\nLEVEL 1 / 5\nDAMAGE  25 → 31"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="UpgradeButton" type="Button" parent="Overlay/ResultPanel/WeaponUpgradePanel"]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 194.0
+offset_right = 192.0
+offset_bottom = 238.0
+theme_override_font_sizes/font_size = 15
+text = "UPGRADE  45"
+
+[node name="PetUpgradePanel" type="NinePatchRect" parent="Overlay/ResultPanel"]
+layout_mode = 0
+offset_left = 522.0
+offset_top = 178.0
+offset_right = 728.0
+offset_bottom = 430.0
+patch_margin_left = 24
+patch_margin_top = 24
+patch_margin_right = 24
+patch_margin_bottom = 24
+
+[node name="FallbackPanel" type="ColorRect" parent="Overlay/ResultPanel/PetUpgradePanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.08, 0.18, 0.2, 1)
+show_behind_parent = true
+
+[node name="HeaderLabel" type="Label" parent="Overlay/ResultPanel/PetUpgradePanel"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 12.0
+offset_right = 194.0
+offset_bottom = 42.0
+theme_override_colors/font_color = Color(0.48, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 17
+text = "PET SKILL"
+horizontal_alignment = 1
+
+[node name="UpgradeLabel" type="Label" parent="Overlay/ResultPanel/PetUpgradePanel"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 48.0
+offset_right = 196.0
+offset_bottom = 178.0
+theme_override_colors/font_color = Color(0.86, 0.96, 1, 1)
+theme_override_font_sizes/font_size = 14
+text = "ENERGY BOLT\nLEVEL 1 / 5\nDAMAGE  12 → 16\nCOOLDOWN  0.79s"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="UpgradeButton" type="Button" parent="Overlay/ResultPanel/PetUpgradePanel"]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 194.0
+offset_right = 192.0
+offset_bottom = 238.0
+theme_override_font_sizes/font_size = 15
+text = "UPGRADE  35"
+
 [node name="NextStageCard" type="TextureButton" parent="Overlay/ResultPanel"]
 layout_mode = 0
 offset_left = 254.0
@@ -119,8 +227,19 @@ vertical_alignment = 1
 [node name="RetryButton" type="Button" parent="Overlay/ResultPanel"]
 layout_mode = 0
 offset_left = 270.0
-offset_top = 464.0
+offset_top = 476.0
 offset_right = 490.0
-offset_bottom = 516.0
+offset_bottom = 528.0
 theme_override_font_sizes/font_size = 20
 text = "REPLAY STAGE 1"
+
+[node name="ShopCurrencyLabel" type="Label" parent="Overlay/ResultPanel"]
+layout_mode = 0
+offset_left = 240.0
+offset_top = 436.0
+offset_right = 520.0
+offset_bottom = 468.0
+theme_override_colors/font_color = Color(1, 0.86, 0.4, 1)
+theme_override_font_sizes/font_size = 17
+text = "AVAILABLE GEARS  0"
+horizontal_alignment = 1

@@ -65,6 +65,8 @@ Persistent save data is required before campaign progression spans multiple play
 5. Weapon and pet-upgrade shop.
 6. Multi-stage route map.
 
+The Stage 1 result screen includes the first run-scoped upgrade workbench. Persistent ownership across application restarts remains a separate save-data milestone before multiple campaign stages are enabled.
+
 ## Art handoff
 
 Before requesting new production art, read `docs/ART_ASSET_MANIFEST.md`. Add every new request to `docs/ART_REQUEST_QUEUE.md`, commit it, push it to GitHub, and report the commit SHA to the art-production workflow.
