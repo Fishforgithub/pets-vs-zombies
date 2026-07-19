@@ -148,6 +148,16 @@ For `slam`, frames 0–1 are the high telegraph and downward drive. Frame index 
 
 `hurt` cancels the current attack but does not enter a long vulnerability by itself. `rage` is the phase-two transition: temporarily lock movement/attacks, play the transition cue once, then enable the faster phase-two behavior after the authored pose. `stunned` disables weapon damage and opens the upper-torso/head vulnerable window. `defeated` permanently disables all boss damage, navigation, body/weapon collision, and lamp output before stage-clear timing; the grounded weapon and IV canisters remain visual only.
 
+## Stage 2 hospital hazards
+
+| Asset | Grid / order | Runtime mapping | Playback |
+|---|---|---|---|
+| `assets/hazards/stage2/rolling_equipment_sheet.png` | 4 x 1, 256 x 256 cells | `roll`: level travel, forward pitch, airborne bounce, settle | Loop, 10 FPS while moving |
+
+The rolling equipment cart is a phase-two Chief Surgeon hazard and may also be reused as a hospital corridor trap. Spawn it as a moving hazard scene with one simple rectangular body/damage shape aligned to the lower cart frame; never derive collision from the monitor, bottles, bandages, loose straps, wheels, or sprite alpha. Keep the gameplay body on a stable ground path while the animation supplies pitch and bounce. Bottles and loose supplies are decorative and must not create separate projectiles.
+
+Enable contact damage only during active travel. Disable damage and collision before despawn, destruction, or off-screen cleanup. Mirror the sprite and travel direction together when launched to the right. The four frames form one continuous motion loop; they are not separate damage states.
+
 ## Stage 1 boss: Undead Foreman
 
 Boss frame cells are `512 x 512`, not the normal `256 x 256`. The authored direction is left-facing. Mirror the complete boss and every authored attack collider together when facing right.
