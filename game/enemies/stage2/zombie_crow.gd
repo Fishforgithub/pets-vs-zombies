@@ -52,6 +52,7 @@ func _physics_process(delta: float) -> void:
 	_update_facing()
 	hurt_timer = maxf(0.0, hurt_timer - delta)
 	attack_cooldown = maxf(0.0, attack_cooldown - delta)
+	update_support_buff(delta)
 
 	if hurt_timer > 0.0:
 		velocity = velocity.move_toward(Vector2.ZERO, recovery_speed * delta)
@@ -70,7 +71,7 @@ func _update_state(delta: float) -> void:
 	match state:
 		State.HOVER:
 			var hover_target := target.global_position + Vector2(0.0, -hover_height)
-			velocity = global_position.direction_to(hover_target) * flight_speed
+			velocity = global_position.direction_to(hover_target) * flight_speed * get_support_speed_multiplier()
 			if attack_cooldown <= 0.0 and absf(target.global_position.x - global_position.x) <= dive_range:
 				_begin_telegraph()
 		State.TELEGRAPH:
@@ -79,13 +80,13 @@ func _update_state(delta: float) -> void:
 			if state_timer <= 0.0:
 				_begin_dive()
 		State.DIVE:
-			velocity = dive_direction * dive_speed
+			velocity = dive_direction * dive_speed * get_support_speed_multiplier()
 			state_timer = maxf(0.0, state_timer - delta)
 			if state_timer <= 0.0:
 				_begin_recovery()
 		State.RECOVER:
 			var recovery_target := target.global_position + Vector2(0.0, -hover_height)
-			velocity = global_position.direction_to(recovery_target) * recovery_speed
+			velocity = global_position.direction_to(recovery_target) * recovery_speed * get_support_speed_multiplier()
 			if global_position.distance_to(recovery_target) <= 18.0:
 				state = State.HOVER
 				attack_cooldown = dive_cooldown

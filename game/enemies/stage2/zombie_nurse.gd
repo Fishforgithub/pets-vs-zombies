@@ -61,6 +61,7 @@ func _physics_process(delta: float) -> void:
 	attack_cooldown = maxf(0.0, attack_cooldown - delta)
 	support_cooldown = maxf(0.0, support_cooldown - delta)
 	hurt_timer = maxf(0.0, hurt_timer - delta)
+	update_support_buff(delta)
 
 	if hurt_timer > 0.0:
 		velocity.x = move_toward(velocity.x, 0.0, move_speed * 4.0 * delta)
@@ -78,7 +79,7 @@ func _update_movement_and_actions() -> void:
 		return
 	var distance_x := target.global_position.x - global_position.x
 	if absf(distance_x) > preferred_range:
-		velocity.x = signf(distance_x) * move_speed
+		velocity.x = signf(distance_x) * move_speed * get_support_speed_multiplier()
 		return
 	velocity.x = 0.0
 	if support_cooldown <= 0.0 and _has_nearby_ally():
@@ -100,7 +101,7 @@ func _process_action(delta: float) -> void:
 		if active_action == Action.THROW:
 			_release_bandage()
 		elif active_action == Action.BUFF:
-			support_buff_requested.emit(self, buff_radius, buff_duration, buff_speed_multiplier)
+			_apply_support_buff()
 	if action_timer > 0.0:
 		return
 	if active_action == Action.THROW:
@@ -127,6 +128,15 @@ func _has_nearby_ally() -> bool:
 		if global_position.distance_to((candidate as WaveEnemy).global_position) <= buff_radius:
 			return true
 	return false
+
+func _apply_support_buff() -> void:
+	for candidate in get_tree().get_nodes_in_group("enemies"):
+		if candidate == self or not candidate is WaveEnemy:
+			continue
+		var ally := candidate as WaveEnemy
+		if global_position.distance_to(ally.global_position) <= buff_radius:
+			ally.apply_support_buff(buff_duration, buff_speed_multiplier)
+	support_buff_requested.emit(self, buff_radius, buff_duration, buff_speed_multiplier)
 
 func _update_facing() -> void:
 	if not is_instance_valid(character_sprite) or not is_instance_valid(target):

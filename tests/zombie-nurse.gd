@@ -81,10 +81,14 @@ func _run() -> void:
 	nurse._process_action(0.01)
 	nurse._process_action(0.01)
 	_check(buff_events.size() == 1, "Support action emits one buff event")
+	_check(ally.support_buff_timer > 0.0, "Support action applies a timed buff to a nearby ally")
+	_check(is_equal_approx(ally.get_support_speed_multiplier(), nurse.buff_speed_multiplier), "Support action increases nearby ally movement speed")
 	if buff_events.size() == 1:
 		_check(buff_events[0].source == nurse, "Buff event identifies its nurse source")
 		_check(is_equal_approx(buff_events[0].radius, nurse.buff_radius), "Buff event exposes its gameplay radius")
 		_check(buff_events[0].multiplier > 1.0, "Buff event exposes a positive speed multiplier")
+	ally.update_support_buff(nurse.buff_duration)
+	_check(is_equal_approx(ally.get_support_speed_multiplier(), 1.0), "Support speed returns to normal when the buff expires")
 
 	nurse.take_damage(1, Vector2.LEFT)
 	_check(nurse.active_action == ZombieNurse.Action.NONE, "Damage cancels nurse actions")

@@ -40,6 +40,7 @@ func _physics_process(delta: float) -> void:
 		_update_facing(target.global_position.x - global_position.x)
 
 	attack_cooldown = maxf(0.0, attack_cooldown - delta)
+	update_support_buff(delta)
 	attack_animation_timer = maxf(0.0, attack_animation_timer - delta)
 	hurt_animation_timer = maxf(0.0, hurt_animation_timer - delta)
 	hit_flash = maxf(0.0, hit_flash - delta)
@@ -48,7 +49,7 @@ func _physics_process(delta: float) -> void:
 	if is_instance_valid(target) and not target.is_dead:
 		var distance_x := target.global_position.x - global_position.x
 		if absf(distance_x) > 35.0:
-			velocity.x = signf(distance_x) * move_speed
+			velocity.x = signf(distance_x) * move_speed * get_support_speed_multiplier()
 		else:
 			velocity.x = 0.0
 			if attack_cooldown <= 0.0:
