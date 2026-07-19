@@ -72,6 +72,8 @@ The authored direction is left-facing. Display as-is while running/attacking lef
 | `assets/enemies/zombie_dog/run_sheet.png` | 3 x 2, 6 frames of 256 x 256 | `run` sprint frames 0–5 | Loop, 12 FPS |
 | `assets/enemies/zombie_dog/action_sheet.png` | 3 x 1, 256 x 256 cells | index 0 `pounce`, 1 `hurt`, 2 `defeated` | State-selected poses; defeated holds |
 
+Known delivery defect: `run_sheet.png` has opaque pixels on the shared x=512 boundary in frames 1 and 2. Keep the sheet out of runtime atlas slicing until request `AR-20260719-006` supplies a normalized replacement. The approved identity, frame order, authored direction, and 12 FPS playback remain unchanged.
+
 Keep the torso collision shape at a stable local offset across the full run cycle; do not move or resize gameplay collision to follow the extended forelegs, hind legs, tail, or exposed ribs. The long airborne stride at frame index 2 is still part of the looping sprint and does not by itself trigger pounce damage.
 
 For `pounce`, move the enemy body along a short authored gameplay arc and enable the bite hitbox only during the active overlap window; the pose alone must not deal continuous damage. `hurt` cancels pounce damage and uses backward knockback. `defeated` permanently disables navigation, damage, and collision before holding the collapsed pose for cleanup.

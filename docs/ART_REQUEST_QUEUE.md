@@ -107,6 +107,25 @@ Request IDs use `AR-YYYYMMDD-NNN`. Allowed states are `queued`, `approved`, `in-
   - Frame order and attack timing remain compatible with the existing frame-2 sweep hitbox and frame-2 slam/shockwave event.
   - Provide a four-sheet contact sheet for explicit user visual approval before committing replacement production PNGs.
 
+### AR-20260719-006 — Normalize zombie dog run cells
+
+- Status: `queued`
+- Screen use: Repair the Stage 2 zombie dog's six-frame sprint presentation before the enemy is enabled. The current sheet has opaque pixels on the shared x=512 boundary in frames 1 and 2, creating an atlas clipping and adjacent-frame fragment risk.
+- Godot node: Planned `AnimatedSprite2D` at `ZombieDog/CharacterSprite` in `game/enemies/stage2/zombie_dog.tscn`.
+- Output path: `res://assets/enemies/zombie_dog/run_sheet.png`.
+- Pixel dimensions: Exactly 768 x 512 pixels; every frame remains exactly 256 x 256 pixels.
+- Grid / slicing: 3 x 2, read left-to-right then top-to-bottom; `run` frames 0–5 remain in their current order and play at 12 FPS.
+- Interaction states: Looping `run`; do not add, remove, or reorder frames. Pounce, hurt, and defeated remain in the separate `action_sheet.png` and are outside this repair.
+- Nine-patch borders: N/A — non-resizable enemy sprite.
+- Acceptance criteria:
+  - File decodes as a valid lossless 768 x 512 PNG with alpha and exactly six 256 x 256 cells.
+  - Preserve the user-approved zombie dog identity, dry stylized exposed-bone treatment, pose intent, limited palette, and authored left-facing direction; this is cell normalization, not a redesign.
+  - Reconstruct or recenter frames 1 and 2 so each complete pose is wholly contained in its own cell and no opaque pixel touches or crosses x=512.
+  - Every cell has at least 8 transparent pixels on all four edges; no body, tail, paw, motion accent, or detached fragment is borrowed from a neighboring cell.
+  - Keep a stable bottom-center gameplay pivot and consistent ground baseline across all six frames.
+  - Preserve the existing contact, down, extended-stride, compression, passing, and recovery frame order and 12 FPS timing.
+  - Provide a six-frame contact sheet for explicit user visual approval before committing the replacement character imagery.
+
 ## Request template
 
 ### AR-YYYYMMDD-NNN — Short name

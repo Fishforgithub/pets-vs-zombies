@@ -57,5 +57,18 @@ The source repository `Fishforgithub/tea-line-bot` is read-only. Copy only appro
 | `assets/enemies/zombie_dog/idle.png` | Approved original Stage 2 low-runner generation | User-approved; 256×256 transparent zombie dog identity anchor with stylized exposed bone |
 | `assets/enemies/zombie_dog/run_sheet.png` | Six-frame generation derived from the approved zombie dog identity anchor | User-approved; 3×2 sprint loop of 256×256 transparent cells |
 | `assets/enemies/zombie_dog/action_sheet.png` | Three-pose generation derived from the approved zombie dog identity anchor | User-approved; pounce, hurt, and defeated 256×256 transparent cells |
+| `assets/enemies/zombie_nurse/idle.png` | Approved original Stage 2 support-enemy generation | User-approved; 256×256 transparent zombie nurse identity anchor with bandage-roll loadout |
+| `assets/enemies/zombie_nurse/walk_sheet.png` | Six-frame generation derived from the approved zombie nurse identity anchor | User-approved corrected 3×2 shamble loop with distinct contact, down, and passing poses |
+| `assets/enemies/zombie_nurse/action_sheet.png` | Four-pose generation derived from the approved zombie nurse identity anchor | User-approved; throw, ally-buff, hurt, and defeated 256×256 transparent cells |
+| `assets/enemies/zombie_doctor/idle.png` | Approved original Stage 2 electric-controller generation | User-approved; 256×256 transparent zombie doctor identity anchor with portable defibrillator loadout |
+| `assets/enemies/zombie_doctor/walk_sheet.png` | Six-frame generation derived from the approved zombie doctor identity anchor | User-approved normalized 3×2 burdened shamble loop with distinct contact, down, and passing poses |
+| `assets/enemies/zombie_doctor/action_sheet.png` | Three-pose generation derived from the approved zombie doctor identity anchor | User-approved; zap, hurt, and defeated 256×256 transparent cells |
+| `assets/enemies/wheelchair_zombie/idle.png` | Approved original Stage 2 armored-charger generation | User-approved; 256×256 transparent wheelchair-zombie identity anchor with forward shield plate |
+| `assets/enemies/wheelchair_zombie/roll_sheet.png` | Corrected six-frame generation derived from the approved wheelchair-zombie identity anchor | User-approved normalized 3×2 rolling loop with wheel marker, suspension phases, and intact shield in every frame |
+| `assets/enemies/wheelchair_zombie/action_sheet.png` | Four-pose generation derived from the approved wheelchair-zombie identity anchor | User-approved; charge, hurt, stunned, and safely defeated 256×256 transparent cells |
+| `assets/bosses/stage2_chief_surgeon/idle.png` | Approved original Stage 2 boss generation | User-approved; normalized 512×512 transparent Undead Chief Surgeon identity anchor with operating-lamp/IV-stand heavy weapon |
+| `assets/bosses/stage2_chief_surgeon/walk_sheet.png` | Four-frame generation derived from the approved Chief Surgeon identity anchor | User-approved normalized 2×2 heavy locomotion loop of 512×512 transparent cells |
+| `assets/bosses/stage2_chief_surgeon/sweep_sheet.png` | Four-stage generation derived from the approved Chief Surgeon identity anchor | User-approved normalized 2×2 wind-up, early swing, active sweep, and recovery cells |
+| `assets/bosses/stage2_chief_surgeon/slam_sheet.png` | Four-stage generation derived from the approved Chief Surgeon identity anchor | User-approved normalized 2×2 overhead wind-up, downward drive, impact, and recovery cells |
 
 No production assets have been copied from `tea-line-bot` yet.
