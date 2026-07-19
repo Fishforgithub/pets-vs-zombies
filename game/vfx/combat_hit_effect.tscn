@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/vfx/combat_effects.png" id="1"]
+[ext_resource type="Script" path="res://game/vfx/combat_hit_effect.gd" id="2"]
+
+[node name="CombatHitEffect" type="Sprite2D"]
+texture = ExtResource("1")
+region_enabled = true
+region_rect = Rect2(256, 0, 256, 256)
+scale = Vector2(0.22, 0.22)
+script = ExtResource("2")

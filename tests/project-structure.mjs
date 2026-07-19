@@ -61,6 +61,8 @@ const requiredFiles = [
   'game/projectiles/bandage_projectile.gd',
   'game/vfx/stage2_hospital_effect.tscn',
   'game/vfx/stage2_hospital_effect.gd',
+  'game/vfx/combat_hit_effect.tscn',
+  'game/vfx/combat_hit_effect.gd',
   'game/ui/hud.tscn',
   'game/ui/hud.gd',
   'game/ui/stage_result.tscn',
@@ -77,7 +79,8 @@ const requiredFiles = [
   'tests/zombie-nurse.gd',
   'tests/zombie-doctor.gd',
   'tests/stage2-effects.gd',
-  'tests/wheelchair-zombie.gd'
+  'tests/wheelchair-zombie.gd',
+  'tests/combat-feedback.gd'
 ];
 
 const errors = [];

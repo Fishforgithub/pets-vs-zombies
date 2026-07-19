@@ -61,7 +61,7 @@ func _fire_at(target: Node2D) -> void:
 	bullet.global_position = global_position + shot_direction * 22.0 + Vector2(0, -18)
 	bullet.speed = 560.0
 	var skill_level := owner_player.progression.get_pet_skill_level(ENERGY_BOLT.skill_id)
-	bullet.configure(shot_direction, &"enemies", ENERGY_BOLT.damage_at(skill_level), Color("74c0fc"))
+	bullet.configure(shot_direction, &"enemies", ENERGY_BOLT.damage_at(skill_level), Color("74c0fc"), 2)
 	attack_cooldown = ENERGY_BOLT.cooldown_at(skill_level)
 
 func _draw() -> void:
@@ -75,4 +75,3 @@ func _draw() -> void:
 	]), PackedColorArray([Color("74c0fc")]))
 	draw_rect(Rect2(-10, -3, 7, 5), Color("228be6"))
 	draw_rect(Rect2(4, -3, 7, 5), Color("228be6"))
-

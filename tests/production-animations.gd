@@ -36,7 +36,7 @@ func _run() -> void:
 		_check_single_frame_animation(player_frames, animation_name)
 
 	var starting_ammo := player.ammo
-	player.aim_direction = Vector2.RIGHT
+	player.aim_direction = Vector2(1.0, 0.65).normalized()
 	var standing_muzzle := player.get_muzzle_global_position()
 	_check(standing_muzzle.x > player.global_position.x, "Right-facing muzzle is in front of the player")
 	_check(standing_muzzle.y < player.global_position.y - 40.0, "Standing muzzle aligns above the player's feet")
@@ -46,6 +46,8 @@ func _run() -> void:
 	_check(spawned_bullet != null, "Firing spawns a bullet")
 	if spawned_bullet != null:
 		_check(spawned_bullet.global_position.is_equal_approx(standing_muzzle), "Bullet spawns at the standing muzzle")
+		_check(is_equal_approx(spawned_bullet.direction.y, 0.0), "Grounded gunfire stays horizontal with horizontal-only character art")
+		_check(spawned_bullet.direction.x > 0.0, "Diagonal right aim resolves to rightward gunfire")
 	_check(player.fire_animation_timer > 0.0, "Firing starts the fire animation timer")
 	player._update_animation(0.0)
 	_check(player.character_sprite.animation == &"fire", "Fire state has animation priority")

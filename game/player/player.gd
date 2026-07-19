@@ -160,7 +160,7 @@ func _try_fire() -> void:
 	get_tree().current_scene.add_child(bullet)
 	bullet.global_position = get_muzzle_global_position()
 	var weapon_level := progression.get_weapon_level(equipped_weapon.weapon_id)
-	bullet.configure(aim_direction, &"enemies", equipped_weapon.damage_at(weapon_level), Color("ffe066"))
+	bullet.configure(get_fire_direction(), &"enemies", equipped_weapon.damage_at(weapon_level), Color("ffe066"), 1)
 	ammo -= 1
 	fire_cooldown = fire_interval
 	fire_animation_timer = fire_animation_duration
@@ -168,6 +168,9 @@ func _try_fire() -> void:
 
 func get_muzzle_global_position() -> Vector2:
 	return global_position + _get_muzzle_local_position()
+
+func get_fire_direction() -> Vector2:
+	return Vector2.LEFT if aim_direction.x < 0.0 else Vector2.RIGHT
 
 func _get_muzzle_local_position() -> Vector2:
 	var offset := CROUCH_MUZZLE_OFFSET if is_crouching else STANDING_MUZZLE_OFFSET

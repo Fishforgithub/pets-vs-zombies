@@ -45,7 +45,7 @@ func _physics_process(delta: float) -> void:
 	hurt_animation_timer = maxf(0.0, hurt_animation_timer - delta)
 	hit_flash = maxf(0.0, hit_flash - delta)
 	if is_instance_valid(character_sprite):
-		character_sprite.modulate = Color("ffb3b3") if hit_flash > 0.0 else Color.WHITE
+		character_sprite.modulate = Color("ff6b6b") if hit_flash > 0.0 else Color.WHITE
 	if is_instance_valid(target) and not target.is_dead:
 		var distance_x := target.global_position.x - global_position.x
 		if absf(distance_x) > 35.0:
@@ -73,7 +73,7 @@ func take_damage(amount: int, knockback_direction: Vector2 = Vector2.ZERO) -> vo
 	if is_dead:
 		return
 	health = maxi(0, health - amount)
-	hit_flash = 0.12
+	hit_flash = 0.18
 	velocity += knockback_direction.normalized() * 95.0
 	if health <= 0:
 		is_dead = true
