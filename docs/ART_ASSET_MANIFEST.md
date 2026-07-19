@@ -156,6 +156,14 @@ The rolling equipment cart is a phase-two Chief Surgeon hazard and may also be r
 
 Enable contact damage only during active travel. Disable damage and collision before despawn, destruction, or off-screen cleanup. Mirror the sprite and travel direction together when launched to the right. The four frames form one continuous motion loop; they are not separate damage states.
 
+## Stage 2 environment
+
+| Asset | Size | Runtime use |
+|---|---|---|
+| `assets/backgrounds/stage2/hospital_corridor.png` | 960 x 540 opaque image | Approved hospital palette/lighting anchor and single-room corridor or boss-arena background plate. Display aspect-cover at 16:9; no collision. |
+
+This plate establishes the Stage 2 environment language: faded cream plaster, mint wall tiles, muted turquoise fixtures, alternating amber emergency lamps and cyan clinical light, with restrained coral symbols. It contains perspective and unique room landmarks, so do not repeat it horizontally as a seamless texture. Use it for a bounded room/arena, or keep it as the far visual plate behind separately authored repeatable corridor modules. The illustrated floor does not define the player path: author a separate horizontal gameplay floor and collision layer in Godot.
+
 ## Stage 1 boss: Undead Foreman
 
 Boss frame cells are `512 x 512`, not the normal `256 x 256`. The authored direction is left-facing. Mirror the complete boss and every authored attack collider together when facing right.
