@@ -12,6 +12,7 @@ const requiredFiles = [
   'docs/ART_ASSET_MANIFEST.md',
   'docs/ART_REQUEST_QUEUE.md',
   'docs/STAGE_1_PLAN.md',
+  'docs/STAGE_2_ART_PLAN.md',
   'assets/props/stage1/street_props.png',
   'assets/props/stage1/crate_break_sheet.png',
   'assets/items/pickups.png',
@@ -45,6 +46,8 @@ const requiredFiles = [
   'game/pets/pet_companion.gd',
   'game/enemies/zombie.tscn',
   'game/enemies/zombie.gd',
+  'game/enemies/stage2/zombie_crow.tscn',
+  'game/enemies/stage2/zombie_crow.gd',
   'game/projectiles/bullet.tscn',
   'game/projectiles/bullet.gd',
   'game/ui/hud.tscn',
@@ -57,7 +60,9 @@ const requiredFiles = [
   'tests/wave-director.gd',
   'tests/foreman-boss.gd',
   'tests/progression.gd',
-  'tests/stage-result.gd'
+  'tests/stage-result.gd',
+  'tests/stage2-assets.gd',
+  'tests/zombie-crow.gd'
 ];
 
 const errors = [];
