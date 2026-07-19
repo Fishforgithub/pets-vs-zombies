@@ -34,8 +34,14 @@ const requiredFiles = [
   'game/bosses/foreman_boss.gd',
   'game/bosses/foreman_shockwave.tscn',
   'game/bosses/foreman_shockwave.gd',
+  'game/bosses/chief_surgeon_boss.tscn',
+  'game/bosses/chief_surgeon_boss.gd',
+  'game/bosses/surgeon_equipment_hazard.tscn',
+  'game/bosses/surgeon_equipment_hazard.gd',
   'game/stages/wave_director.tscn',
   'game/stages/wave_director.gd',
+  'game/stages/stage2.tscn',
+  'game/stages/stage2.gd',
   'game/player/player.tscn',
   'game/player/player.gd',
   'game/progression/run_progression.tscn',
@@ -65,6 +71,8 @@ const requiredFiles = [
   'game/vfx/stage2_hospital_effect.gd',
   'game/vfx/combat_hit_effect.tscn',
   'game/vfx/combat_hit_effect.gd',
+  'game/hazards/electric_puddle.tscn',
+  'game/hazards/electric_puddle.gd',
   'game/ui/hud.tscn',
   'game/ui/hud.gd',
   'game/ui/stage_result.tscn',
@@ -77,6 +85,8 @@ const requiredFiles = [
   'tests/progression.gd',
   'tests/stage-result.gd',
   'tests/campaign-map.gd',
+  'tests/chief-surgeon-boss.gd',
+  'tests/stage2-gameplay-smoke.gd',
   'tests/stage2-assets.gd',
   'tests/zombie-crow.gd',
   'tests/zombie-nurse.gd',
@@ -106,9 +116,6 @@ if (!exportPresets.includes('platform="Web"') || !exportPresets.includes('varian
   errors.push('export_presets.cfg must define a single-threaded Web export.');
 }
 const textExtensions = new Set(['.gd', '.tscn', '.godot', '.md', '.json', '.mjs']);
-const optionalResourcePaths = new Set([
-  'res://game/stages/stage2.tscn'
-]);
 async function walk(directory) {
   const entries = await readdir(directory, { withFileTypes: true });
   const files = [];
@@ -128,7 +135,7 @@ for (const file of await walk(root)) {
   if (relativeFile !== 'docs/ART_REQUEST_QUEUE.md') {
     const matches = content.matchAll(/res:\/\/([^"')\s]+)/g);
     for (const match of matches) {
-      if (optionalResourcePaths.has(match[0])) continue;
+      if (match[0].includes('%')) continue;
       const referenced = path.join(root, match[1]);
       try {
         await access(referenced);

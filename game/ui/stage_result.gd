@@ -3,6 +3,7 @@ extends CanvasLayer
 
 signal retry_requested
 signal map_requested
+signal next_stage_requested(stage_number: int)
 signal upgrade_purchased
 
 const STARTER_WEAPON: WeaponData = preload("res://game/data/weapons/starter_pistol.tres")
@@ -23,10 +24,12 @@ const ENERGY_BOLT: PetSkillData = preload("res://game/data/pet_skills/energy_bol
 @onready var map_button: Button = $Overlay/ResultPanel/MapButton
 
 var progression: RunProgression
+var current_stage_number: int = 1
 
 func _ready() -> void:
 	retry_button.pressed.connect(_on_retry_pressed)
 	map_button.pressed.connect(_on_map_pressed)
+	next_stage_card.pressed.connect(_on_next_stage_pressed)
 	weapon_upgrade_button.pressed.connect(_on_weapon_upgrade_pressed)
 	pet_upgrade_button.pressed.connect(_on_pet_upgrade_pressed)
 	visible = false
@@ -40,13 +43,19 @@ func configure_progression(run_progression: RunProgression) -> void:
 		progression.progress_changed.connect(_on_progress_changed)
 	_refresh_shop()
 
-func show_stage_clear(experience_earned: int, currency_earned: int, player_level: int) -> void:
-	title_label.text = "STAGE 1 CLEAR"
+func show_stage_clear(experience_earned: int, currency_earned: int, player_level: int, stage_number: int = 1, next_stage_available: bool = false) -> void:
+	current_stage_number = stage_number
+	title_label.text = "STAGE %d CLEAR" % stage_number
 	reward_label.text = "XP +%d     GEARS +%d" % [experience_earned, currency_earned]
 	level_label.text = "PLAYER LEVEL  %d" % player_level
-	stage_label.text = "STAGE 2\nHOSPITAL CORRIDOR"
-	status_label.text = "UNLOCKED — UNDER CONSTRUCTION" if is_instance_valid(progression) and progression.is_stage_unlocked(2) else "LOCKED — CLEAR STAGE 1"
-	next_stage_card.disabled = true
+	if stage_number == 1:
+		stage_label.text = "STAGE 2\nHOSPITAL CORRIDOR"
+		status_label.text = "AVAILABLE — ENTER" if next_stage_available else "UNLOCKED — UNDER CONSTRUCTION"
+	else:
+		stage_label.text = "STAGE %d\nROUTE CONTINUES" % (stage_number + 1)
+		status_label.text = "COMING SOON"
+	next_stage_card.disabled = not next_stage_available
+	retry_button.text = "REPLAY STAGE %d" % stage_number
 	visible = true
 	_refresh_shop()
 	if not weapon_upgrade_button.disabled:
@@ -113,3 +122,7 @@ func _on_retry_pressed() -> void:
 
 func _on_map_pressed() -> void:
 	map_requested.emit()
+
+func _on_next_stage_pressed() -> void:
+	if not next_stage_card.disabled:
+		next_stage_requested.emit(current_stage_number + 1)

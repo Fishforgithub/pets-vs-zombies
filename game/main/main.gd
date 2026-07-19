@@ -33,6 +33,9 @@ func _refresh_route() -> void:
 	elif not stage_2_available:
 		stage_2_status.text = "UNLOCKED  •  UNDER CONSTRUCTION"
 		route_status.text = "Stage 2 is unlocked and will become playable when its scene is complete."
+	elif progression.is_stage_completed(2):
+		stage_2_status.text = "CLEARED  •  REPLAY"
+		route_status.text = "Both available stages are cleared. Replay either route to earn more upgrades."
 	else:
 		stage_2_status.text = "AVAILABLE  •  ENTER"
 		route_status.text = "Choose any unlocked stage. Progress and upgrades carry between stages."

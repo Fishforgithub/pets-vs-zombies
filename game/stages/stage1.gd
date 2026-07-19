@@ -40,6 +40,7 @@ func _ready() -> void:
 	stage_result.configure_progression(player.progression)
 	stage_result.retry_requested.connect(_on_retry_requested)
 	stage_result.map_requested.connect(_on_map_requested)
+	stage_result.next_stage_requested.connect(_on_next_stage_requested)
 	stage_result.upgrade_purchased.connect(_on_upgrade_purchased)
 	wave_director.wave_started.connect(_on_wave_started)
 	wave_director.wave_progress_changed.connect(_on_wave_progress_changed)
@@ -79,7 +80,7 @@ func _process(_delta: float) -> void:
 	if finished and Input.is_action_just_pressed("restart"):
 		get_tree().reload_current_scene()
 
-func _spawn_zombie(spawn_side: int) -> ZombieEnemy:
+func _spawn_zombie(spawn_side: int) -> WaveEnemy:
 	var zombie := ZOMBIE_SCENE.instantiate() as ZombieEnemy
 	enemies.add_child(zombie)
 	var direction := 1.0 if spawn_side >= 0 else -1.0
@@ -129,7 +130,7 @@ func _on_foreman_defeated(boss: ForemanBoss) -> void:
 	finished = true
 	player.is_dead = true
 	hud.hide_boss()
-	stage_result.show_stage_clear(experience_earned, currency_earned, player.progression.level)
+	stage_result.show_stage_clear(experience_earned, currency_earned, player.progression.level, 1, ResourceLoader.exists("res://game/stages/stage2.tscn"))
 
 func _on_retry_requested() -> void:
 	_save_progression()
@@ -138,6 +139,14 @@ func _on_retry_requested() -> void:
 func _on_map_requested() -> void:
 	_save_progression()
 	get_tree().change_scene_to_file(CAMPAIGN_MAP_PATH)
+
+func _on_next_stage_requested(stage_number: int) -> void:
+	_save_progression()
+	var next_scene_path := "res://game/stages/stage%d.tscn" % stage_number
+	if ResourceLoader.exists(next_scene_path):
+		get_tree().change_scene_to_file(next_scene_path)
+	else:
+		get_tree().change_scene_to_file(CAMPAIGN_MAP_PATH)
 
 func _on_upgrade_purchased() -> void:
 	_save_progression()

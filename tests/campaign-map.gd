@@ -31,7 +31,7 @@ func _run() -> void:
 	_check(progression.save_profile() == OK, "Route progress saves from the campaign map model")
 	campaign_map._refresh_route()
 	_check("CLEARED" in campaign_map.stage_1_status.text, "Cleared Stage 1 remains available for replay")
-	_check("UNLOCKED" in campaign_map.stage_2_status.text and "UNDER CONSTRUCTION" in campaign_map.stage_2_status.text, "Unlocked Stage 2 is retained while its playable scene is pending")
+	_check(not campaign_map.stage_2_card.disabled and "AVAILABLE" in campaign_map.stage_2_status.text, "Unlocked Stage 2 becomes selectable when its gameplay scene exists")
 
 	campaign_map.queue_free()
 	await process_frame
@@ -43,6 +43,7 @@ func _run() -> void:
 	await process_frame
 	_check(restored_progression.is_stage_completed(1), "A later session restores completed stages")
 	_check(restored_progression.is_stage_unlocked(2), "A later session restores unlocked route progress")
+	_check(not restored_map.stage_2_card.disabled, "A later session can select the restored Stage 2 route")
 	_check("LEVEL  2" in restored_map.profile_label.text and "GEARS  45" in restored_map.profile_label.text, "A later session restores level and gears on the route map")
 
 	restored_map.queue_free()
