@@ -51,6 +51,8 @@ const requiredFiles = [
   'game/enemies/stage2/zombie_crow.gd',
   'game/enemies/stage2/zombie_nurse.tscn',
   'game/enemies/stage2/zombie_nurse.gd',
+  'game/enemies/stage2/zombie_doctor.tscn',
+  'game/enemies/stage2/zombie_doctor.gd',
   'game/projectiles/bullet.tscn',
   'game/projectiles/bullet.gd',
   'game/projectiles/bandage_projectile.tscn',
@@ -68,7 +70,8 @@ const requiredFiles = [
   'tests/stage-result.gd',
   'tests/stage2-assets.gd',
   'tests/zombie-crow.gd',
-  'tests/zombie-nurse.gd'
+  'tests/zombie-nurse.gd',
+  'tests/zombie-doctor.gd'
 ];
 
 const errors = [];

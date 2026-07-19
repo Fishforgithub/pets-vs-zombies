@@ -59,18 +59,20 @@ func _run() -> void:
 
 	var mixed_director := packed_scene.instantiate() as WaveDirector
 	host.add_child(mixed_director)
-	mixed_director.configure(_spawn_mixed_enemy, [{"enemy_count": 2, "spawn_interval": 0.0, "max_alive": 2}])
+	mixed_director.configure(_spawn_mixed_enemy, [{"enemy_count": 3, "spawn_interval": 0.0, "max_alive": 3}])
 	mixed_director.start()
 	for _iteration in range(10):
 		await process_frame
-		if mixed_enemies.size() == 2:
+		if mixed_enemies.size() == 3:
 			break
-	_check(mixed_enemies.size() == 2, "Director spawns a mixed wave through the shared enemy interface")
-	if mixed_enemies.size() == 2:
+	_check(mixed_enemies.size() == 3, "Director spawns a mixed wave through the shared enemy interface")
+	if mixed_enemies.size() == 3:
 		_check(mixed_enemies[0] is ZombieCrow, "Mixed wave accepts an aerial crow")
 		_check(mixed_enemies[1] is ZombieNurse, "Mixed wave accepts a support nurse")
+		_check(mixed_enemies[2] is ZombieDoctor, "Mixed wave accepts a controller doctor")
 		(mixed_enemies[0] as ZombieCrow).take_damage((mixed_enemies[0] as ZombieCrow).health)
 		(mixed_enemies[1] as ZombieNurse).take_damage((mixed_enemies[1] as ZombieNurse).health)
+		(mixed_enemies[2] as ZombieDoctor).take_damage((mixed_enemies[2] as ZombieDoctor).health)
 		await process_frame
 	_check(mixed_director.finished, "Mixed enemy defeats complete the wave")
 
@@ -85,7 +87,12 @@ func _spawn_enemy(spawn_side: int) -> ZombieEnemy:
 	return enemy
 
 func _spawn_mixed_enemy(_spawn_side: int) -> WaveEnemy:
-	var path := "res://game/enemies/stage2/zombie_crow.tscn" if mixed_enemies.is_empty() else "res://game/enemies/stage2/zombie_nurse.tscn"
+	var paths := [
+		"res://game/enemies/stage2/zombie_crow.tscn",
+		"res://game/enemies/stage2/zombie_nurse.tscn",
+		"res://game/enemies/stage2/zombie_doctor.tscn",
+	]
+	var path: String = paths[mixed_enemies.size() % paths.size()]
 	var packed_enemy := load(path) as PackedScene
 	var enemy := packed_enemy.instantiate() as WaveEnemy
 	enemies.add_child(enemy)

@@ -27,6 +27,8 @@ var fire_cooldown: float = 0.0
 var fire_animation_timer: float = 0.0
 var reload_timer: float = 0.0
 var hurt_animation_timer: float = 0.0
+var movement_slow_timer: float = 0.0
+var movement_speed_multiplier: float = 1.0
 var is_crouching: bool = false
 var is_reloading: bool = false
 var is_dead: bool = false
@@ -58,7 +60,7 @@ func _physics_process(delta: float) -> void:
 
 	var axis := Input.get_axis("move_left", "move_right")
 	_update_crouch_state(Input.is_action_pressed("crouch") and is_on_floor())
-	velocity.x = axis * (move_speed * 0.45 if is_crouching else move_speed)
+	velocity.x = axis * (move_speed * 0.45 if is_crouching else move_speed) * movement_speed_multiplier
 
 	if Input.is_action_just_pressed("jump") and is_on_floor() and not is_crouching:
 		velocity.y = jump_velocity
@@ -121,6 +123,10 @@ func _has_standing_clearance() -> bool:
 func _update_action_timers(delta: float) -> void:
 	fire_animation_timer = maxf(0.0, fire_animation_timer - delta)
 	hurt_animation_timer = maxf(0.0, hurt_animation_timer - delta)
+	if movement_slow_timer > 0.0:
+		movement_slow_timer = maxf(0.0, movement_slow_timer - delta)
+		if movement_slow_timer <= 0.0:
+			movement_speed_multiplier = 1.0
 	if not is_reloading:
 		return
 
@@ -131,6 +137,10 @@ func _update_action_timers(delta: float) -> void:
 	is_reloading = false
 	ammo = magazine_size
 	ammo_changed.emit(ammo, magazine_size)
+
+func apply_movement_slow(duration: float, speed_multiplier: float) -> void:
+	movement_slow_timer = maxf(movement_slow_timer, duration)
+	movement_speed_multiplier = minf(movement_speed_multiplier, clampf(speed_multiplier, 0.1, 1.0))
 
 func _apply_equipped_weapon_data() -> void:
 	if equipped_weapon == null:
