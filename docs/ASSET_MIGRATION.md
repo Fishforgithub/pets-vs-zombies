@@ -60,6 +60,7 @@ The source repository `Fishforgithub/tea-line-bot` is read-only. Copy only appro
 | `assets/bosses/stage2_chief_surgeon/reaction_sheet.png` | Four-pose generation derived from the approved Chief Surgeon identity anchor | User-approved; normalized hurt, phase-two rage, stunned, and defeated 512×512 cells |
 | `assets/hazards/stage2/rolling_equipment_sheet.png` | Project-specific hospital hazard generation derived from the approved Stage 2 palette | Art-production self-reviewed; four transparent 256×256 roll, pitch, bounce, and settle cells |
 | `assets/backgrounds/stage2/hospital_corridor.png` | Approved project-specific Stage 2 environment generation | User-approved; 960×540 opaque hospital corridor palette and lighting anchor |
+| `assets/tilesets/stage2/hospital_ground_tiles.png` | Project-specific tile generation derived from the approved Stage 2 hospital direction | Art-production self-reviewed; basic, cracked, drain, and puddle variants in four aligned transparent 256×256 cells |
 | `assets/bosses/stage1_foreman/idle.png` | Approved original Stage 1 boss generation | Approved; 512×512 transparent Undead Foreman identity anchor |
 | `assets/bosses/stage1_foreman/walk_sheet.png` | Four-frame generation derived from the Undead Foreman identity anchor | Approved; 2×2 heavy-walk sheet of 512×512 cells |
 | `assets/bosses/stage1_foreman/sweep_sheet.png` | Four-frame generation derived from the Undead Foreman identity anchor | Approved; 2×2 horizontal-sweep sheet of 512×512 cells |

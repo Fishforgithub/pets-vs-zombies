@@ -31,6 +31,7 @@ Stage 2 hospital character production is underway:
 - phase-two rolling equipment cart hazard is delivered as a four-frame transparent travel loop
 - hospital-specific electric-hit, bandage-buff, wheelchair-skid, and Chief Surgeon impact effects are delivered
 - hospital corridor background direction is approved and delivered as the Stage 2 palette/lighting anchor
+- repeatable hospital ground tiles are delivered in basic, cracked, drain, and puddle variants
 
 ## Stage 1 boss completion
 
@@ -63,8 +64,8 @@ For complete asset paths, frame order, FPS, facing rules, pivots, collision guid
 
 1. Read any `ready` items added by Codex to `docs/ART_REQUEST_QUEUE.md`.
 2. Verify that Codex has integrated or cherry-picked the latest art branch before changing paths or layouts.
-3. Derive repeatable Stage 2 ground/wall modules from the approved hospital environment direction.
-4. Produce modular doors, beds, carts, signs, and additional corridor hazards.
+3. Derive repeatable Stage 2 wall/door modules from the approved hospital environment direction.
+4. Produce modular beds, carts, signs, and additional corridor hazards.
 5. Begin UI production only from a committed request that specifies Godot consumers, dimensions, states, and NinePatch margins.
 6. Keep all new character and creature image drafts out of Git until explicit user approval.
 

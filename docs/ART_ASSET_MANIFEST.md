@@ -161,8 +161,11 @@ Enable contact damage only during active travel. Disable damage and collision be
 | Asset | Size | Runtime use |
 |---|---|---|
 | `assets/backgrounds/stage2/hospital_corridor.png` | 960 x 540 opaque image | Approved hospital palette/lighting anchor and single-room corridor or boss-arena background plate. Display aspect-cover at 16:9; no collision. |
+| `assets/tilesets/stage2/hospital_ground_tiles.png` | 4 x 1, 256 x 256 cells | Basic, cracked, drain, puddle. Repeatable side-view hospital floor blocks with aligned outer geometry and walkable top. |
 
 This plate establishes the Stage 2 environment language: faded cream plaster, mint wall tiles, muted turquoise fixtures, alternating amber emergency lamps and cyan clinical light, with restrained coral symbols. It contains perspective and unique room landmarks, so do not repeat it horizontally as a seamless texture. Use it for a bounded room/arena, or keep it as the far visual plate behind separately authored repeatable corridor modules. The illustrated floor does not define the player path: author a separate horizontal gameplay floor and collision layer in Godot.
+
+All four hospital ground cells use the same tile origin and aligned top surface. Assign the same simple rectangular ground collision to every variant; cracks, grate openings, puddle edges, drips, and front-face damage are decorative only. The tile artwork reaches both horizontal cell edges so adjacent cells can form a continuous platform. Disable texture filtering and avoid per-tile scaling so seams remain stable.
 
 ## Stage 1 boss: Undead Foreman
 
