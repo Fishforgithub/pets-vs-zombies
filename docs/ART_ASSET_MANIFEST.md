@@ -76,6 +76,8 @@ Known delivery defect: `run_sheet.png` has opaque pixels on the shared x=512 bou
 
 Keep the torso collision shape at a stable local offset across the full run cycle; do not move or resize gameplay collision to follow the extended forelegs, hind legs, tail, or exposed ribs. The long airborne stride at frame index 2 is still part of the looping sprint and does not by itself trigger pounce damage.
 
+The run sheet was normalized after engine atlas validation: every 256 x 256 cell is independently contained with at least 12 transparent pixels on every edge, adjacent-frame fragments are removed, and all six poses share one bottom-center baseline. Do not re-trim individual frames during import.
+
 For `pounce`, move the enemy body along a short authored gameplay arc and enable the bite hitbox only during the active overlap window; the pose alone must not deal continuous damage. `hurt` cancels pounce damage and uses backward knockback. `defeated` permanently disables navigation, damage, and collision before holding the collapsed pose for cleanup.
 
 ### Zombie nurse
@@ -198,6 +200,8 @@ Known delivery defect: the current four multi-frame sheets contain opaque conten
 | `assets/bosses/stage1_foreman/reaction_sheet.png` | 2 x 2, four independent 512 x 512 poses | index 0 `hurt`, 1 `rage`, 2 `stunned`, 3 `defeated` | State-selected key poses; do not loop as one animation |
 
 Use separate authored shapes for the boss body, vulnerable area, and road-barrier hammer. Never include the extended hammer in the persistent body hurtbox. Activate weapon hitboxes only during documented attack windows. For `sweep`, frame index 2 owns the wide leftward attack area; frames 0, 1, and 3 must not damage the player. For `slam`, frame index 2 owns the local impact hitbox and spawns one leftward plus one rightward ground shockwave at the hammer contact point. The `rage` pose is the phase-two transition, `stunned` disables attacks and opens the vulnerable window, and `defeated` disables all damage/collision before stage-clear timing. Preserve the bottom-center pivot when switching animations so the large sprite does not jump vertically.
+
+The four Foreman sheets were normalized after engine atlas validation. All poses use one global 86% scale and a shared bottom-center baseline, detached neighboring-cell fragments are removed, and every 512 x 512 cell now has safe transparent margins. Import the documented cell regions directly; do not auto-crop frames independently.
 
 ## Stage 1 environment
 

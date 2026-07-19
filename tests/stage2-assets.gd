@@ -5,7 +5,7 @@ const ASSET_SPECS: Array[Dictionary] = [
 	{"path": "res://assets/enemies/zombie_crow/flight_sheet.png", "columns": 3, "rows": 2, "cell": 256},
 	{"path": "res://assets/enemies/zombie_crow/action_sheet.png", "columns": 3, "rows": 1, "cell": 256},
 	{"path": "res://assets/enemies/zombie_dog/idle.png", "columns": 1, "rows": 1, "cell": 256},
-	{"path": "res://assets/enemies/zombie_dog/run_sheet.png", "columns": 3, "rows": 2, "cell": 256, "check_border": false, "skip_reason": "cell-border repair is tracked by AR-20260719-006"},
+	{"path": "res://assets/enemies/zombie_dog/run_sheet.png", "columns": 3, "rows": 2, "cell": 256, "margin": 12},
 	{"path": "res://assets/enemies/zombie_dog/action_sheet.png", "columns": 3, "rows": 1, "cell": 256},
 	{"path": "res://assets/enemies/zombie_nurse/idle.png", "columns": 1, "rows": 1, "cell": 256},
 	{"path": "res://assets/enemies/zombie_nurse/walk_sheet.png", "columns": 3, "rows": 2, "cell": 256},
@@ -16,6 +16,10 @@ const ASSET_SPECS: Array[Dictionary] = [
 	{"path": "res://assets/enemies/wheelchair_zombie/idle.png", "columns": 1, "rows": 1, "cell": 256},
 	{"path": "res://assets/enemies/wheelchair_zombie/roll_sheet.png", "columns": 3, "rows": 2, "cell": 256},
 	{"path": "res://assets/enemies/wheelchair_zombie/action_sheet.png", "columns": 4, "rows": 1, "cell": 256},
+	{"path": "res://assets/bosses/stage1_foreman/walk_sheet.png", "columns": 2, "rows": 2, "cell": 512, "margin": 8},
+	{"path": "res://assets/bosses/stage1_foreman/sweep_sheet.png", "columns": 2, "rows": 2, "cell": 512, "margin": 8},
+	{"path": "res://assets/bosses/stage1_foreman/slam_sheet.png", "columns": 2, "rows": 2, "cell": 512, "margin": 8},
+	{"path": "res://assets/bosses/stage1_foreman/reaction_sheet.png", "columns": 2, "rows": 2, "cell": 512, "margin": 8},
 	{"path": "res://assets/bosses/stage2_chief_surgeon/idle.png", "columns": 1, "rows": 1, "cell": 512},
 	{"path": "res://assets/bosses/stage2_chief_surgeon/walk_sheet.png", "columns": 2, "rows": 2, "cell": 512},
 	{"path": "res://assets/bosses/stage2_chief_surgeon/sweep_sheet.png", "columns": 2, "rows": 2, "cell": 512},
@@ -67,7 +71,7 @@ func _validate_asset(spec: Dictionary) -> void:
 	for row in range(rows):
 		for column in range(columns):
 			var frame_index := row * columns + column
-			var border_is_clear := _shared_cell_borders_are_clear(image, column, row, columns, rows, cell_size) if spec.get("shared_borders_only", false) else _cell_border_is_clear(image, column, row, cell_size)
+			var border_is_clear := _shared_cell_borders_are_clear(image, column, row, columns, rows, cell_size) if spec.get("shared_borders_only", false) else _cell_margin_is_clear(image, column, row, cell_size, int(spec.get("margin", 1)))
 			_check(border_is_clear, "%s frame %d has clear atlas boundaries" % [path, frame_index])
 
 func _shared_cell_borders_are_clear(image: Image, column: int, row: int, columns: int, rows: int, cell_size: int) -> bool:
@@ -93,17 +97,14 @@ func _shared_cell_borders_are_clear(image: Image, column: int, row: int, columns
 				return false
 	return true
 
-func _cell_border_is_clear(image: Image, column: int, row: int, cell_size: int) -> bool:
+func _cell_margin_is_clear(image: Image, column: int, row: int, cell_size: int, margin: int) -> bool:
 	var left := column * cell_size
 	var top := row * cell_size
-	var right := left + cell_size - 1
-	var bottom := top + cell_size - 1
-	for x in range(left, right + 1):
-		if image.get_pixel(x, top).a > 0.0 or image.get_pixel(x, bottom).a > 0.0:
-			return false
-	for y in range(top, bottom + 1):
-		if image.get_pixel(left, y).a > 0.0 or image.get_pixel(right, y).a > 0.0:
-			return false
+	for local_y in range(cell_size):
+		for local_x in range(cell_size):
+			if local_x < margin or local_x >= cell_size - margin or local_y < margin or local_y >= cell_size - margin:
+				if image.get_pixel(left + local_x, top + local_y).a > 0.0:
+					return false
 	return true
 
 func _check(condition: bool, message: String) -> void:
