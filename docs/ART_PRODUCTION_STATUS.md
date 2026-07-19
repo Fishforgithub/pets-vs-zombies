@@ -34,6 +34,7 @@ Stage 2 hospital character production is underway:
 - repeatable hospital ground tiles are delivered in basic, cracked, drain, and puddle variants
 - modular hospital wall, closed-door, open-doorway, and observation-window backgrounds are delivered
 - hospital gurney, IV stand, supply cabinet, and tipped waiting-chair prop set is delivered
+- four-phase electric-puddle corridor hazard is delivered with a documented safe window and active damage frame
 
 ## Stage 1 boss completion
 
@@ -66,7 +67,7 @@ For complete asset paths, frame order, FPS, facing rules, pivots, collision guid
 
 1. Read any `ready` items added by Codex to `docs/ART_REQUEST_QUEUE.md`.
 2. Verify that Codex has integrated or cherry-picked the latest art branch before changing paths or layouts.
-3. Produce reusable hospital signs and additional corridor hazards.
+3. Produce reusable hospital signs and one additional mechanical corridor hazard.
 4. Build Stage 2 card/HUD treatment only after a ready implementation request specifies consumers and states.
 5. Begin UI production only from a committed request that specifies Godot consumers, dimensions, states, and NinePatch margins.
 6. Keep all new character and creature image drafts out of Git until explicit user approval.

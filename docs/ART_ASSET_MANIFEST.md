@@ -153,10 +153,13 @@ For `slam`, frames 0–1 are the high telegraph and downward drive. Frame index 
 | Asset | Grid / order | Runtime mapping | Playback |
 |---|---|---|---|
 | `assets/hazards/stage2/rolling_equipment_sheet.png` | 4 x 1, 256 x 256 cells | `roll`: level travel, forward pitch, airborne bounce, settle | Loop, 10 FPS while moving |
+| `assets/hazards/stage2/electric_puddle_sheet.png` | 4 x 1, 256 x 256 cells | `electric_cycle`: safe rest, left discharge, central active surge, right aftershock | Loop, 8 FPS; damage only on frame index 2 |
 
 The rolling equipment cart is a phase-two Chief Surgeon hazard and may also be reused as a hospital corridor trap. Spawn it as a moving hazard scene with one simple rectangular body/damage shape aligned to the lower cart frame; never derive collision from the monitor, bottles, bandages, loose straps, wheels, or sprite alpha. Keep the gameplay body on a stable ground path while the animation supplies pitch and bounce. Bottles and loose supplies are decorative and must not create separate projectiles.
 
 Enable contact damage only during active travel. Disable damage and collision before despawn, destruction, or off-screen cleanup. Mirror the sprite and travel direction together when launched to the right. The four frames form one continuous motion loop; they are not separate damage states.
+
+The electric puddle uses a fixed ground-aligned hazard area covering only the water surface. Frame index 0 is the readable safe window; index 1 telegraphs the imminent surge without damage; index 2 enables electric damage/status once for the active window; index 3 disables damage and recovers. Keep damage timing state-driven rather than inferred from bright pixels, and rate-limit hits so one active frame cannot apply damage every physics tick. The broken cable, sparks, splash crown, tile fragments, and droplets are visual only.
 
 ## Stage 2 environment
 
