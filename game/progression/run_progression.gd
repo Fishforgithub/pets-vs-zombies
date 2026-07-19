@@ -166,7 +166,10 @@ func _apply_snapshot(snapshot: Dictionary) -> bool:
 		return false
 	var loaded_highest_stage := 1
 	var loaded_completed_stages: Array[int] = []
-	if snapshot_version >= 2:
+	if snapshot_version == 1:
+		loaded_highest_stage = 2
+		loaded_completed_stages = [1]
+	else:
 		if not snapshot.get("completed_stages", []) is Array:
 			return false
 		loaded_highest_stage = int(snapshot.get("highest_unlocked_stage", 0))

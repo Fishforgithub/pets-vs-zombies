@@ -85,7 +85,7 @@ func _run() -> void:
 		"pet_skill_levels": {"energy_bolt": 1},
 	}
 	_check(legacy._apply_snapshot(legacy_snapshot), "Version 1 profiles migrate without losing progression")
-	_check(legacy.highest_unlocked_stage == 1 and legacy.completed_stages.is_empty(), "Legacy profiles receive safe Stage 1 campaign defaults")
+	_check(legacy.highest_unlocked_stage == 2 and legacy.completed_stages == [1], "Legacy profiles retain their implied Stage 1 completion and unlock Stage 2")
 
 	var currency_before_corruption := restored.currency
 	var corrupt_file := FileAccess.open(TEST_SAVE_PATH, FileAccess.WRITE)
