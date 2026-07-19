@@ -134,6 +134,7 @@ Chief Surgeon frame cells are `512 x 512`. The authored direction is left-facing
 | `assets/bosses/stage2_chief_surgeon/walk_sheet.png` | 2 x 2, 4 frames of 512 x 512 | `walk` heavy contact/down/rebound frames 0–3 | Loop, 6 FPS |
 | `assets/bosses/stage2_chief_surgeon/sweep_sheet.png` | 2 x 2, 4 frames of 512 x 512 | `sweep`: wind-up, early swing, active sweep, recovery | One shot, 7 FPS; weapon damage only on frame index 2 |
 | `assets/bosses/stage2_chief_surgeon/slam_sheet.png` | 2 x 2, 4 frames of 512 x 512 | `slam`: high wind-up, downward drive, ground impact, recovery | One shot, 7 FPS; impact/shockwaves spawn on frame index 2 |
+| `assets/bosses/stage2_chief_surgeon/reaction_sheet.png` | 2 x 2, four independent 512 x 512 poses | index 0 `hurt`, 1 `rage`, 2 `stunned`, 3 `defeated` | State-selected key poses; do not loop as one animation |
 
 Author separate simple shapes for the boss body, vulnerable upper torso/head, IV-stand shaft, and oversized operating-lamp hammer. The lamp head, shaft, hanging canisters, coat tails, hair, and loupe are excluded from the persistent body hurtbox. Weapon damage is enabled only during documented attack windows; never derive collision from sprite alpha. Preserve the bottom-center pivot so the massive body does not jump when switching states.
 
@@ -142,6 +143,8 @@ Keep the gameplay body's ground position stable while the walk cycle supplies he
 For `sweep`, frames 0–1 are readable telegraph/startup and must not damage the player. Frame index 2 owns the wide leftward lamp-head attack area; its colored motion arc is visual only and does not define collision. Frame 3 disables weapon damage and recovers toward idle. Mirror the complete attack area and weapon together when facing right.
 
 For `slam`, frames 0–1 are the high telegraph and downward drive. Frame index 2 owns the local lamp-head impact area and spawns one leftward plus one rightward ground shockwave at the contact point; the authored colored burst/debris is visual only. Frame 3 disables impact damage and exposes the recovery window. Mirror the impact origin and shockwave directions with the full boss when facing changes.
+
+`hurt` cancels the current attack but does not enter a long vulnerability by itself. `rage` is the phase-two transition: temporarily lock movement/attacks, play the transition cue once, then enable the faster phase-two behavior after the authored pose. `stunned` disables weapon damage and opens the upper-torso/head vulnerable window. `defeated` permanently disables all boss damage, navigation, body/weapon collision, and lamp output before stage-clear timing; the grounded weapon and IV canisters remain visual only.
 
 ## Stage 1 boss: Undead Foreman
 
