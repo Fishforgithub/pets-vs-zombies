@@ -2,6 +2,7 @@ class_name StageResultScreen
 extends CanvasLayer
 
 signal retry_requested
+signal map_requested
 signal upgrade_purchased
 
 const STARTER_WEAPON: WeaponData = preload("res://game/data/weapons/starter_pistol.tres")
@@ -19,11 +20,13 @@ const ENERGY_BOLT: PetSkillData = preload("res://game/data/pet_skills/energy_bol
 @onready var stage_label: Label = $Overlay/ResultPanel/NextStageCard/StageLabel
 @onready var status_label: Label = $Overlay/ResultPanel/NextStageCard/StatusLabel
 @onready var retry_button: Button = $Overlay/ResultPanel/RetryButton
+@onready var map_button: Button = $Overlay/ResultPanel/MapButton
 
 var progression: RunProgression
 
 func _ready() -> void:
 	retry_button.pressed.connect(_on_retry_pressed)
+	map_button.pressed.connect(_on_map_pressed)
 	weapon_upgrade_button.pressed.connect(_on_weapon_upgrade_pressed)
 	pet_upgrade_button.pressed.connect(_on_pet_upgrade_pressed)
 	visible = false
@@ -41,8 +44,8 @@ func show_stage_clear(experience_earned: int, currency_earned: int, player_level
 	title_label.text = "STAGE 1 CLEAR"
 	reward_label.text = "XP +%d     GEARS +%d" % [experience_earned, currency_earned]
 	level_label.text = "PLAYER LEVEL  %d" % player_level
-	stage_label.text = "STAGE 2\nSUBURBAN NIGHT"
-	status_label.text = "LOCKED — COMING SOON"
+	stage_label.text = "STAGE 2\nHOSPITAL CORRIDOR"
+	status_label.text = "UNLOCKED — UNDER CONSTRUCTION" if is_instance_valid(progression) and progression.is_stage_unlocked(2) else "LOCKED — CLEAR STAGE 1"
 	next_stage_card.disabled = true
 	visible = true
 	_refresh_shop()
@@ -107,3 +110,6 @@ func _on_progress_changed(_level: int, _experience: int, _experience_required: i
 
 func _on_retry_pressed() -> void:
 	retry_requested.emit()
+
+func _on_map_pressed() -> void:
+	map_requested.emit()

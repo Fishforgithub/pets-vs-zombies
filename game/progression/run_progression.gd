@@ -4,13 +4,14 @@ extends Node
 signal progress_changed(level: int, experience: int, experience_required: int, currency: int)
 signal level_increased(new_level: int)
 signal upgrades_changed
+signal campaign_changed
 signal profile_loaded
 signal profile_saved
 signal profile_save_failed(error: Error)
 
 const STARTER_WEAPON: WeaponData = preload("res://game/data/weapons/starter_pistol.tres")
 const ENERGY_BOLT: PetSkillData = preload("res://game/data/pet_skills/energy_bolt.tres")
-const SAVE_VERSION: int = 1
+const SAVE_VERSION: int = 2
 const DEFAULT_SAVE_PATH: String = "user://campaign_profile.json"
 
 @export var level: int = 1
@@ -19,6 +20,8 @@ const DEFAULT_SAVE_PATH: String = "user://campaign_profile.json"
 
 var weapon_levels: Dictionary = {&"starter_pistol": 1}
 var pet_skill_levels: Dictionary = {&"energy_bolt": 1}
+var highest_unlocked_stage: int = 1
+var completed_stages: Array[int] = []
 var save_path: String = DEFAULT_SAVE_PATH
 
 func _ready() -> void:
@@ -41,6 +44,21 @@ func get_weapon_level(weapon_id: StringName) -> int:
 
 func get_pet_skill_level(skill_id: StringName) -> int:
 	return int(pet_skill_levels.get(skill_id, 0))
+
+func is_stage_unlocked(stage_number: int) -> bool:
+	return stage_number >= 1 and stage_number <= highest_unlocked_stage
+
+func is_stage_completed(stage_number: int) -> bool:
+	return completed_stages.has(stage_number)
+
+func complete_stage(stage_number: int) -> void:
+	if stage_number < 1:
+		return
+	if not completed_stages.has(stage_number):
+		completed_stages.append(stage_number)
+		completed_stages.sort()
+	highest_unlocked_stage = maxi(highest_unlocked_stage, stage_number + 1)
+	campaign_changed.emit()
 
 func try_purchase_weapon(data: WeaponData) -> bool:
 	if data == null or get_weapon_level(data.weapon_id) > 0:
@@ -128,10 +146,13 @@ func _create_snapshot() -> Dictionary:
 		"currency": currency,
 		"weapon_levels": _stringify_level_dictionary(weapon_levels),
 		"pet_skill_levels": _stringify_level_dictionary(pet_skill_levels),
+		"highest_unlocked_stage": highest_unlocked_stage,
+		"completed_stages": completed_stages,
 	}
 
 func _apply_snapshot(snapshot: Dictionary) -> bool:
-	if int(snapshot.get("version", -1)) != SAVE_VERSION:
+	var snapshot_version := int(snapshot.get("version", -1))
+	if snapshot_version < 1 or snapshot_version > SAVE_VERSION:
 		return false
 	if not snapshot.has("level") or not snapshot.has("experience") or not snapshot.has("currency"):
 		return false
@@ -143,6 +164,15 @@ func _apply_snapshot(snapshot: Dictionary) -> bool:
 	var loaded_currency := int(snapshot.get("currency", -1))
 	if loaded_level < 1 or loaded_level > 999 or loaded_experience < 0 or loaded_currency < 0:
 		return false
+	var loaded_highest_stage := 1
+	var loaded_completed_stages: Array[int] = []
+	if snapshot_version >= 2:
+		if not snapshot.get("completed_stages", []) is Array:
+			return false
+		loaded_highest_stage = int(snapshot.get("highest_unlocked_stage", 0))
+		if loaded_highest_stage < 1 or loaded_highest_stage > 999:
+			return false
+		loaded_completed_stages = _parse_stage_array(snapshot.get("completed_stages", []) as Array)
 
 	var loaded_weapon_levels := _parse_level_dictionary(snapshot.get("weapon_levels") as Dictionary)
 	var loaded_pet_skill_levels := _parse_level_dictionary(snapshot.get("pet_skill_levels") as Dictionary)
@@ -154,7 +184,10 @@ func _apply_snapshot(snapshot: Dictionary) -> bool:
 	currency = loaded_currency
 	weapon_levels = loaded_weapon_levels
 	pet_skill_levels = loaded_pet_skill_levels
+	highest_unlocked_stage = loaded_highest_stage
+	completed_stages = loaded_completed_stages
 	upgrades_changed.emit()
+	campaign_changed.emit()
 	_emit_progress()
 	return true
 
@@ -171,6 +204,15 @@ func _parse_level_dictionary(serialized: Dictionary) -> Dictionary:
 		if item_level > 0 and item_level <= 999:
 			levels[StringName(String(item_id))] = item_level
 	return levels
+
+func _parse_stage_array(serialized: Array) -> Array[int]:
+	var stages: Array[int] = []
+	for stage_value in serialized:
+		var stage_number := int(stage_value)
+		if stage_number >= 1 and stage_number <= 999 and not stages.has(stage_number):
+			stages.append(stage_number)
+	stages.sort()
+	return stages
 
 func _emit_progress() -> void:
 	progress_changed.emit(level, experience, experience_required_for_next_level(), currency)

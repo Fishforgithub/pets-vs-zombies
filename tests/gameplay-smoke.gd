@@ -6,8 +6,8 @@ func _init() -> void:
 	call_deferred("_run")
 
 func _run() -> void:
-	var main_scene := load("res://game/main/main.tscn") as PackedScene
-	_check(main_scene != null, "Main scene loads")
+	var main_scene := load("res://game/stages/stage1.tscn") as PackedScene
+	_check(main_scene != null, "Stage 1 scene loads")
 	if main_scene == null:
 		_finish()
 		return
@@ -96,7 +96,9 @@ func _run() -> void:
 	_check("LV 3" in main.hud.progression_label.text, "HUD reflects earned progression")
 	_check(main.stage_result.visible, "Stage completion shows the result screen")
 	_check("XP +270" in main.stage_result.reward_label.text and "GEARS +180" in main.stage_result.reward_label.text, "Result screen reports all Stage 1 rewards")
-	_check(main.stage_result.next_stage_card.disabled, "Stage 2 card remains locked as a placeholder")
+	_check(player.progression.is_stage_completed(1) and player.progression.is_stage_unlocked(2), "Stage completion persists route progress")
+	_check(main.stage_result.next_stage_card.disabled, "Stage 2 result card stays disabled until its playable scene is complete")
+	_check("UNDER CONSTRUCTION" in main.stage_result.status_label.text, "Stage 2 result card explains its current availability")
 	_check("STAGE 1 CLEAR" in main.stage_result.title_label.text, "Stage completion shows the clear title")
 	_check(main.stage_result.progression == player.progression, "Stage result shop uses the active run progression")
 	_check("AVAILABLE GEARS  180" in main.stage_result.shop_currency_label.text, "Stage result shop exposes earned boss currency")

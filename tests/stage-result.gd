@@ -2,6 +2,7 @@ extends SceneTree
 
 var failures: Array[String] = []
 var retry_seen: bool = false
+var map_seen: bool = false
 var upgrade_purchase_count: int = 0
 
 func _init() -> void:
@@ -20,6 +21,7 @@ func _run() -> void:
 	root.add_child(progression)
 	await process_frame
 	result.retry_requested.connect(_on_retry_requested)
+	result.map_requested.connect(_on_map_requested)
 	result.upgrade_purchased.connect(_on_upgrade_purchased)
 
 	_check(not result.visible, "Stage result starts hidden")
@@ -28,13 +30,14 @@ func _run() -> void:
 	_check(result.get_node("Overlay/ResultPanel/WeaponUpgradePanel") is NinePatchRect, "Weapon shop card is ready for NinePatch production art")
 	_check(result.get_node("Overlay/ResultPanel/PetUpgradePanel") is NinePatchRect, "Pet shop card is ready for NinePatch production art")
 	progression.award_rewards(270, 180)
+	progression.complete_stage(1)
 	result.configure_progression(progression)
 	result.show_stage_clear(270, 180, 3)
 	_check(result.visible, "Stage result becomes visible after stage clear")
 	_check("XP +270" in result.reward_label.text and "GEARS +180" in result.reward_label.text, "Result summarizes earned rewards")
 	_check("PLAYER LEVEL  3" in result.level_label.text, "Result shows the reached player level")
-	_check(result.next_stage_card.disabled, "Unavailable Stage 2 card is locked")
-	_check("STAGE 2" in result.stage_label.text and "COMING SOON" in result.status_label.text, "Next-stage placeholder explains availability")
+	_check(result.next_stage_card.disabled, "Unavailable Stage 2 card remains non-interactive")
+	_check("STAGE 2" in result.stage_label.text and "UNDER CONSTRUCTION" in result.status_label.text, "Next-stage card reports an unlocked route awaiting its scene")
 	_check("AVAILABLE GEARS  180" in result.shop_currency_label.text, "Upgrade shop shows spendable Stage 1 currency")
 	_check("LEVEL 1 / 5" in result.weapon_upgrade_label.text and not result.weapon_upgrade_button.disabled, "Affordable weapon upgrade is available")
 	_check("LEVEL 1 / 5" in result.pet_upgrade_label.text and not result.pet_upgrade_button.disabled, "Affordable pet upgrade is available")
@@ -47,6 +50,8 @@ func _run() -> void:
 	_check(upgrade_purchase_count == 2, "Successful shop purchases request profile persistence")
 	result._on_retry_pressed()
 	_check(retry_seen, "Replay control emits a retry request")
+	result._on_map_pressed()
+	_check(map_seen, "Campaign-map control emits a map request")
 
 	result.queue_free()
 	progression.queue_free()
@@ -54,6 +59,9 @@ func _run() -> void:
 
 func _on_retry_requested() -> void:
 	retry_seen = true
+
+func _on_map_requested() -> void:
+	map_seen = true
 
 func _on_upgrade_purchased() -> void:
 	upgrade_purchase_count += 1

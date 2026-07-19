@@ -28,6 +28,8 @@ const requiredFiles = [
   'deploy/cloudflare-worker.js',
   'game/main/main.tscn',
   'game/main/main.gd',
+  'game/stages/stage1.tscn',
+  'game/stages/stage1.gd',
   'game/bosses/foreman_boss.tscn',
   'game/bosses/foreman_boss.gd',
   'game/bosses/foreman_shockwave.tscn',
@@ -74,6 +76,7 @@ const requiredFiles = [
   'tests/foreman-boss.gd',
   'tests/progression.gd',
   'tests/stage-result.gd',
+  'tests/campaign-map.gd',
   'tests/stage2-assets.gd',
   'tests/zombie-crow.gd',
   'tests/zombie-nurse.gd',
@@ -103,6 +106,9 @@ if (!exportPresets.includes('platform="Web"') || !exportPresets.includes('varian
   errors.push('export_presets.cfg must define a single-threaded Web export.');
 }
 const textExtensions = new Set(['.gd', '.tscn', '.godot', '.md', '.json', '.mjs']);
+const optionalResourcePaths = new Set([
+  'res://game/stages/stage2.tscn'
+]);
 async function walk(directory) {
   const entries = await readdir(directory, { withFileTypes: true });
   const files = [];
@@ -122,6 +128,7 @@ for (const file of await walk(root)) {
   if (relativeFile !== 'docs/ART_REQUEST_QUEUE.md') {
     const matches = content.matchAll(/res:\/\/([^"')\s]+)/g);
     for (const match of matches) {
+      if (optionalResourcePaths.has(match[0])) continue;
       const referenced = path.join(root, match[1]);
       try {
         await access(referenced);

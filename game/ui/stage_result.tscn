@@ -226,12 +226,21 @@ vertical_alignment = 1
 
 [node name="RetryButton" type="Button" parent="Overlay/ResultPanel"]
 layout_mode = 0
-offset_left = 270.0
+offset_left = 154.0
 offset_top = 476.0
-offset_right = 490.0
+offset_right = 366.0
 offset_bottom = 528.0
 theme_override_font_sizes/font_size = 20
 text = "REPLAY STAGE 1"
+
+[node name="MapButton" type="Button" parent="Overlay/ResultPanel"]
+layout_mode = 0
+offset_left = 394.0
+offset_top = 476.0
+offset_right = 606.0
+offset_bottom = 528.0
+theme_override_font_sizes/font_size = 20
+text = "CAMPAIGN MAP"
 
 [node name="ShopCurrencyLabel" type="Label" parent="Overlay/ResultPanel"]
 layout_mode = 0

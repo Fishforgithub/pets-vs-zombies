@@ -24,6 +24,7 @@ func _run() -> void:
 	_check(progression.currency == 0, "Progression starts without currency")
 	_check(progression.get_weapon_level(&"starter_pistol") == 1, "Starter pistol is owned at level one")
 	_check(progression.get_pet_skill_level(&"energy_bolt") == 1, "Energy Bolt is owned at level one")
+	_check(progression.is_stage_unlocked(1) and not progression.is_stage_unlocked(2), "A new campaign starts with only Stage 1 unlocked")
 
 	progression.award_rewards(50, 20)
 	_check(progression.level == 1 and progression.experience == 50, "Rewards add experience without premature level-up")
@@ -56,6 +57,9 @@ func _run() -> void:
 	_check(progression.try_purchase_weapon(locked_weapon), "Unlocked weapon can be bought with earned currency")
 	_check(progression.get_weapon_level(&"test_rifle") == 1, "Purchased weapon enters the inventory")
 	_check(progress_signal_count > 0, "Progression emits UI update signals")
+	progression.complete_stage(1)
+	_check(progression.is_stage_completed(1), "Clearing Stage 1 records campaign completion")
+	_check(progression.is_stage_unlocked(2), "Clearing Stage 1 unlocks the next route card")
 
 	_remove_test_save()
 	_check(progression.save_profile(TEST_SAVE_PATH) == OK, "Campaign profile saves as versioned JSON")
@@ -67,6 +71,21 @@ func _run() -> void:
 	_check(restored.level == progression.level and restored.experience == progression.experience and restored.currency == progression.currency, "Campaign level, XP, and currency survive reload")
 	_check(restored.weapon_levels == progression.weapon_levels, "Owned weapon levels survive reload")
 	_check(restored.pet_skill_levels == progression.pet_skill_levels, "Pet-skill levels survive reload")
+	_check(restored.completed_stages == [1] and restored.highest_unlocked_stage == 2, "Stage completion and unlock state survive reload")
+
+	var legacy := packed_scene.instantiate() as RunProgression
+	root.add_child(legacy)
+	await process_frame
+	var legacy_snapshot := {
+		"version": 1,
+		"level": 2,
+		"experience": 10,
+		"currency": 20,
+		"weapon_levels": {"starter_pistol": 1},
+		"pet_skill_levels": {"energy_bolt": 1},
+	}
+	_check(legacy._apply_snapshot(legacy_snapshot), "Version 1 profiles migrate without losing progression")
+	_check(legacy.highest_unlocked_stage == 1 and legacy.completed_stages.is_empty(), "Legacy profiles receive safe Stage 1 campaign defaults")
 
 	var currency_before_corruption := restored.currency
 	var corrupt_file := FileAccess.open(TEST_SAVE_PATH, FileAccess.WRITE)
@@ -78,6 +97,7 @@ func _run() -> void:
 
 	progression.queue_free()
 	restored.queue_free()
+	legacy.queue_free()
 	_finish()
 
 func _remove_test_save() -> void:
