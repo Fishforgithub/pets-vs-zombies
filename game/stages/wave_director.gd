@@ -4,7 +4,7 @@ extends Node
 signal wave_started(wave_number: int, total_waves: int, enemy_count: int)
 signal wave_progress_changed(wave_number: int, total_waves: int, defeated: int, enemy_count: int)
 signal wave_completed(wave_number: int, total_waves: int)
-signal enemy_defeated(enemy: ZombieEnemy)
+signal enemy_defeated(enemy: WaveEnemy)
 signal all_waves_completed
 
 const DEFAULT_WAVE_CONFIGS: Array[Dictionary] = [
@@ -74,9 +74,9 @@ func _spawn_one(config: Dictionary) -> void:
 	if sides.is_empty():
 		sides = [1]
 	var spawn_side := int(sides[spawned_in_wave % sides.size()])
-	var enemy := spawn_factory.call(spawn_side) as ZombieEnemy
+	var enemy := spawn_factory.call(spawn_side) as WaveEnemy
 	if not is_instance_valid(enemy):
-		push_error("WaveDirector spawn factory did not return a ZombieEnemy.")
+		push_error("WaveDirector spawn factory did not return a WaveEnemy.")
 		running = false
 		return
 	spawned_in_wave += 1
@@ -84,7 +84,7 @@ func _spawn_one(config: Dictionary) -> void:
 	enemy.defeated.connect(_on_enemy_defeated)
 	_emit_progress()
 
-func _on_enemy_defeated(enemy: ZombieEnemy) -> void:
+func _on_enemy_defeated(enemy: WaveEnemy) -> void:
 	if not wave_active:
 		return
 	alive_in_wave = maxi(0, alive_in_wave - 1)

@@ -91,7 +91,7 @@ func _on_wave_started(wave_number: int, total_waves: int, enemy_count: int) -> v
 func _on_wave_progress_changed(wave_number: int, total_waves: int, defeated: int, enemy_count: int) -> void:
 	hud.set_wave(wave_number, total_waves, defeated, enemy_count)
 
-func _on_zombie_defeated(enemy: ZombieEnemy) -> void:
+func _on_zombie_defeated(enemy: WaveEnemy) -> void:
 	defeated_count += 1
 	experience_earned += enemy.experience_reward
 	currency_earned += enemy.currency_reward

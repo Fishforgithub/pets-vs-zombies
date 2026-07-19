@@ -1,7 +1,5 @@
 class_name ZombieCrow
-extends CharacterBody2D
-
-signal defeated(enemy: ZombieCrow)
+extends WaveEnemy
 
 enum State {
 	HOVER,
@@ -22,9 +20,6 @@ enum State {
 @export var hurt_duration: float = 0.18
 @export var defeated_duration: float = 0.55
 @export var contact_damage: int = 12
-@export var experience_reward: int = 20
-@export var currency_reward: int = 14
-
 var health: int
 var target: PlayerGirl
 var state: State = State.HOVER

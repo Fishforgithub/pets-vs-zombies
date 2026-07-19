@@ -64,8 +64,8 @@ func _run() -> void:
 	_check(crow.dive_hit_consumed, "Damage closes the dive damage window")
 	_check(crow.character_sprite.animation == &"hurt", "Damage uses the authored hurt pose")
 
-	var defeated_events: Array[ZombieCrow] = []
-	crow.defeated.connect(func(enemy: ZombieCrow) -> void: defeated_events.append(enemy))
+	var defeated_events: Array[WaveEnemy] = []
+	crow.defeated.connect(func(enemy: WaveEnemy) -> void: defeated_events.append(enemy))
 	crow.take_damage(crow.health)
 	_check(crow.is_dead, "Lethal damage defeats the crow")
 	_check(not crow.is_in_group("enemies"), "Defeated crow leaves the enemy target group")
