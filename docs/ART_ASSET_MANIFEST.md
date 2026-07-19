@@ -224,6 +224,12 @@ For the Stage 2 hospital effects, place index 0 at the resolved zap contact poin
 | Asset | Size | Runtime use |
 |---|---|---|
 | `assets/ui/stage1/boss_health_frame.png` | 640 x 96 fixed overlay | Construction-themed Stage 1 boss health frame. Place above a dynamic fill node; recommended inner fill rect is x=60, y=16, width=520, height=64. Do not stretch as a NinePatch and do not bake boss name, health, or numbers into this texture. |
+| `assets/ui/stage_result_panel.png` | 384 x 256 | Stage-result `NinePatchRect`; margins left/top/right/bottom = 32 px. Keep all runtime title, rewards, cards, and controls above the calm center region. |
+| `assets/ui/stage_card_frames.png` | 5 x 1, 192 x 256 cells | Fixed card states in order: normal, hover/focus, pressed, selected, locked. Use `AtlasTexture` regions; do not NinePatch-stretch. Runtime illustration/text remain separate. |
+| `assets/ui/upgrade_card_panel.png` | 192 x 192 | Neutral reusable upgrade-card `NinePatchRect`; margins = 24 px on every side. Weapon/pet distinction, values, and labels remain runtime controls. |
+| `assets/ui/upgrade_button_states.png` | 4 x 1, 192 x 48 cells | Button style states in order: normal, hover/focus, pressed, disabled. Slice each state first, then use 12 px NinePatch margins per cell. Runtime label remains separate. |
+
+The result and upgrade panels were rebuilt with their authored border ornaments compressed completely inside the documented NinePatch margins. Use patch-axis stretch for the center only and disable texture filtering/mipmaps. The locked stage card combines desaturation, structural shutter bars, and a padlock silhouette, so it remains distinct without color. The disabled upgrade button likewise uses darker value and blocked/hatch end-cap details rather than tint alone.
 
 ## Current integration order
 

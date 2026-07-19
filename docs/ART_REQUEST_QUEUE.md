@@ -19,7 +19,8 @@ Copy this block for each request. Keep one stable request ID for all revisions.
 ```md
 ### ART-000 — Short name
 
-- Status: ready
+- Status: delivered
+- Art delivery: self-reviewed production asset; delivery commit is the art-branch commit containing this queue update.
 - Feature/scene: shop, skills, stage select, HUD, character, enemy, boss, environment, or VFX
 - Gameplay purpose: what the player does and why the image is required
 - Godot consumer: intended scene and node type, for example `ShopScreen/Panel` (`NinePatchRect`)
@@ -65,7 +66,8 @@ Copy this block for each request. Keep one stable request ID for all revisions.
 
 ### AR-20260716-001 — Stage result panel
 
-- Status: ready
+- Status: delivered
+- Art delivery: self-reviewed production asset; delivery commit is the art-branch commit containing this queue update.
 - Godot consumer: `StageResultScreen/Overlay/ResultPanel` (`NinePatchRect`)
 - Deliverable path: `assets/ui/stage_result_panel.png`
 - Pixel dimensions: 384 x 256
@@ -74,7 +76,8 @@ Copy this block for each request. Keep one stable request ID for all revisions.
 
 ### AR-20260716-002 — Next-stage card states
 
-- Status: ready
+- Status: delivered
+- Art delivery: self-reviewed production asset; delivery commit is the art-branch commit containing this queue update.
 - Godot consumer: `StageResultScreen/Overlay/ResultPanel/NextStageCard` (`TextureButton`)
 - Deliverable path: `assets/ui/stage_card_frames.png`
 - Pixel dimensions: 960 x 256; five 192 x 256 cells
@@ -83,7 +86,8 @@ Copy this block for each request. Keep one stable request ID for all revisions.
 
 ### AR-20260716-003 — Upgrade shop card panel
 
-- Status: ready
+- Status: delivered
+- Art delivery: self-reviewed production asset; delivery commit is the art-branch commit containing this queue update.
 - Godot consumer: weapon and pet upgrade `NinePatchRect` panels
 - Deliverable path: `assets/ui/upgrade_card_panel.png`
 - Pixel dimensions: 192 x 192

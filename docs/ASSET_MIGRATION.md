@@ -78,5 +78,9 @@ The source repository `Fishforgithub/tea-line-bot` is read-only. Copy only appro
 | `assets/vfx/foreman_shockwave.png` | Project-specific VFX generation derived from the approved Foreman slam impact palette | Art-production self-reviewed; four transparent 256×256 shockwave frames |
 | `assets/vfx/stage2_hospital_effects.png` | Project-specific VFX generation derived from the approved Stage 2 hospital palette | Art-production self-reviewed; four independent transparent 256×256 electric-hit, bandage-buff, skid-dust, and lamp-impact cells |
 | `assets/ui/stage1/boss_health_frame.png` | Project-specific UI generation derived from the approved Stage 1 construction palette | Art-production self-reviewed; 640×96 transparent fixed overlay frame |
+| `assets/ui/stage_result_panel.png` | Project-specific result-screen UI generation derived from the approved Stage 1 construction palette | Art-production self-reviewed; 384×256 transparent panel with 32 px NinePatch borders and uncluttered center |
+| `assets/ui/stage_card_frames.png` | Project-specific campaign-card UI generation derived from the approved Stage 1 construction palette | Art-production self-reviewed; five fixed 192×256 normal, hover, pressed, selected, and locked cells |
+| `assets/ui/upgrade_card_panel.png` | Project-specific upgrade-card UI generation derived from the approved Stage 1 construction palette | Art-production self-reviewed; neutral 192×192 transparent panel with 24 px NinePatch borders |
+| `assets/ui/upgrade_button_states.png` | Project-specific upgrade-button UI generation derived from the approved Stage 1 construction palette | Art-production self-reviewed; four 192×48 normal, hover/focus, pressed, and disabled cells with 12 px NinePatch borders |
 
 No production assets have been copied from `tea-line-bot` yet.

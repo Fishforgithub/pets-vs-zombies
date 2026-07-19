@@ -37,6 +37,7 @@ Stage 2 hospital character production is underway:
 - four-phase electric-puddle corridor hazard is delivered with a documented safe window and active damage frame
 - Foreman walk, sweep, slam, and reaction sheets are user-approved after atlas-cell normalization
 - zombie-dog run sheet is user-approved after adjacent-fragment removal and baseline normalization
+- Stage Result panel, five-state stage card, neutral upgrade card, and four-state upgrade button UI are delivered from implementation-authored requests
 
 ## Stage 1 boss completion
 
@@ -71,8 +72,7 @@ For complete asset paths, frame order, FPS, facing rules, pivots, collision guid
 2. Verify that Codex has integrated or cherry-picked the latest art branch before changing paths or layouts.
 3. Produce reusable hospital signs and one additional mechanical corridor hazard.
 4. Build Stage 2 card/HUD treatment only after a ready implementation request specifies consumers and states.
-5. Begin UI production only from a committed request that specifies Godot consumers, dimensions, states, and NinePatch margins.
-6. Keep all new character and creature image drafts out of Git until explicit user approval.
+5. Keep all new character and creature image drafts out of Git until explicit user approval.
 
 ## Resume command for Codex
 
