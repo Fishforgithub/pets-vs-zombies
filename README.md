@@ -14,7 +14,8 @@ The repository contains a playable vertical-slice prototype with production char
 - approved stage-one city background and street ground tiles with procedural fallbacks
 - health, ammunition, defeat, and stage-clear UI
 - campaign route entry screen with persistent stage completion and unlock state
-- Stage 1 replay selection and a visible Stage 2 hospital construction card
+- replayable Stage 1 and an unlockable, playable Stage 2 hospital route
+- Stage 2 mixed enemy waves, electric puddles, and Chief Surgeon boss encounter
 
 Procedural drawing remains as a fallback while production pet, enemy, effects, and environment art continues to arrive.
 

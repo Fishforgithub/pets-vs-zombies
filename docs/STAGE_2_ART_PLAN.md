@@ -1,6 +1,16 @@
 # Stage 2 Art Plan — Abandoned Hospital
 
-Status: core character/boss art and the hospital environment direction are approved; gameplay implementation remains deferred until Stage 1 integration is stable.
+Status: the approved character, boss, environment, hazard, and VFX assets are integrated into an initial complete playable Stage 2 flow.
+
+## Gameplay implementation
+
+- Five escalating data-driven waves mix zombie crow, nurse, doctor, and wheelchair enemies.
+- Two animated electric puddles provide frame-gated environmental damage.
+- The Undead Chief Surgeon enters after wave five with sweep, slam, phase-two acceleration, hospital impact VFX, and twin rolling-equipment hazards.
+- Defeating the boss persists Stage 2 completion, unlocks the next route position, and opens the Stage 2 result/shop screen.
+- The campaign route enables Stage 2 only after Stage 1 completion and keeps both completed stages replayable.
+
+The zombie dog assets remain approved and validated but are reserved for a later Stage 2 tuning pass; they are not required for the first playable five-wave composition.
 
 ## Stage fantasy
 

@@ -56,7 +56,7 @@ The common zombie's base health and damage remain stable across these waves. Sta
 
 Campaign progression is stored as versioned JSON at `user://campaign_profile.json`. Stage-clear rewards and successful shop purchases persist the player level, XP, gears, weapon levels, pet-skill levels, completed stages, and highest unlocked stage across replay and application restarts. Existing version 1 profiles migrate with Stage 1 completed and Stage 2 unlocked because that profile format was written only from the Stage 1 clear workbench flow. Failed-stage partial rewards remain run-scoped. Invalid or unsupported save data is rejected without replacing safe defaults. Windows desktop remains the first target; the Web build uses the same gameplay data model and Godot `user://` storage.
 
-The project opens on the campaign route instead of immediately starting Stage 1. Players may replay any completed stage, and future playable stage scenes become selectable through the same route-card contract. A stage may be visibly unlocked while remaining non-interactive when its gameplay scene is still under construction.
+The project opens on the campaign route instead of immediately starting Stage 1. Players may replay any completed stage, and playable stage scenes become selectable through the same route-card contract. Stage 2 becomes selectable after Stage 1 completion and carries the same saved profile into its hospital encounters.
 
 ## Campaign UI roadmap
 
@@ -77,6 +77,6 @@ Before requesting new production art, read `docs/ART_ASSET_MANIFEST.md`. Add eve
 
 - Grenades.
 - Multiple selectable pets.
-- Full playable route content beyond the implemented Stage 1 card and Stage 2 construction placeholder.
+- Full playable route content beyond the implemented Stage 1 and Stage 2 cards.
 - Mobile touch controls.
 - Online services and LINE account integration.
