@@ -80,8 +80,9 @@ Request IDs use `AR-YYYYMMDD-NNN`. Allowed states are `queued`, `approved`, `in-
 
 ### AR-20260716-005 — Normalize Foreman animation cells
 
-- Status: `delivered`
+- Status: `integrated`
 - Delivery commit: `agent/art-production` commit `a5a6ee4`
+- Engine integration commit: `34d522b`
 - Screen use: Repair the Stage 1 Undead Foreman during walk, sweep, slam, hurt, rage, stunned, and defeated presentation. Current 2 x 2 sheets place opaque pixels across 512 px cell boundaries, causing a clipped hammer/body edge in one frame and detached fragments from the adjacent frame in another.
 - Godot node: `AnimatedSprite2D` at `ForemanBoss/CharacterSprite` in `game/bosses/foreman_boss.tscn`.
 - Output paths:
@@ -110,8 +111,9 @@ Request IDs use `AR-YYYYMMDD-NNN`. Allowed states are `queued`, `approved`, `in-
 
 ### AR-20260719-006 — Normalize zombie dog run cells
 
-- Status: `delivered`
+- Status: `integrated`
 - Delivery commit: `agent/art-production` commit `a5a6ee4`
+- Engine integration commit: `34d522b`
 - Screen use: Repair the Stage 2 zombie dog's six-frame sprint presentation before the enemy is enabled. The current sheet has opaque pixels on the shared x=512 boundary in frames 1 and 2, creating an atlas clipping and adjacent-frame fragment risk.
 - Godot node: Planned `AnimatedSprite2D` at `ZombieDog/CharacterSprite` in `game/enemies/stage2/zombie_dog.tscn`.
 - Output path: `res://assets/enemies/zombie_dog/run_sheet.png`.

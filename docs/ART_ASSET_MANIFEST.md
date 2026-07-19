@@ -72,8 +72,6 @@ The authored direction is left-facing. Display as-is while running/attacking lef
 | `assets/enemies/zombie_dog/run_sheet.png` | 3 x 2, 6 frames of 256 x 256 | `run` sprint frames 0–5 | Loop, 12 FPS |
 | `assets/enemies/zombie_dog/action_sheet.png` | 3 x 1, 256 x 256 cells | index 0 `pounce`, 1 `hurt`, 2 `defeated` | State-selected poses; defeated holds |
 
-Known delivery defect: `run_sheet.png` has opaque pixels on the shared x=512 boundary in frames 1 and 2. Keep the sheet out of runtime atlas slicing until request `AR-20260719-006` supplies a normalized replacement. The approved identity, frame order, authored direction, and 12 FPS playback remain unchanged.
-
 Keep the torso collision shape at a stable local offset across the full run cycle; do not move or resize gameplay collision to follow the extended forelegs, hind legs, tail, or exposed ribs. The long airborne stride at frame index 2 is still part of the looping sprint and does not by itself trigger pounce damage.
 
 The run sheet was normalized after engine atlas validation: every 256 x 256 cell is independently contained with at least 12 transparent pixels on every edge, adjacent-frame fragments are removed, and all six poses share one bottom-center baseline. Do not re-trim individual frames during import.
@@ -188,8 +186,6 @@ All four props default to decoration with no gameplay collision. When level desi
 ## Stage 1 boss: Undead Foreman
 
 Boss frame cells are `512 x 512`, not the normal `256 x 256`. The authored direction is left-facing. Mirror the complete boss and every authored attack collider together when facing right.
-
-Known delivery defect: the current four multi-frame sheets contain opaque content crossing their 512 px cell boundaries, which produces clipping and adjacent-frame fragments under the exact atlas regions below. Request `AR-20260716-005` must normalize the cells without changing these runtime regions, frame orders, pivots, or attack timings. Replacement Boss imagery still requires explicit user visual approval.
 
 | Asset | Grid / order | Runtime mapping | Playback |
 |---|---|---|---|
