@@ -74,6 +74,7 @@ The source repository `Fishforgithub/tea-line-bot` is read-only. Copy only appro
 | `assets/hazards/stage2/rolling_equipment_sheet.png` | Project-specific hospital hazard generation derived from the approved Stage 2 palette | Art-production self-reviewed; four transparent 256×256 roll, pitch, bounce, and settle cells |
 | `assets/vfx/stage2_hospital_effects.png` | Project-specific VFX generation derived from the approved Stage 2 hospital palette | Art-production self-reviewed; four independent transparent 256×256 electric-hit, bandage-buff, skid-dust, and lamp-impact cells |
 | `assets/backgrounds/stage2/hospital_corridor.png` | Approved project-specific Stage 2 environment generation | User-approved; 960×540 opaque hospital corridor palette and lighting anchor |
+| `assets/backgrounds/stage2/hospital_wall_modules.png` | Project-specific module generation derived from the approved Stage 2 hospital direction | Art-production self-reviewed; intact wall, closed door, open doorway, and cracked-window modules in four transparent 256×256 cells |
 | `assets/tilesets/stage2/hospital_ground_tiles.png` | Project-specific tile generation derived from the approved Stage 2 hospital direction | Art-production self-reviewed; basic, cracked, drain, and puddle variants in four aligned transparent 256×256 cells |
 
 No production assets have been copied from `tea-line-bot` yet.
