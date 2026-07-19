@@ -172,6 +172,14 @@ All four hospital ground cells use the same tile origin and aligned top surface.
 
 Treat the wall cells as region-selected `Sprite2D` background modules over a continuous wall-color backing, not as physics tiles. The modules share a bottom baseline and similar side-column width; place adjacent modules with controlled overlap behind the columns rather than assuming transparent cell margins are seamless. Closed and open doors may swap at the same anchor. Door blocking, room transitions, prompts, locks, and triggers must use independent Godot collision/interaction nodes. The cracked observation window is decorative and does not imply a breakable surface unless level design explicitly adds one.
 
+### Stage 2 hospital props
+
+| Asset | Grid / order | Runtime use |
+|---|---|---|
+| `assets/props/stage2/hospital_props.png` | 4 x 1, 256 x 256 cells | Empty gurney, IV stand, supply cabinet, tipped paired chair. Independent bottom-aligned props at a shared world scale. |
+
+All four props default to decoration with no gameplay collision. When level design requires blocking, use a simple low rectangle for the gurney, cabinet, or chair base and exclude wheels, rails, sheets, drawers, IV bags/pole, and loose paper. The IV stand should remain non-blocking. The cabinet drawer and empty IV bags are static art; pickups, break reactions, and swinging motion require separate nodes or future state art. Preserve the authored relative scale rather than enlarging every cell to fill its region.
+
 ## Stage 1 boss: Undead Foreman
 
 Boss frame cells are `512 x 512`, not the normal `256 x 256`. The authored direction is left-facing. Mirror the complete boss and every authored attack collider together when facing right.
