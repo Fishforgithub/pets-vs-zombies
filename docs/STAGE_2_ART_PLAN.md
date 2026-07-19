@@ -1,6 +1,6 @@
 # Stage 2 Art Plan — Abandoned Hospital
 
-Status: character concept production started; gameplay implementation remains deferred until Stage 1 integration is stable.
+Status: core character/boss art and the hospital environment direction are approved; gameplay implementation remains deferred until Stage 1 integration is stable.
 
 ## Stage fantasy
 
