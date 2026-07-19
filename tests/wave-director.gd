@@ -6,6 +6,7 @@ var enemies: Node2D
 var spawned_sides: Array[int] = []
 var started_waves: Array[int] = []
 var completed_waves: Array[int] = []
+var mixed_enemies: Array[WaveEnemy] = []
 
 func _init() -> void:
 	call_deferred("_run")
@@ -56,6 +57,23 @@ func _run() -> void:
 	_check(completed_waves == [1, 2], "Director completes waves in order")
 	_check(spawned_sides == [1, 1, -1, 1, -1], "Configured spawn directions repeat deterministically")
 
+	var mixed_director := packed_scene.instantiate() as WaveDirector
+	host.add_child(mixed_director)
+	mixed_director.configure(_spawn_mixed_enemy, [{"enemy_count": 2, "spawn_interval": 0.0, "max_alive": 2}])
+	mixed_director.start()
+	for _iteration in range(10):
+		await process_frame
+		if mixed_enemies.size() == 2:
+			break
+	_check(mixed_enemies.size() == 2, "Director spawns a mixed wave through the shared enemy interface")
+	if mixed_enemies.size() == 2:
+		_check(mixed_enemies[0] is ZombieCrow, "Mixed wave accepts an aerial crow")
+		_check(mixed_enemies[1] is ZombieNurse, "Mixed wave accepts a support nurse")
+		(mixed_enemies[0] as ZombieCrow).take_damage((mixed_enemies[0] as ZombieCrow).health)
+		(mixed_enemies[1] as ZombieNurse).take_damage((mixed_enemies[1] as ZombieNurse).health)
+		await process_frame
+	_check(mixed_director.finished, "Mixed enemy defeats complete the wave")
+
 	host.queue_free()
 	_finish()
 
@@ -64,6 +82,14 @@ func _spawn_enemy(spawn_side: int) -> ZombieEnemy:
 	var packed_enemy := load("res://game/enemies/zombie.tscn") as PackedScene
 	var enemy := packed_enemy.instantiate() as ZombieEnemy
 	enemies.add_child(enemy)
+	return enemy
+
+func _spawn_mixed_enemy(_spawn_side: int) -> WaveEnemy:
+	var path := "res://game/enemies/stage2/zombie_crow.tscn" if mixed_enemies.is_empty() else "res://game/enemies/stage2/zombie_nurse.tscn"
+	var packed_enemy := load(path) as PackedScene
+	var enemy := packed_enemy.instantiate() as WaveEnemy
+	enemies.add_child(enemy)
+	mixed_enemies.append(enemy)
 	return enemy
 
 func _on_wave_started(wave_number: int, _total_waves: int, _enemy_count: int) -> void:

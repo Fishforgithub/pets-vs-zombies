@@ -46,10 +46,15 @@ const requiredFiles = [
   'game/pets/pet_companion.gd',
   'game/enemies/zombie.tscn',
   'game/enemies/zombie.gd',
+  'game/enemies/wave_enemy.gd',
   'game/enemies/stage2/zombie_crow.tscn',
   'game/enemies/stage2/zombie_crow.gd',
+  'game/enemies/stage2/zombie_nurse.tscn',
+  'game/enemies/stage2/zombie_nurse.gd',
   'game/projectiles/bullet.tscn',
   'game/projectiles/bullet.gd',
+  'game/projectiles/bandage_projectile.tscn',
+  'game/projectiles/bandage_projectile.gd',
   'game/ui/hud.tscn',
   'game/ui/hud.gd',
   'game/ui/stage_result.tscn',
@@ -62,7 +67,8 @@ const requiredFiles = [
   'tests/progression.gd',
   'tests/stage-result.gd',
   'tests/stage2-assets.gd',
-  'tests/zombie-crow.gd'
+  'tests/zombie-crow.gd',
+  'tests/zombie-nurse.gd'
 ];
 
 const errors = [];
