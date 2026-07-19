@@ -4,7 +4,7 @@ Updated: 2026-07-16
 
 ## Definition of done
 
-Stage 1 is complete when the player can finish five escalating waves, defeat the Undead Foreman boss, receive experience and currency, see a stage-clear result, and reach a next-stage card placeholder. Losing all health must still allow an immediate retry.
+Stage 1 is complete when the player can select it from the campaign route, finish five escalating waves, defeat the Undead Foreman boss, receive experience and currency, unlock Stage 2, and return to the route or replay. Losing all health must still allow an immediate retry.
 
 ## Current implementation
 
@@ -27,6 +27,9 @@ Stage 1 is complete when the player can finish five escalating waves, defeat the
 - [x] Add a Stage 1 result workbench that spends earned gears on weapon and pet-skill upgrades.
 - [x] Persist stage-clear rewards and purchased upgrades across replay and application restarts.
 - [x] Add Stage 1 reward result and next-stage card placeholder.
+- [x] Start the project on a persistent campaign route instead of immediately entering Stage 1.
+- [x] Persist completed stages and unlocked route cards with backward-compatible profile migration.
+- [x] Add replay and campaign-map choices to the Stage 1 result screen.
 - [x] Re-run all checks, export Web release, deploy, and verify the public URL.
 
 ## Default wave tuning

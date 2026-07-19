@@ -54,7 +54,9 @@ The common zombie's base health and damage remain stable across these waves. Sta
 - Weapon data must keep damage, fire interval, magazine size, reload duration, price, and unlock level independent from player movement code.
 - Pet-skill data must keep damage, cooldown, range, targeting behavior, and upgrade price independent from follow movement.
 
-Campaign progression is stored as versioned JSON at `user://campaign_profile.json`. Stage-clear rewards and successful shop purchases persist the player level, XP, gears, weapon levels, and pet-skill levels across replay and application restarts. Failed-stage partial rewards remain run-scoped. Invalid or unsupported save data is rejected without replacing safe defaults. Windows desktop remains the first target; the Web build uses the same gameplay data model and Godot `user://` storage.
+Campaign progression is stored as versioned JSON at `user://campaign_profile.json`. Stage-clear rewards and successful shop purchases persist the player level, XP, gears, weapon levels, pet-skill levels, completed stages, and highest unlocked stage across replay and application restarts. Version 1 profiles migrate to safe Stage 1 route defaults. Failed-stage partial rewards remain run-scoped. Invalid or unsupported save data is rejected without replacing safe defaults. Windows desktop remains the first target; the Web build uses the same gameplay data model and Godot `user://` storage.
+
+The project opens on the campaign route instead of immediately starting Stage 1. Players may replay any completed stage, and future playable stage scenes become selectable through the same route-card contract. A stage may be visibly unlocked while remaining non-interactive when its gameplay scene is still under construction.
 
 ## Campaign UI roadmap
 
@@ -63,7 +65,7 @@ Campaign progression is stored as versioned JSON at `user://campaign_profile.jso
 3. Stage-clear reward screen.
 4. Next-stage card.
 5. Weapon and pet-upgrade shop.
-6. Multi-stage route map.
+6. Multi-stage route map and persistent stage unlocks. Implemented as the project entry flow; additional stage scenes plug into their route cards as they are completed.
 
 The Stage 1 result screen includes the first upgrade workbench. Purchases persist through the campaign profile so the same weapon and pet-skill levels can carry into later stages.
 
@@ -75,6 +77,6 @@ Before requesting new production art, read `docs/ART_ASSET_MANIFEST.md`. Add eve
 
 - Grenades.
 - Multiple selectable pets.
-- Full multi-stage route content beyond the next-stage placeholder.
+- Full playable route content beyond the implemented Stage 1 card and Stage 2 construction placeholder.
 - Mobile touch controls.
 - Online services and LINE account integration.
