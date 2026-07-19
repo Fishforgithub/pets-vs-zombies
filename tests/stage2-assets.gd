@@ -25,6 +25,9 @@ const ASSET_SPECS: Array[Dictionary] = [
 	{"path": "res://assets/vfx/stage2_hospital_effects.png", "columns": 4, "rows": 1, "cell": 256},
 	{"path": "res://assets/backgrounds/stage2/hospital_corridor.png", "columns": 1, "rows": 1, "width": 960, "height": 540, "alpha": false, "check_border": false, "skip_reason": "opaque background does not use atlas slicing"},
 	{"path": "res://assets/tilesets/stage2/hospital_ground_tiles.png", "columns": 4, "rows": 1, "cell": 256, "check_border": false, "skip_reason": "repeatable floor tiles intentionally meet their cell edges"},
+	{"path": "res://assets/backgrounds/stage2/hospital_wall_modules.png", "columns": 4, "rows": 1, "cell": 256, "check_border": false, "skip_reason": "wall modules intentionally fill their complete cells"},
+	{"path": "res://assets/props/stage2/hospital_props.png", "columns": 4, "rows": 1, "cell": 256, "shared_borders_only": true},
+	{"path": "res://assets/hazards/stage2/electric_puddle_sheet.png", "columns": 4, "rows": 1, "cell": 256, "shared_borders_only": true},
 ]
 
 var failures: Array[String] = []

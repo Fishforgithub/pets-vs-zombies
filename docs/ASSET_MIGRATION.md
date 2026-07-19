@@ -76,5 +76,8 @@ The source repository `Fishforgithub/tea-line-bot` is read-only. Copy only appro
 | `assets/backgrounds/stage2/hospital_corridor.png` | Approved project-specific Stage 2 environment generation | User-approved; 960×540 opaque hospital corridor palette and lighting anchor |
 | `assets/backgrounds/stage2/hospital_wall_modules.png` | Project-specific module generation derived from the approved Stage 2 hospital direction | Art-production self-reviewed; intact wall, closed door, open doorway, and cracked-window modules in four transparent 256×256 cells |
 | `assets/tilesets/stage2/hospital_ground_tiles.png` | Project-specific tile generation derived from the approved Stage 2 hospital direction | Art-production self-reviewed; basic, cracked, drain, and puddle variants in four aligned transparent 256×256 cells |
+| `assets/backgrounds/stage2/hospital_wall_modules.png` | Project-specific module generation derived from the approved Stage 2 hospital direction | Art-production self-reviewed; intact wall, closed door, open doorway, and cracked-window modules in four transparent 256×256 cells |
+| `assets/props/stage2/hospital_props.png` | Project-specific prop generation derived from the approved Stage 2 hospital direction | Art-production self-reviewed; empty gurney, IV stand, supply cabinet, and tipped paired chair in four transparent 256×256 cells at shared scale |
+| `assets/hazards/stage2/electric_puddle_sheet.png` | Project-specific corridor-hazard generation derived from the approved Stage 2 palette | Art-production self-reviewed; four transparent 256×256 safe, telegraph, active-surge, and recovery cells |
 
 No production assets have been copied from `tea-line-bot` yet.
