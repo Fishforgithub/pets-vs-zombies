@@ -83,6 +83,7 @@ func _run() -> void:
 	_check(buff_events.size() == 1, "Support action emits one buff event")
 	_check(ally.support_buff_timer > 0.0, "Support action applies a timed buff to a nearby ally")
 	_check(is_equal_approx(ally.get_support_speed_multiplier(), nurse.buff_speed_multiplier), "Support action increases nearby ally movement speed")
+	_check(_find_effect(host, 1) != null, "Support action spawns the authored bandage-buff effect")
 	if buff_events.size() == 1:
 		_check(buff_events[0].source == nurse, "Buff event identifies its nurse source")
 		_check(is_equal_approx(buff_events[0].radius, nurse.buff_radius), "Buff event exposes its gameplay radius")
@@ -109,6 +110,12 @@ func _find_bandage(host: Node) -> BandageProjectile:
 	for child in host.get_children():
 		if child is BandageProjectile:
 			return child as BandageProjectile
+	return null
+
+func _find_effect(host: Node, effect_index: int) -> Stage2HospitalEffect:
+	for child in host.get_children():
+		if child is Stage2HospitalEffect and (child as Stage2HospitalEffect).effect_index == effect_index:
+			return child as Stage2HospitalEffect
 	return null
 
 func _check(condition: bool, message: String) -> void:

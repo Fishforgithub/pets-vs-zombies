@@ -10,6 +10,7 @@ enum Action {
 }
 
 const BANDAGE_PROJECTILE := preload("res://game/projectiles/bandage_projectile.tscn")
+const HOSPITAL_EFFECT := preload("res://game/vfx/stage2_hospital_effect.tscn")
 
 @export var max_health: int = 52
 @export var move_speed: float = 58.0
@@ -136,7 +137,17 @@ func _apply_support_buff() -> void:
 		var ally := candidate as WaveEnemy
 		if global_position.distance_to(ally.global_position) <= buff_radius:
 			ally.apply_support_buff(buff_duration, buff_speed_multiplier)
+			_spawn_buff_effect(ally)
 	support_buff_requested.emit(self, buff_radius, buff_duration, buff_speed_multiplier)
+
+func _spawn_buff_effect(ally: WaveEnemy) -> void:
+	if get_tree().current_scene == null:
+		return
+	var effect := HOSPITAL_EFFECT.instantiate() as Stage2HospitalEffect
+	get_tree().current_scene.add_child(effect)
+	effect.global_position = ally.global_position + Vector2(0.0, -28.0)
+	effect.z_index = ally.z_index - 1
+	effect.configure(1, 0.42)
 
 func _update_facing() -> void:
 	if not is_instance_valid(character_sprite) or not is_instance_valid(target):

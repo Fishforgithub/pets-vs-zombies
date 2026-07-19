@@ -59,6 +59,7 @@ func _run() -> void:
 	_check(player.health == health_before - doctor.zap_damage, "Zap damages a player in the forward area")
 	_check(player.movement_slow_timer > 0.0, "Zap applies a timed movement control effect")
 	_check(is_equal_approx(player.movement_speed_multiplier, doctor.zap_speed_multiplier), "Zap applies its configured speed multiplier")
+	_check(_find_effect(host, 0) != null, "Zap spawns the authored electric-hit effect")
 	doctor._process_zap(0.01)
 	_check(player.health == health_before - doctor.zap_damage, "One zap cannot damage the player twice")
 	player._update_action_timers(doctor.zap_slow_duration)
@@ -80,6 +81,12 @@ func _run() -> void:
 
 	host.queue_free()
 	_finish()
+
+func _find_effect(host: Node, effect_index: int) -> Stage2HospitalEffect:
+	for child in host.get_children():
+		if child is Stage2HospitalEffect and (child as Stage2HospitalEffect).effect_index == effect_index:
+			return child as Stage2HospitalEffect
+	return null
 
 func _check(condition: bool, message: String) -> void:
 	if condition:

@@ -1,6 +1,8 @@
 class_name ZombieDoctor
 extends WaveEnemy
 
+const HOSPITAL_EFFECT := preload("res://game/vfx/stage2_hospital_effect.tscn")
+
 @export var max_health: int = 62
 @export var move_speed: float = 48.0
 @export var gravity: float = 1280.0
@@ -99,7 +101,16 @@ func _resolve_zap() -> void:
 		if is_in_front and absf(offset.x) <= zap_range and absf(offset.y) <= zap_vertical_tolerance:
 			target.take_damage(zap_damage, Vector2(facing_sign, -0.1))
 			target.apply_movement_slow(zap_slow_duration, zap_speed_multiplier)
+			_spawn_zap_effect(target.global_position + Vector2(0.0, -32.0))
 	call_deferred("_disable_zap_area")
+
+func _spawn_zap_effect(effect_position: Vector2) -> void:
+	if get_tree().current_scene == null:
+		return
+	var effect := HOSPITAL_EFFECT.instantiate() as Stage2HospitalEffect
+	get_tree().current_scene.add_child(effect)
+	effect.global_position = effect_position
+	effect.configure(0, 0.24)
 
 func _disable_zap_area() -> void:
 	zap_collision_shape.disabled = true
