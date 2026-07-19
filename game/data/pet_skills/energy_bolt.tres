@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PetSkillData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://game/progression/pet_skill_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+skill_id = &"energy_bolt"
+display_name = "Energy Bolt"
+base_damage = 12
+damage_per_level = 4
+base_cooldown = 0.85
+cooldown_reduction_per_level = 0.06
+attack_range = 430.0
+upgrade_base_cost = 35
+max_level = 5

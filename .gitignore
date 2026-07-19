@@ -1,0 +1,10 @@
+.godot/
+.import/
+export/
+build/
+*.tmp
+*.log
+.env
+.env.local
+
+.wrangler/

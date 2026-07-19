@@ -1,0 +1,14 @@
+{
+  "name": "pets-vs-zombies-tooling",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node tests/project-structure.mjs",
+    "validate": "node tests/project-structure.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
+

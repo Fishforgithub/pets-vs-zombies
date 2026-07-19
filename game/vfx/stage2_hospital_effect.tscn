@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/vfx/stage2_hospital_effects.png" id="1"]
+[ext_resource type="Script" path="res://game/vfx/stage2_hospital_effect.gd" id="2"]
+
+[node name="Stage2HospitalEffect" type="Sprite2D"]
+texture = ExtResource("1")
+region_enabled = true
+region_rect = Rect2(0, 0, 256, 256)
+scale = Vector2(0.44, 0.44)
+script = ExtResource("2")
