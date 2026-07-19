@@ -29,6 +29,7 @@ Stage 2 hospital character production is underway:
 - wheelchair zombie identity, corrected six-frame roll cycle, charge, hurt, stunned, and defeated states are delivered
 - Chief Surgeon core boss set is delivered: identity, heavy locomotion, horizontal sweep, overhead slam, hurt, phase-two rage, stunned, and defeated states
 - phase-two rolling equipment cart hazard is delivered as a four-frame transparent travel loop
+- hospital-specific electric-hit, bandage-buff, wheelchair-skid, and Chief Surgeon impact effects are delivered
 
 ## Stage 1 boss completion
 
@@ -61,8 +62,8 @@ For complete asset paths, frame order, FPS, facing rules, pivots, collision guid
 
 1. Read any `ready` items added by Codex to `docs/ART_REQUEST_QUEUE.md`.
 2. Verify that Codex has integrated or cherry-picked the latest art branch before changing paths or layouts.
-3. Produce hospital-specific impact VFX under art-production self-review.
-4. Begin Stage 2 hospital environment layers, tiles, doors, beds, carts, signs, and additional hazards now that the boss hazard is delivered.
+3. Begin Stage 2 hospital environment layers and ground tiles under art-production self-review.
+4. Produce doors, beds, carts, signs, and additional corridor hazards after the first environment direction is established.
 5. Begin UI production only from a committed request that specifies Godot consumers, dimensions, states, and NinePatch margins.
 6. Keep all new character and creature image drafts out of Git until explicit user approval.
 

@@ -190,6 +190,9 @@ Use separate authored shapes for the boss body, vulnerable area, and road-barrie
 | `assets/items/pickups.png` | 4 x 1, 256 x 256 cells | Health snack, ammo box, pet treat, gear coin. Use simple centered pickup areas; visual bob/glow may be procedural. |
 | `assets/vfx/combat_effects.png` | 4 x 1, 256 x 256 cells | Muzzle flash, bullet impact, pet-energy hit, heal sparkle. These are single-frame flashes; scale them down in-scene rather than resampling source files. |
 | `assets/vfx/foreman_shockwave.png` | 4 x 1, 256 x 256 cells | Boss slam ground wave: spawn, rise, active travel, dissipate. Play once at 12 FPS, move the effect node horizontally, enable damage only on frame index 2, and use `flip_h` for the rightward copy. |
+| `assets/vfx/stage2_hospital_effects.png` | 4 x 1, 256 x 256 cells | Index 0 electric-zap hit, 1 bandage ally-buff aura, 2 wheelchair skid dust, 3 Chief Surgeon lamp-slam impact. Each cell is an independent single-frame effect, not one animation. |
+
+For the Stage 2 hospital effects, place index 0 at the resolved zap contact point and flash/fade it without collision. Center index 1 on the buffed ally's ground pivot and keep it behind the character; gameplay buff duration remains independent of the visual fade. Place index 2 at the wheelchair's rear ground contact, use `flip_h` with travel direction, and emit it only during charge braking or sharp turns. Place index 3 at the Chief Surgeon's lamp contact point on slam frame index 2; it is the local impact flash, while traveling shockwaves and their damage areas remain separate runtime nodes. None of these textures defines a hitbox.
 
 ## UI
 
