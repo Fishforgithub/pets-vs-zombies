@@ -42,7 +42,7 @@ The source repository `Fishforgithub/tea-line-bot` is read-only. Copy only appro
 | `assets/enemies/zombie_crow/flight_sheet.png` | Six-frame generation derived from the zombie crow identity anchor | User-approved; 3×2 flight loop of 256×256 cells |
 | `assets/enemies/zombie_crow/action_sheet.png` | Three-pose generation derived from the zombie crow identity anchor | User-approved; dive, hurt, and defeated 256×256 cells |
 | `assets/enemies/zombie_dog/idle.png` | Approved original Stage 2 low-runner generation | User-approved; 256×256 transparent zombie dog identity anchor with stylized exposed bone |
-| `assets/enemies/zombie_dog/run_sheet.png` | Six-frame generation derived from the approved zombie dog identity anchor | User-approved; 3×2 sprint loop of 256×256 transparent cells |
+| `assets/enemies/zombie_dog/run_sheet.png` | Six-frame generation derived from the approved zombie dog identity anchor; normalized after engine atlas validation | User-approved repair; 3×2 sprint loop with adjacent-frame fragments removed, shared bottom-center baseline, and at least 12 px transparent margins |
 | `assets/enemies/zombie_dog/action_sheet.png` | Three-pose generation derived from the approved zombie dog identity anchor | User-approved; pounce, hurt, and defeated 256×256 transparent cells |
 | `assets/enemies/zombie_nurse/idle.png` | Approved original Stage 2 support-enemy generation | User-approved; 256×256 transparent zombie nurse identity anchor with bandage-roll loadout |
 | `assets/enemies/zombie_nurse/walk_sheet.png` | Six-frame generation derived from the approved zombie nurse identity anchor | User-approved corrected 3×2 shamble loop with distinct contact, down, and passing poses |
@@ -65,10 +65,10 @@ The source repository `Fishforgithub/tea-line-bot` is read-only. Copy only appro
 | `assets/tilesets/stage2/hospital_ground_tiles.png` | Project-specific tile generation derived from the approved Stage 2 hospital direction | Art-production self-reviewed; basic, cracked, drain, and puddle variants in four aligned transparent 256×256 cells |
 | `assets/props/stage2/hospital_props.png` | Project-specific prop generation derived from the approved Stage 2 hospital direction | Art-production self-reviewed; empty gurney, IV stand, supply cabinet, and tipped paired chair in four transparent 256×256 cells at shared scale |
 | `assets/bosses/stage1_foreman/idle.png` | Approved original Stage 1 boss generation | Approved; 512×512 transparent Undead Foreman identity anchor |
-| `assets/bosses/stage1_foreman/walk_sheet.png` | Four-frame generation derived from the Undead Foreman identity anchor | Approved; 2×2 heavy-walk sheet of 512×512 cells |
-| `assets/bosses/stage1_foreman/sweep_sheet.png` | Four-frame generation derived from the Undead Foreman identity anchor | Approved; 2×2 horizontal-sweep sheet of 512×512 cells |
-| `assets/bosses/stage1_foreman/slam_sheet.png` | Four-frame generation derived from the Undead Foreman identity anchor | Approved; 2×2 ground-slam sheet of 512×512 cells |
-| `assets/bosses/stage1_foreman/reaction_sheet.png` | Four-pose generation derived from the Undead Foreman identity anchor | Approved; 2×2 hurt, rage, stunned, and defeated state sheet |
+| `assets/bosses/stage1_foreman/walk_sheet.png` | Four-frame generation derived from the Undead Foreman identity anchor; normalized after engine atlas validation | User-approved repair; 2×2 heavy-walk sheet with shared scale, baseline, and safe margins |
+| `assets/bosses/stage1_foreman/sweep_sheet.png` | Four-frame generation derived from the Undead Foreman identity anchor; normalized after engine atlas validation | User-approved repair; 2×2 horizontal-sweep sheet with owned trails and no adjacent-cell fragments |
+| `assets/bosses/stage1_foreman/slam_sheet.png` | Four-frame generation derived from the Undead Foreman identity anchor; normalized after engine atlas validation | User-approved repair; 2×2 ground-slam sheet with owned impact debris and no adjacent-cell fragments |
+| `assets/bosses/stage1_foreman/reaction_sheet.png` | Four-pose generation derived from the Undead Foreman identity anchor; normalized after engine atlas validation | User-approved repair; 2×2 hurt, rage, stunned, and defeated sheet with safe margins |
 | `assets/backgrounds/stage1/city_far.png` | Approved original project-specific Stage 1 background generation | Approved; 960×540 indexed-color opaque background |
 | `assets/tilesets/stage1/ground_tiles.png` | Approved original project-specific Stage 1 tile generation | Approved; four transparent 256×256 ground cells |
 | `assets/props/stage1/street_props.png` | Approved original project-specific Stage 1 prop generation | Approved; crate, cone, bags, and hydrant |

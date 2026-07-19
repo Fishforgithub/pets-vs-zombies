@@ -35,6 +35,8 @@ Stage 2 hospital character production is underway:
 - modular hospital wall, closed-door, open-doorway, and observation-window backgrounds are delivered
 - hospital gurney, IV stand, supply cabinet, and tipped waiting-chair prop set is delivered
 - four-phase electric-puddle corridor hazard is delivered with a documented safe window and active damage frame
+- Foreman walk, sweep, slam, and reaction sheets are user-approved after atlas-cell normalization
+- zombie-dog run sheet is user-approved after adjacent-fragment removal and baseline normalization
 
 ## Stage 1 boss completion
 
