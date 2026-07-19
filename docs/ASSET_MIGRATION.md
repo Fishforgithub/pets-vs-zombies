@@ -70,5 +70,10 @@ The source repository `Fishforgithub/tea-line-bot` is read-only. Copy only appro
 | `assets/bosses/stage2_chief_surgeon/walk_sheet.png` | Four-frame generation derived from the approved Chief Surgeon identity anchor | User-approved normalized 2×2 heavy locomotion loop of 512×512 transparent cells |
 | `assets/bosses/stage2_chief_surgeon/sweep_sheet.png` | Four-stage generation derived from the approved Chief Surgeon identity anchor | User-approved normalized 2×2 wind-up, early swing, active sweep, and recovery cells |
 | `assets/bosses/stage2_chief_surgeon/slam_sheet.png` | Four-stage generation derived from the approved Chief Surgeon identity anchor | User-approved normalized 2×2 overhead wind-up, downward drive, impact, and recovery cells |
+| `assets/bosses/stage2_chief_surgeon/reaction_sheet.png` | Four-pose generation derived from the approved Chief Surgeon identity anchor | User-approved normalized hurt, phase-two rage, stunned, and defeated 512×512 cells |
+| `assets/hazards/stage2/rolling_equipment_sheet.png` | Project-specific hospital hazard generation derived from the approved Stage 2 palette | Art-production self-reviewed; four transparent 256×256 roll, pitch, bounce, and settle cells |
+| `assets/vfx/stage2_hospital_effects.png` | Project-specific VFX generation derived from the approved Stage 2 hospital palette | Art-production self-reviewed; four independent transparent 256×256 electric-hit, bandage-buff, skid-dust, and lamp-impact cells |
+| `assets/backgrounds/stage2/hospital_corridor.png` | Approved project-specific Stage 2 environment generation | User-approved; 960×540 opaque hospital corridor palette and lighting anchor |
+| `assets/tilesets/stage2/hospital_ground_tiles.png` | Project-specific tile generation derived from the approved Stage 2 hospital direction | Art-production self-reviewed; basic, cracked, drain, and puddle variants in four aligned transparent 256×256 cells |
 
 No production assets have been copied from `tea-line-bot` yet.
