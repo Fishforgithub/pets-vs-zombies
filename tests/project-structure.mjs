@@ -26,6 +26,7 @@ const requiredFiles = [
   'export_presets.cfg',
   'wrangler.jsonc',
   'deploy/cloudflare-worker.js',
+  'scripts/publish-web.ps1',
   'game/main/main.tscn',
   'game/main/main.gd',
   'game/stages/stage1.tscn',

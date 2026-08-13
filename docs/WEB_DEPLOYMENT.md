@@ -11,7 +11,26 @@ The browser build uses Godot's single-threaded Web export. The release is stored
 
 No credentials are stored in this repository. Deployment uses the local `teabot-apikey` OCI CLI profile and the local Wrangler login.
 
-## Export
+## One-command publishing on Windows
+
+Use the repository root in PowerShell. The default command runs all Godot and structural checks, builds the Web release, uploads every required game asset to OCI, publishes the Worker, then verifies the public HTML, WASM MIME type, and release header.
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\publish-web.ps1
+```
+
+The script creates a time-based release identifier automatically. To use a specific release identifier, append `-ReleaseId 2026-08-14.1`.
+
+| Workflow | Command | Effect |
+|---|---|---|
+| Recommended public release | `powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\publish-web.ps1` | Runs checks, exports, uploads to OCI, deploys the Worker, and verifies the public site. |
+| Safe build verification | `powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\publish-web.ps1 -DryRun -SkipTests -ReleaseId local-check` | Exports and hashes the Web build only. It does not change OCI objects or the Cloudflare Worker. |
+
+The publisher requires the existing local OCI CLI profile `teabot-apikey`, an authenticated Wrangler CLI session, and Node.js/npm. If Godot 4.7.1 is not available through `GODOT_PATH` or the `godot` command, the script downloads the official Windows build into the ignored `.tools` directory on its first run. Credentials and tokens are never stored in the script or repository.
+
+The generated asset manifest is written to `build/web/release-manifest.json`. OCI uploads preserve explicit MIME types and use checksum verification; the Worker receives the release identifier through its `PVZ_RELEASE` deployment variable, so the public `X-PVZ-Release` header is updated automatically.
+
+## Manual export fallback
 
 Create `build/web` and run Godot 4.7.1 with:
 
@@ -21,7 +40,7 @@ godot --headless --path . --export-release Web build/web/index.html
 
 The output entry point must remain `index.html`. Keep `variant/thread_support=false` unless the Cloudflare Worker is also updated to return the required cross-origin isolation headers.
 
-## Upload and publish
+## Manual upload and publish fallback
 
 Upload every file under `build/web` to the `pets-vs-zombies-web` OCI bucket with its original filename. Preserve these MIME types:
 
