@@ -4,13 +4,13 @@ Status: the approved character, boss, environment, hazard, and VFX assets are in
 
 ## Gameplay implementation
 
-- Five escalating data-driven waves mix zombie crow, nurse, doctor, and wheelchair enemies.
+- Five escalating data-driven waves mix zombie crow, dog, nurse, doctor, and wheelchair enemies.
 - Two animated electric puddles provide frame-gated environmental damage.
 - The Undead Chief Surgeon enters after wave five with sweep, slam, phase-two acceleration, hospital impact VFX, and twin rolling-equipment hazards.
 - Defeating the boss persists Stage 2 completion, unlocks the next route position, and opens the Stage 2 result/shop screen.
 - The campaign route enables Stage 2 only after Stage 1 completion and keeps both completed stages replayable.
 
-The zombie dog assets remain approved and validated but are reserved for a later Stage 2 tuning pass; they are not required for the first playable five-wave composition.
+The approved zombie dog is now integrated as the Stage 2 fast low runner. It first appears in Wave 2 and returns in later mixed waves, creating a readable speed-and-height pressure pair with aerial crows and rear-line support enemies.
 
 ## Stage fantasy
 

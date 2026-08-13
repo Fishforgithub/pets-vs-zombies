@@ -5,6 +5,7 @@ const CROW_SCENE := preload("res://game/enemies/stage2/zombie_crow.tscn")
 const NURSE_SCENE := preload("res://game/enemies/stage2/zombie_nurse.tscn")
 const DOCTOR_SCENE := preload("res://game/enemies/stage2/zombie_doctor.tscn")
 const WHEELCHAIR_SCENE := preload("res://game/enemies/stage2/wheelchair_zombie.tscn")
+const DOG_SCENE := preload("res://game/enemies/stage2/zombie_dog.tscn")
 const CHIEF_SURGEON_SCENE := preload("res://game/bosses/chief_surgeon_boss.tscn")
 const HOSPITAL_BACKGROUND_PATH := "res://assets/backgrounds/stage2/hospital_corridor.png"
 const HOSPITAL_GROUND_PATH := "res://assets/tilesets/stage2/hospital_ground_tiles.png"
@@ -12,10 +13,10 @@ const HOSPITAL_PROPS_PATH := "res://assets/props/stage2/hospital_props.png"
 
 const STAGE_2_WAVES: Array[Dictionary] = [
 	{"enemy_count": 3, "spawn_interval": 1.15, "max_alive": 2, "spawn_sides": [1], "enemy_types": [&"nurse", &"crow", &"nurse"]},
-	{"enemy_count": 4, "spawn_interval": 0.95, "max_alive": 3, "spawn_sides": [1, -1], "enemy_types": [&"crow", &"nurse", &"crow", &"doctor"]},
-	{"enemy_count": 5, "spawn_interval": 0.82, "max_alive": 3, "spawn_sides": [-1, 1], "enemy_types": [&"doctor", &"nurse", &"crow", &"doctor", &"nurse"]},
-	{"enemy_count": 6, "spawn_interval": 0.68, "max_alive": 4, "spawn_sides": [1, -1], "enemy_types": [&"wheelchair", &"crow", &"nurse", &"doctor", &"wheelchair", &"crow"]},
-	{"enemy_count": 8, "spawn_interval": 0.55, "max_alive": 5, "spawn_sides": [-1, 1], "enemy_types": [&"wheelchair", &"doctor", &"crow", &"nurse", &"wheelchair", &"crow", &"doctor", &"nurse"]},
+	{"enemy_count": 4, "spawn_interval": 0.95, "max_alive": 3, "spawn_sides": [1, -1], "enemy_types": [&"crow", &"nurse", &"dog", &"doctor"]},
+	{"enemy_count": 5, "spawn_interval": 0.82, "max_alive": 3, "spawn_sides": [-1, 1], "enemy_types": [&"doctor", &"dog", &"crow", &"doctor", &"nurse"]},
+	{"enemy_count": 6, "spawn_interval": 0.68, "max_alive": 4, "spawn_sides": [1, -1], "enemy_types": [&"wheelchair", &"crow", &"dog", &"doctor", &"wheelchair", &"crow"]},
+	{"enemy_count": 8, "spawn_interval": 0.55, "max_alive": 5, "spawn_sides": [-1, 1], "enemy_types": [&"wheelchair", &"doctor", &"dog", &"nurse", &"wheelchair", &"crow", &"doctor", &"dog"]},
 ]
 
 const ENEMY_SCENES: Dictionary = {
@@ -23,6 +24,7 @@ const ENEMY_SCENES: Dictionary = {
 	&"nurse": NURSE_SCENE,
 	&"doctor": DOCTOR_SCENE,
 	&"wheelchair": WHEELCHAIR_SCENE,
+	&"dog": DOG_SCENE,
 }
 
 @export var use_stage_two_default_waves: bool = true
@@ -72,10 +74,20 @@ func _add_hospital_props() -> void:
 		add_child(prop)
 
 func _spawn_zombie(spawn_side: int) -> WaveEnemy:
-	var config := STAGE_2_WAVES[wave_director.current_wave_index]
+	var wave_index := wave_director.current_wave_index
+	if wave_index < 0 or wave_index >= wave_director.wave_configs.size():
+		push_error("Stage 2 attempted to spawn an enemy outside its configured wave range.")
+		return null
+	var config := wave_director.wave_configs[wave_index]
 	var enemy_types := config.get("enemy_types", []) as Array
+	if enemy_types.is_empty():
+		push_error("Stage 2 wave requires at least one enemy type.")
+		return null
 	var enemy_type := enemy_types[wave_director.spawned_in_wave % enemy_types.size()] as StringName
 	var packed_scene := ENEMY_SCENES.get(enemy_type) as PackedScene
+	if packed_scene == null:
+		push_error("Stage 2 does not have a scene registered for enemy type %s." % enemy_type)
+		return null
 	var enemy := packed_scene.instantiate() as WaveEnemy
 	enemies.add_child(enemy)
 	var direction := 1.0 if spawn_side >= 0 else -1.0

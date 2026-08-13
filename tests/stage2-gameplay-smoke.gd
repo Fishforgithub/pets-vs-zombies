@@ -37,6 +37,8 @@ func _run() -> void:
 					seen_types[&"doctor"] = true
 				elif enemy_node is WheelchairZombie:
 					seen_types[&"wheelchair"] = true
+				elif enemy_node is ZombieDog:
+					seen_types[&"dog"] = true
 				enemy_node.call("take_damage", 9999)
 		await process_frame
 		await process_frame
@@ -45,7 +47,7 @@ func _run() -> void:
 	_check(stage.wave_director.finished, "Defeating five mixed waves completes Stage 2 wave progression")
 	_check(stage.defeated_count == 5, "Fast Stage 2 smoke waves report all five defeats")
 	_check(is_instance_valid(stage.active_boss) and stage.active_boss is ChiefSurgeonBoss, "Chief Surgeon enters after Stage 2 wave five")
-	_check(seen_types.size() >= 4, "Stage 2 wave sequence exercises all four implemented enemy roles")
+	_check(seen_types.size() >= 5, "Stage 2 wave sequence exercises all five implemented enemy roles")
 	if is_instance_valid(stage.active_boss):
 		stage.active_boss.defeat_delay = 0.0
 		stage.active_boss.take_damage(stage.active_boss.health)
@@ -64,7 +66,7 @@ func _fast_waves() -> Array[Dictionary]:
 		{"enemy_count": 1, "spawn_interval": 0.0, "max_alive": 1, "spawn_sides": [-1], "enemy_types": [&"nurse"]},
 		{"enemy_count": 1, "spawn_interval": 0.0, "max_alive": 1, "spawn_sides": [1], "enemy_types": [&"doctor"]},
 		{"enemy_count": 1, "spawn_interval": 0.0, "max_alive": 1, "spawn_sides": [-1], "enemy_types": [&"wheelchair"]},
-		{"enemy_count": 1, "spawn_interval": 0.0, "max_alive": 1, "spawn_sides": [1], "enemy_types": [&"crow"]},
+		{"enemy_count": 1, "spawn_interval": 0.0, "max_alive": 1, "spawn_sides": [1], "enemy_types": [&"dog"]},
 	]
 
 func _wait_frames(count: int) -> void:
