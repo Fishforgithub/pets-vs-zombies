@@ -36,7 +36,7 @@ function Write-Step {
 
 function Assert-LastExitCode {
     param([string]$Operation)
-    if ($LASTEXITCODE -ne 0) {
+    if ($null -ne $LASTEXITCODE -and $LASTEXITCODE -ne 0) {
         throw "$Operation failed with exit code $LASTEXITCODE."
     }
 }
@@ -81,18 +81,21 @@ function Resolve-GodotExecutable {
 
 function Invoke-Godot {
     param([string]$Executable, [string[]]$Arguments, [string]$Operation)
+    $global:LASTEXITCODE = 0
     & $Executable @Arguments
     Assert-LastExitCode $Operation
 }
 
 function Invoke-Oci {
     param([string[]]$Arguments, [string]$Operation)
+    $global:LASTEXITCODE = 0
     & oci @Arguments
     Assert-LastExitCode $Operation
 }
 
 function Invoke-Wrangler {
     param([string[]]$Arguments, [string]$Operation)
+    $global:LASTEXITCODE = 0
     & wrangler @Arguments
     Assert-LastExitCode $Operation
 }
