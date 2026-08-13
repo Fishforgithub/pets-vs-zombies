@@ -2,6 +2,7 @@
 .import/
 export/
 build/
+.tools/
 *.tmp
 *.log
 .env

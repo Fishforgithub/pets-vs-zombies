@@ -17,7 +17,7 @@ function contentTypeFor(pathname) {
 }
 
 export default {
-  async fetch(request) {
+  async fetch(request, env) {
     if (request.method !== "GET" && request.method !== "HEAD") {
       return new Response("Method not allowed", {
         status: 405,
@@ -41,9 +41,12 @@ export default {
     }
 
     const headers = new Headers(upstream.headers);
+    const releaseId = typeof env.PVZ_RELEASE === "string" && env.PVZ_RELEASE.length > 0
+      ? env.PVZ_RELEASE
+      : "unversioned";
     headers.set("Content-Type", contentTypeFor(pathname));
     headers.set("X-Content-Type-Options", "nosniff");
-    headers.set("X-PVZ-Release", "2026-08-13.1");
+    headers.set("X-PVZ-Release", releaseId);
     headers.set(
       "Cache-Control",
       pathname.endsWith(".html") || pathname.endsWith(".pck")
