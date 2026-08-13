@@ -33,7 +33,8 @@ func _run() -> void:
 
 	var player_frames := player.character_sprite.sprite_frames
 	for animation_name in [&"fire", &"reload", &"hurt", &"faint"]:
-		_check_single_frame_animation(player_frames, animation_name)
+		_check_single_frame_animation(player_frames, animation_name, false)
+		_check_player_action_baseline(player, animation_name)
 
 	var starting_ammo := player.ammo
 	player.aim_direction = Vector2(1.0, 0.65).normalized()
@@ -131,6 +132,16 @@ func _find_bullet(host: Node) -> GameBullet:
 		if child is GameBullet:
 			return child as GameBullet
 	return null
+
+func _check_player_action_baseline(player: PlayerGirl, animation_name: StringName) -> void:
+	var texture := player.character_sprite.sprite_frames.get_frame_texture(animation_name, 0)
+	if texture == null:
+		_check(false, "%s runtime baseline texture loads" % animation_name)
+		return
+	player._play_character_animation(animation_name)
+	var used_bottom := float(texture.get_image().get_used_rect().end.y)
+	var runtime_bottom := player.character_sprite.position.y + (used_bottom - texture.get_height() * 0.5) * player.character_sprite.scale.y
+	_check(is_equal_approx(runtime_bottom, 0.88), "%s runtime art aligns to the standard feet baseline" % animation_name)
 
 func _check_single_frame_animation(frames: SpriteFrames, animation_name: StringName, check_feet_baseline: bool = true) -> void:
 	_check(frames.has_animation(animation_name), "%s animation exists" % animation_name)

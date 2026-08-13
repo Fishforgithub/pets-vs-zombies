@@ -9,6 +9,14 @@ const BULLET_SCENE := preload("res://game/projectiles/bullet.tscn")
 const STARTER_WEAPON: WeaponData = preload("res://game/data/weapons/starter_pistol.tres")
 const STANDING_MUZZLE_OFFSET := Vector2(48.0, -53.0)
 const CROUCH_MUZZLE_OFFSET := Vector2(25.0, -23.0)
+const CHARACTER_SPRITE_BASE_POSITION := Vector2(2.0, -44.0)
+const CHARACTER_SPRITE_SCALE: float = 0.44
+const ACTION_BASELINE_OFFSETS: Dictionary = {
+	&"fire": 14.0,
+	&"reload": 14.0,
+	&"hurt": 25.0,
+	&"faint": 19.0,
+}
 
 @export var move_speed: float = 250.0
 @export var jump_velocity: float = -470.0
@@ -44,6 +52,7 @@ func _ready() -> void:
 	equipped_weapon = STARTER_WEAPON
 	_apply_equipped_weapon_data()
 	ammo = magazine_size
+	_apply_sprite_baseline(&"idle")
 	add_to_group("player")
 	health_changed.emit(health, max_health)
 	ammo_changed.emit(ammo, magazine_size)
@@ -83,22 +92,32 @@ func _update_animation(move_axis: float) -> void:
 	if not is_instance_valid(character_sprite):
 		return
 	character_sprite.flip_h = aim_direction.x < 0.0
+	var animation_name: StringName = &"idle"
 	if is_dead:
-		character_sprite.play(&"faint")
+		animation_name = &"faint"
 	elif hurt_animation_timer > 0.0:
-		character_sprite.play(&"hurt")
+		animation_name = &"hurt"
 	elif is_reloading and not is_crouching and is_on_floor():
-		character_sprite.play(&"reload")
+		animation_name = &"reload"
 	elif fire_animation_timer > 0.0 and not is_crouching and is_on_floor():
-		character_sprite.play(&"fire")
+		animation_name = &"fire"
 	elif not is_on_floor():
-		character_sprite.play(&"jump" if velocity.y < 0.0 else &"fall")
+		animation_name = &"jump" if velocity.y < 0.0 else &"fall"
 	elif is_crouching:
-		character_sprite.play(&"crouch")
+		animation_name = &"crouch"
 	elif absf(move_axis) > 0.05:
-		character_sprite.play(&"run")
-	else:
-		character_sprite.play(&"idle")
+		animation_name = &"run"
+	_play_character_animation(animation_name)
+
+func _play_character_animation(animation_name: StringName) -> void:
+	if not is_instance_valid(character_sprite):
+		return
+	character_sprite.play(animation_name)
+	_apply_sprite_baseline(animation_name)
+
+func _apply_sprite_baseline(animation_name: StringName) -> void:
+	var source_pixel_offset := float(ACTION_BASELINE_OFFSETS.get(animation_name, 0.0))
+	character_sprite.position = CHARACTER_SPRITE_BASE_POSITION + Vector2(0.0, source_pixel_offset * CHARACTER_SPRITE_SCALE)
 
 func _update_crouch_state(wants_crouch: bool) -> void:
 	if wants_crouch == is_crouching:
@@ -197,8 +216,7 @@ func take_damage(amount: int, knockback_direction: Vector2 = Vector2.ZERO) -> vo
 		is_dead = true
 		hurt_animation_timer = 0.0
 		velocity = Vector2.ZERO
-		if is_instance_valid(character_sprite):
-			character_sprite.play(&"faint")
+		_play_character_animation(&"faint")
 		died.emit()
 	else:
 		hurt_animation_timer = hurt_animation_duration
