@@ -153,6 +153,7 @@ try {
     Write-Step "Building the Godot Web release"
     Remove-Item -LiteralPath $BuildDirectory -Recurse -Force -ErrorAction SilentlyContinue
     New-Item -ItemType Directory -Path $BuildDirectory -Force | Out-Null
+    Set-Content -LiteralPath (Join-Path $ProjectRoot "build\.gdignore") -Value "Generated Web output is not a Godot source asset." -Encoding utf8
     Invoke-Godot $godot @("--headless", "--path", $ProjectRoot, "--export-release", "Web", (Join-Path $BuildDirectory "index.html")) "Godot Web export"
 
     Wait-ForWebExportAssets -Directory $BuildDirectory -Assets $RequiredAssets
