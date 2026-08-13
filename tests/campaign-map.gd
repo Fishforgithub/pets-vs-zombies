@@ -25,6 +25,8 @@ func _run() -> void:
 	_check(campaign_map.stage_2_card.disabled, "Stage 2 is locked before Stage 1 clear")
 	_check("PLAYER LEVEL  1" in campaign_map.profile_label.text, "Campaign map shows persisted profile summary")
 	_check("CLEAR STAGE 1" in campaign_map.stage_2_status.text, "Locked route explains its unlock requirement")
+	_check(campaign_map.stage_1_card.focus_mode == Control.FOCUS_ALL, "Stage 1 card accepts keyboard focus")
+	_check(campaign_map.selected_stage_number == 1 and "SELECTED: STAGE 1" in campaign_map.controls_label.text, "Campaign map announces the initial selected route")
 
 	progression.complete_stage(1)
 	progression.award_rewards(80, 45)
@@ -32,6 +34,11 @@ func _run() -> void:
 	campaign_map._refresh_route()
 	_check("CLEARED" in campaign_map.stage_1_status.text, "Cleared Stage 1 remains available for replay")
 	_check(not campaign_map.stage_2_card.disabled and "AVAILABLE" in campaign_map.stage_2_status.text, "Unlocked Stage 2 becomes selectable when its gameplay scene exists")
+	campaign_map._focus_next_available_stage()
+	_check(campaign_map.selected_stage_number == 2 and campaign_map.stage_2_card.has_focus(), "Campaign map can move keyboard focus to an unlocked Stage 2")
+	_check("SELECTED: STAGE 2" in campaign_map.controls_label.text, "Campaign map updates its selected-route instruction")
+	campaign_map._focus_next_available_stage()
+	_check(campaign_map.selected_stage_number == 1 and campaign_map.stage_1_card.has_focus(), "Campaign map loops keyboard focus back to Stage 1")
 
 	campaign_map.queue_free()
 	await process_frame

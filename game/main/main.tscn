@@ -94,6 +94,9 @@ offset_bottom = 530.0
 texture_normal = ExtResource("3")
 ignore_texture_size = true
 stretch_mode = 0
+focus_mode = 2
+mouse_default_cursor_shape = 2
+tooltip_text = "Start Stage 1: City Street"
 
 [node name="Shade" type="ColorRect" parent="Stage1Card"]
 layout_mode = 1
@@ -146,6 +149,9 @@ texture_normal = ExtResource("4")
 texture_disabled = ExtResource("4")
 ignore_texture_size = true
 stretch_mode = 0
+focus_mode = 2
+mouse_default_cursor_shape = 2
+tooltip_text = "Clear Stage 1 to unlock Hospital Corridor"
 disabled = true
 
 [node name="Shade" type="ColorRect" parent="Stage2Card"]
@@ -209,7 +215,7 @@ offset_right = 1160.0
 offset_bottom = 684.0
 theme_override_colors/font_color = Color(0.56, 0.66, 0.76, 1)
 theme_override_font_sizes/font_size = 16
-text = "CLICK A CARD OR USE TAB / ENTER"
+text = "SELECTED: STAGE 1   •   TAB: SWITCH ROUTE   •   ENTER / SPACE: START"
 horizontal_alignment = 1
 
 [node name="Progression" parent="." instance=ExtResource("2")]

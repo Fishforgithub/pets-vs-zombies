@@ -8,6 +8,9 @@ signal upgrade_purchased
 
 const STARTER_WEAPON: WeaponData = preload("res://game/data/weapons/starter_pistol.tres")
 const ENERGY_BOLT: PetSkillData = preload("res://game/data/pet_skills/energy_bolt.tres")
+const NEXT_CARD_AVAILABLE_COLOR := Color(0.12, 0.15, 0.2, 1.0)
+const NEXT_CARD_FOCUSED_COLOR := Color(0.18, 0.34, 0.38, 1.0)
+const NEXT_CARD_LOCKED_COLOR := Color(0.08, 0.09, 0.12, 1.0)
 
 @onready var title_label: Label = $Overlay/ResultPanel/TitleLabel
 @onready var reward_label: Label = $Overlay/ResultPanel/RewardLabel
@@ -20,6 +23,7 @@ const ENERGY_BOLT: PetSkillData = preload("res://game/data/pet_skills/energy_bol
 @onready var next_stage_card: TextureButton = $Overlay/ResultPanel/NextStageCard
 @onready var stage_label: Label = $Overlay/ResultPanel/NextStageCard/StageLabel
 @onready var status_label: Label = $Overlay/ResultPanel/NextStageCard/StatusLabel
+@onready var next_stage_fallback: ColorRect = $Overlay/ResultPanel/NextStageCard/CardFallback
 @onready var retry_button: Button = $Overlay/ResultPanel/RetryButton
 @onready var map_button: Button = $Overlay/ResultPanel/MapButton
 
@@ -30,10 +34,14 @@ func _ready() -> void:
 	retry_button.pressed.connect(_on_retry_pressed)
 	map_button.pressed.connect(_on_map_pressed)
 	next_stage_card.pressed.connect(_on_next_stage_pressed)
+	next_stage_card.focus_entered.connect(_on_next_stage_card_focus_entered)
+	next_stage_card.focus_exited.connect(_on_next_stage_card_focus_exited)
 	weapon_upgrade_button.pressed.connect(_on_weapon_upgrade_pressed)
 	pet_upgrade_button.pressed.connect(_on_pet_upgrade_pressed)
 	visible = false
+	_configure_focus_order()
 	_refresh_shop()
+	_refresh_next_stage_card_visual()
 
 func configure_progression(run_progression: RunProgression) -> void:
 	if is_instance_valid(progression) and progression.progress_changed.is_connected(_on_progress_changed):
@@ -55,15 +63,45 @@ func show_stage_clear(experience_earned: int, currency_earned: int, player_level
 		stage_label.text = "STAGE %d\nROUTE CONTINUES" % (stage_number + 1)
 		status_label.text = "COMING SOON"
 	next_stage_card.disabled = not next_stage_available
+	next_stage_card.focus_mode = Control.FOCUS_ALL if next_stage_available else Control.FOCUS_NONE
 	retry_button.text = "REPLAY STAGE %d" % stage_number
-	visible = true
 	_refresh_shop()
+	_configure_focus_order()
+	_refresh_next_stage_card_visual()
+	visible = true
 	if not weapon_upgrade_button.disabled:
 		weapon_upgrade_button.grab_focus()
 	elif not pet_upgrade_button.disabled:
 		pet_upgrade_button.grab_focus()
+	elif not next_stage_card.disabled:
+		next_stage_card.grab_focus()
 	else:
 		retry_button.grab_focus()
+
+func _configure_focus_order() -> void:
+	weapon_upgrade_button.focus_neighbor_right = next_stage_card.get_path()
+	weapon_upgrade_button.focus_neighbor_bottom = retry_button.get_path()
+	next_stage_card.focus_neighbor_left = weapon_upgrade_button.get_path()
+	next_stage_card.focus_neighbor_right = pet_upgrade_button.get_path()
+	next_stage_card.focus_neighbor_bottom = retry_button.get_path()
+	pet_upgrade_button.focus_neighbor_left = next_stage_card.get_path()
+	pet_upgrade_button.focus_neighbor_bottom = map_button.get_path()
+	retry_button.focus_neighbor_top = weapon_upgrade_button.get_path()
+	retry_button.focus_neighbor_right = map_button.get_path()
+	map_button.focus_neighbor_top = pet_upgrade_button.get_path()
+	map_button.focus_neighbor_left = retry_button.get_path()
+
+func _refresh_next_stage_card_visual() -> void:
+	if next_stage_card.disabled:
+		next_stage_fallback.color = NEXT_CARD_LOCKED_COLOR
+	else:
+		next_stage_fallback.color = NEXT_CARD_FOCUSED_COLOR if next_stage_card.has_focus() else NEXT_CARD_AVAILABLE_COLOR
+
+func _on_next_stage_card_focus_entered() -> void:
+	_refresh_next_stage_card_visual()
+
+func _on_next_stage_card_focus_exited() -> void:
+	_refresh_next_stage_card_visual()
 
 func _refresh_shop() -> void:
 	if not is_instance_valid(progression):
