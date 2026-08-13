@@ -113,9 +113,9 @@ Request IDs use `AR-YYYYMMDD-NNN`. Allowed states are `queued`, `approved`, `in-
 
 - Status: `integrated`
 - Delivery commit: `agent/art-production` commit `a5a6ee4`
-- Engine integration commit: `34d522b`
-- Screen use: Repair the Stage 2 zombie dog's six-frame sprint presentation before the enemy is enabled. The current sheet has opaque pixels on the shared x=512 boundary in frames 1 and 2, creating an atlas clipping and adjacent-frame fragment risk.
-- Godot node: Planned `AnimatedSprite2D` at `ZombieDog/CharacterSprite` in `game/enemies/stage2/zombie_dog.tscn`.
+- Engine integration commit: `f51050e`
+- Screen use: The Stage 2 zombie dog's six-frame sprint presentation is used by the fast low-runner enemy after atlas-cell normalization removed the prior adjacent-frame fragment risk.
+- Godot node: `AnimatedSprite2D` at `ZombieDog/CharacterSprite` in `game/enemies/stage2/zombie_dog.tscn`.
 - Output path: `res://assets/enemies/zombie_dog/run_sheet.png`.
 - Pixel dimensions: Exactly 768 x 512 pixels; every frame remains exactly 256 x 256 pixels.
 - Grid / slicing: 3 x 2, read left-to-right then top-to-bottom; `run` frames 0–5 remain in their current order and play at 12 FPS.
