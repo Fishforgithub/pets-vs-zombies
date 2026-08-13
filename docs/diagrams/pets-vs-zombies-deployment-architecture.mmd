@@ -1,0 +1,53 @@
+flowchart LR
+    %% Pets vs Zombies deployment and traffic architecture
+    classDef local fill:#E8F1FF,stroke:#2563EB,stroke-width:2px,color:#0F172A
+    classDef storage fill:#FFF7E6,stroke:#EA8A00,stroke-width:2px,color:#0F172A
+    classDef edge fill:#EAFBF3,stroke:#059669,stroke-width:2px,color:#0F172A
+    classDef user fill:#F3E8FF,stroke:#7C3AED,stroke-width:2px,color:#0F172A
+    classDef note fill:#F8FAFC,stroke:#64748B,stroke-width:1px,color:#334155
+
+    subgraph LOCAL["你的 Windows 電腦／本地開發"]
+        SRC[Godot 遊戲原始碼<br/>GitHub 分支]
+        PUB[一行發布腳本<br/>publish-web.ps1]
+        BUILD[Godot Web 匯出<br/>index.html · JS · WASM · PCK · 圖片]
+        OCI_CLI[OCI CLI<br/>既有認證 profile]
+        WRANGLER[Wrangler CLI<br/>既有 Cloudflare 登入]
+        SRC --> PUB --> BUILD
+        PUB --> OCI_CLI
+        PUB --> WRANGLER
+    end
+
+    subgraph EXISTING["既有雲端基礎設施"]
+        subgraph OCI["OCI Object Storage · Japan East (Tokyo)"]
+            BUCKET[(Bucket<br/>pets-vs-zombies-web)]
+            ASSETS[遊戲靜態檔案<br/>HTML · JS · WASM · PCK · PNG]
+            BUCKET --- ASSETS
+        end
+
+        subgraph CF["Cloudflare Workers"]
+            WORKER[Worker<br/>pets-vs-zombies]
+            URL[公開網址<br/>pets-vs-zombies.fishzero002-games.workers.dev]
+            WORKER --- URL
+        end
+    end
+
+    PLAYER[玩家瀏覽器]:::user
+
+    OCI_CLI -->|① 上傳／覆蓋遊戲檔案<br/>附 MIME 類型與 checksum 驗證| BUCKET
+    WRANGLER -->|② 發布 Worker 程式<br/>注入本次 PVZ_RELEASE| WORKER
+
+    PLAYER -->|③ 請求公開網址| URL
+    URL -->|④ 交由 Worker 處理| WORKER
+    WORKER -->|⑤ 讀取對應靜態檔案| ASSETS
+    ASSETS -->|⑥ 回傳檔案內容| WORKER
+    WORKER -->|⑦ 回傳遊戲內容、MIME、快取與版本標頭| PLAYER
+
+    NOTE1[發布時：本地端同時更新 OCI 檔案與 Worker 版本]:::note
+    NOTE2[遊戲時：玩家只連 Cloudflare；Worker 再向 OCI 取檔]:::note
+    NOTE1 -.說明.-> BUCKET
+    NOTE1 -.說明.-> WORKER
+    NOTE2 -.說明.-> PLAYER
+
+    class SRC,PUB,BUILD,OCI_CLI,WRANGLER local
+    class BUCKET,ASSETS storage
+    class WORKER,URL edge
