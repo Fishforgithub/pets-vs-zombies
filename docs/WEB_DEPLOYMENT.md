@@ -43,9 +43,12 @@ The Worker maps `/` to OCI's `index.html`, serves all game files from the same p
 
 ## Latest verified release
 
-- Release header: `2026-07-19.5`
-- Cloudflare Worker Version ID: `25b03812-dd1b-47c5-8f73-865df4d11434`
-- Verified on: 2026-07-19 (Asia/Taipei)
-- Public checks: HTML, JavaScript, PCK, and WASM returned HTTP 200 with their expected MIME types.
-- Exported PCK size: 6,474,812 bytes.
-- WASM header: `00 61 73 6D 01 00 00 00`.
+| Item | Verified value |
+|---|---|
+| Release header | `2026-08-13.1` |
+| Source commit | `8054cc9` on `agent/stage2-completion` |
+| Cloudflare Worker Version ID | `6aedbfc0-c838-40d3-8103-7c95713b3079` |
+| Verified on | 2026-08-13 (Asia/Taipei) |
+| Public checks | The campaign map and Stage 1 launch returned successfully from the player URL; HTML returned HTTP 200 with `text/html; charset=utf-8` and WASM returned HTTP 200 with `application/wasm`. |
+| Exported PCK size | 6,490,132 bytes |
+| Exported WASM size | 39,513,091 bytes |
