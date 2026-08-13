@@ -16,6 +16,8 @@ $ErrorActionPreference = "Stop"
 
 $ProjectRoot = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
 $BuildDirectory = Join-Path $ProjectRoot "build\web"
+$SafeReleaseId = $ReleaseId -replace "[^A-Za-z0-9._-]", "-"
+$TemporaryExportDirectory = Join-Path ([System.IO.Path]::GetTempPath()) "pets-vs-zombies-web-export-$SafeReleaseId"
 $WorkerConfigPath = Join-Path $ProjectRoot $WorkerConfig
 $RequiredAssets = @(
     @{ Name = "index.html"; ContentType = "text/html; charset=utf-8" },
@@ -151,12 +153,15 @@ try {
     }
 
     Write-Step "Building the Godot Web release"
+    Remove-Item -LiteralPath $TemporaryExportDirectory -Recurse -Force -ErrorAction SilentlyContinue
+    New-Item -ItemType Directory -Path $TemporaryExportDirectory -Force | Out-Null
+    Invoke-Godot $godot @("--headless", "--path", $ProjectRoot, "--export-release", "Web", (Join-Path $TemporaryExportDirectory "index.html")) "Godot Web export"
+    Wait-ForWebExportAssets -Directory $TemporaryExportDirectory -Assets $RequiredAssets
+
     Remove-Item -LiteralPath $BuildDirectory -Recurse -Force -ErrorAction SilentlyContinue
     New-Item -ItemType Directory -Path $BuildDirectory -Force | Out-Null
-    Set-Content -LiteralPath (Join-Path $ProjectRoot "build\.gdignore") -Value "Generated Web output is not a Godot source asset." -Encoding utf8
-    Invoke-Godot $godot @("--headless", "--path", $ProjectRoot, "--export-release", "Web", (Join-Path $BuildDirectory "index.html")) "Godot Web export"
-
-    Wait-ForWebExportAssets -Directory $BuildDirectory -Assets $RequiredAssets
+    Copy-Item -Path (Join-Path $TemporaryExportDirectory "*") -Destination $BuildDirectory -Force
+    Remove-Item -LiteralPath $TemporaryExportDirectory -Recurse -Force
 
     $manifest = [ordered]@{
         release = $ReleaseId
