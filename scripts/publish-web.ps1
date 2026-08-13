@@ -106,6 +106,19 @@ function Get-ResponseHeaderValue {
     return [string]$value
 }
 
+function Wait-ForWebExportAssets {
+    param([string]$Directory, [array]$Assets, [int]$TimeoutSeconds = 20)
+    for ($elapsed = 0; $elapsed -lt $TimeoutSeconds; $elapsed++) {
+        $missing = @($Assets | Where-Object { -not (Test-Path -LiteralPath (Join-Path $Directory $_.Name) -PathType Leaf) })
+        if ($missing.Count -eq 0) {
+            return
+        }
+        Start-Sleep -Seconds 1
+    }
+    $missingNames = ($Assets | Where-Object { -not (Test-Path -LiteralPath (Join-Path $Directory $_.Name) -PathType Leaf) } | ForEach-Object Name) -join ", "
+    throw "Godot Web export did not produce the required assets within $TimeoutSeconds seconds: $missingNames"
+}
+
 Push-Location $ProjectRoot
 try {
     Write-Step "Checking local prerequisites"
@@ -139,12 +152,7 @@ try {
     New-Item -ItemType Directory -Path $BuildDirectory -Force | Out-Null
     Invoke-Godot $godot @("--headless", "--path", $ProjectRoot, "--export-release", "Web", (Join-Path $BuildDirectory "index.html")) "Godot Web export"
 
-    foreach ($asset in $RequiredAssets) {
-        $assetPath = Join-Path $BuildDirectory $asset.Name
-        if (-not (Test-Path -LiteralPath $assetPath -PathType Leaf)) {
-            throw "Web export is missing required asset: $assetPath"
-        }
-    }
+    Wait-ForWebExportAssets -Directory $BuildDirectory -Assets $RequiredAssets
 
     $manifest = [ordered]@{
         release = $ReleaseId
